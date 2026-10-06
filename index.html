@@ -3,26 +3,26 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Fundacentro Data & Analytics Platform — Artisanal Fisheries Intelligence</title>
+  <title>Plataforma Fundacentro de Dados & Analytics — Pesca Artesanal</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
   
   <style>
     /* ==========================================================================
-       1. PALETA CORPORATIVA E VARIÁVEIS MODERNAS (SaaS Clean & High-Tech)
+       1. IDENTIDADE VISUAL CORPORATIVA & PALETA GEOMÉTRICA
        ========================================================================== */
     :root {
       --bg-cream: #FBF9F0;
       --bg-card: #FFFFFF;
-      --bg-subtle: #F4F2E6;
+      --bg-subtle: #F3F1E5;
       --text-main: #0F172A;
       --text-muted: #475569;
       --text-light: #64748B;
       --border-subtle: #E2E0D2;
       --border-accent: #CBD5E1;
       
-      /* Acentos da Identidade Geométrica */
+      /* Cores do Mosaico Geométrico (Acentos) */
       --color-yellow: #E4C027;
       --color-ochre: #C27329;
       --color-green: #22C55E;
@@ -48,15 +48,19 @@
       flex-direction: column;
       min-height: 100vh;
       -webkit-font-smoothing: antialiased;
+      
+      /* Padrão Abstrato Sutil (Rede de Pesca & Malha de Dados) */
+      background-image: radial-gradient(rgba(15, 23, 42, 0.05) 1px, transparent 0);
+      background-size: 24px 24px;
     }
 
     a { color: inherit; text-decoration: none; }
 
     /* ==========================================================================
-       2. HEADER & NAVIGATION (Minimalist Tech Navbar)
+       2. CABEÇALHO & NAVEGAÇÃO INTERNACIONAL
        ========================================================================== */
     header {
-      background-color: rgba(251, 249, 240, 0.9);
+      background-color: rgba(251, 249, 240, 0.92);
       backdrop-filter: blur(12px);
       border-bottom: 1px solid var(--border-subtle);
       position: sticky;
@@ -117,6 +121,28 @@
       background-color: var(--bg-subtle);
     }
 
+    .lang-selector {
+      display: flex;
+      gap: 0.2rem;
+      background-color: var(--bg-subtle);
+      padding: 0.2rem;
+      border-radius: 6px;
+      border: 1px solid var(--border-subtle);
+      font-size: 0.72rem;
+      font-weight: 700;
+    }
+
+    .lang-btn {
+      padding: 0.25rem 0.5rem;
+      border-radius: 4px;
+      cursor: pointer;
+    }
+
+    .lang-btn.active {
+      background-color: var(--text-main);
+      color: white;
+    }
+
     .btn-access {
       background-color: var(--text-main) !important;
       color: white !important;
@@ -125,12 +151,8 @@
       padding: 0.5rem 1rem !important;
     }
 
-    .btn-access:hover {
-      background-color: #1E293B !important;
-    }
-
     /* ==========================================================================
-       3. LAYOUT & CONTAINERS
+       3. COMPONENTES VISUAIS & ESTRUTURA
        ========================================================================== */
     main {
       flex: 1;
@@ -143,7 +165,6 @@
     .tab-content { display: none; }
     .tab-content.active { display: block; }
 
-    /* Cards e Containers Modernos */
     .card {
       background-color: var(--bg-card);
       border: 1px solid var(--border-subtle);
@@ -152,11 +173,8 @@
       transition: border-color 0.2s ease;
     }
 
-    .card:hover {
-      border-color: var(--border-accent);
-    }
+    .card:hover { border-color: var(--border-accent); }
 
-    /* Status Badges tech */
     .badge {
       display: inline-flex;
       align-items: center;
@@ -170,9 +188,9 @@
       width: fit-content;
     }
 
-    .badge-demo { background-color: rgba(228, 192, 39, 0.15); color: #856404; }
-    .badge-validated { background-color: rgba(34, 197, 94, 0.12); color: #15803D; }
-    .badge-dev { background-color: rgba(29, 79, 177, 0.12); color: var(--color-blue); }
+    .badge-demo { background-color: rgba(228, 192, 39, 0.18); color: #856404; }
+    .badge-validated { background-color: rgba(34, 197, 94, 0.15); color: #15803D; }
+    .badge-dev { background-color: rgba(29, 79, 177, 0.15); color: var(--color-blue); }
 
     .badge::before {
       content: '';
@@ -182,9 +200,7 @@
       background-color: currentColor;
     }
 
-    /* ==========================================================================
-       4. HERO BANNER & DASHBOARD METRICS
-       ========================================================================== */
+    /* Hero Banner Moderno */
     .hero-banner {
       background-color: var(--bg-card);
       border: 1px solid var(--border-subtle);
@@ -242,7 +258,7 @@
     .btn-secondary { background-color: var(--bg-subtle); color: var(--text-main); border-color: var(--border-subtle); }
     .btn-secondary:hover { background-color: #E6E3D3; }
 
-    /* KPI Grid */
+    /* KPI Grid Corporativo */
     .kpi-grid {
       display: grid;
       grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
@@ -282,14 +298,66 @@
       color: var(--text-light);
     }
 
-    .kpi-sub {
-      font-size: 0.78rem;
-      color: var(--text-muted);
-      margin-top: 0.5rem;
-    }
+    .kpi-sub { font-size: 0.78rem; color: var(--text-muted); margin-top: 0.5rem; }
 
     /* ==========================================================================
-       5. DATA EXPLORER & QUERY BUILDER (CROSS-TABULATION ENGINE)
+       4. GALERIA & ARTES CONCEITUAIS (COM NOTA DE ATENÇÃO)
+       ========================================================================== */
+    .art-preview-container {
+      background-color: var(--bg-card);
+      border: 1px solid var(--border-subtle);
+      border-radius: 10px;
+      padding: 1.5rem;
+      margin-bottom: 2.5rem;
+    }
+
+    .art-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+      gap: 1.5rem;
+      margin-top: 1rem;
+    }
+
+    .art-card {
+      border: 1px solid var(--border-subtle);
+      border-radius: 8px;
+      overflow: hidden;
+      background-color: var(--bg-cream);
+    }
+
+    .art-card img {
+      width: 100%;
+      height: auto;
+      display: block;
+      object-fit: cover;
+    }
+
+    .art-caption {
+      padding: 0.85rem;
+      font-size: 0.8rem;
+      color: var(--text-muted);
+      border-top: 1px solid var(--border-subtle);
+      background-color: var(--bg-card);
+    }
+
+    /* Nota de Atenção Institucional */
+    .notice-box {
+      background-color: rgba(228, 192, 39, 0.12);
+      border: 1px solid var(--color-yellow);
+      border-radius: 8px;
+      padding: 1rem 1.25rem;
+      margin-top: 1rem;
+      display: flex;
+      align-items: flex-start;
+      gap: 0.75rem;
+      font-size: 0.82rem;
+      color: #715100;
+    }
+
+    .notice-box svg { flex-shrink: 0; margin-top: 0.1rem; }
+
+    /* ==========================================================================
+       5. DATA EXPLORER & PIVOT TABLE
        ========================================================================== */
     .explorer-layout {
       display: grid;
@@ -337,14 +405,8 @@
       font-size: 0.85rem;
       color: var(--text-main);
       outline: none;
-      transition: border-color 0.2s ease;
     }
 
-    .filter-group select:focus {
-      border-color: var(--color-blue);
-    }
-
-    /* Cross-tabulation Control Bar */
     .cross-builder {
       background-color: var(--bg-subtle);
       border: 1px solid var(--border-subtle);
@@ -353,12 +415,12 @@
       margin-bottom: 1.5rem;
       display: flex;
       flex-wrap: wrap;
-      gap: 1rem;
+      gap: 0.6rem;
       align-items: center;
     }
 
     .cross-builder-title {
-      font-size: 0.8rem;
+      font-size: 0.78rem;
       font-weight: 800;
       text-transform: uppercase;
       color: var(--text-main);
@@ -366,7 +428,7 @@
     }
 
     .chip-btn {
-      padding: 0.4rem 0.8rem;
+      padding: 0.4rem 0.85rem;
       font-size: 0.78rem;
       font-weight: 600;
       background-color: var(--bg-card);
@@ -382,7 +444,6 @@
       border-color: var(--color-blue);
     }
 
-    /* Tables Modernas */
     .data-table-container {
       overflow-x: auto;
       border: 1px solid var(--border-subtle);
@@ -411,15 +472,11 @@
     .data-table td {
       padding: 0.85rem 1rem;
       border-bottom: 1px solid var(--border-subtle);
-      color: var(--text-main);
     }
 
     .data-table tr:last-child td { border-bottom: none; }
-    .data-table tr:hover { background-color: rgba(251, 249, 240, 0.6); }
 
-    /* ==========================================================================
-       6. AUTOMATED INSIGHTS & STATISTICAL SUMMARY MODULE
-       ========================================================================== */
+    /* Insights Grid */
     .insights-grid {
       display: grid;
       grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
@@ -435,84 +492,16 @@
       border-left: 4px solid var(--color-blue);
     }
 
-    .insight-header {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      margin-bottom: 0.6rem;
-    }
-
     .insight-title {
       font-size: 0.85rem;
       font-weight: 700;
       text-transform: uppercase;
-      letter-spacing: 0.03em;
       color: var(--text-main);
+      margin-bottom: 0.4rem;
     }
 
-    .insight-body {
-      font-size: 0.875rem;
-      color: var(--text-muted);
-      line-height: 1.5;
-    }
-
-    .insight-stat {
-      font-family: var(--font-mono);
-      font-weight: 700;
-      color: var(--color-ochre);
-    }
-
-    /* Metadata Box */
-    .metadata-card {
-      background-color: var(--bg-subtle);
-      border: 1px solid var(--border-subtle);
-      border-radius: 8px;
-      padding: 1.25rem;
-      margin-top: 1.5rem;
-      font-size: 0.82rem;
-      color: var(--text-muted);
-    }
-
-    .metadata-card h4 {
-      color: var(--text-main);
-      font-size: 0.85rem;
-      font-weight: 700;
-      text-transform: uppercase;
-      margin-bottom: 0.6rem;
-    }
-
-    /* Roadmap Timeline Clean */
-    .timeline {
-      display: flex;
-      flex-direction: column;
-      gap: 1.2rem;
-      position: relative;
-      padding-left: 1.5rem;
-      border-left: 2px solid var(--border-subtle);
-      margin-top: 1.5rem;
-    }
-
-    .timeline-item {
-      background-color: var(--bg-card);
-      border: 1px solid var(--border-subtle);
-      border-radius: 8px;
-      padding: 1.25rem;
-      position: relative;
-    }
-
-    .timeline-item::before {
-      content: '';
-      position: absolute;
-      left: -2.05rem;
-      top: 1.4rem;
-      width: 10px;
-      height: 10px;
-      border-radius: 50%;
-      background-color: var(--text-light);
-    }
-
-    .timeline-item.completed::before { background-color: var(--color-green); }
-    .timeline-item.active::before { background-color: var(--color-blue); }
+    .insight-body { font-size: 0.875rem; color: var(--text-muted); }
+    .insight-stat { font-family: var(--font-mono); font-weight: 700; color: var(--color-ochre); }
 
     /* Footer */
     footer {
@@ -534,11 +523,7 @@
       gap: 1.5rem;
     }
 
-    .mosaic-strip {
-      height: 4px;
-      width: 100%;
-      display: flex;
-    }
+    .mosaic-strip { height: 4px; width: 100%; display: flex; }
     .m-block { flex: 1; }
 
     @media (max-width: 900px) {
@@ -558,13 +543,13 @@
   </div>
 
   <!-- ==========================================================================
-       HEADER & NAVIGATION
+       CABEÇALHO & NAVEGAÇÃO
        ========================================================================== -->
   <header>
     <div class="nav-container">
       <div class="brand">
-        <!-- Logo SVG Vetorial Geométrico -->
-        <svg width="36" height="36" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <!-- SVG Abstrato: Mosaico do Peixe Geométrico + Ícone de Saúde e Segurança -->
+        <svg width="38" height="38" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
           <path d="M 10 35 L 35 10 L 60 35 L 35 60 Z" fill="#E4C027"/>
           <path d="M 60 10 L 85 10 L 85 35 L 60 35 Z" fill="#22C55E"/>
           <path d="M 35 35 L 85 35 L 85 85 L 35 85 Z" fill="#C27329"/>
@@ -573,99 +558,131 @@
         </svg>
         <div>
           <span class="brand-title">Fundacentro Data & Analytics</span>
-          <span class="brand-subtitle">Artisanal Fisheries Intelligence Platform</span>
+          <span class="brand-subtitle">Plataforma de Dados da Pesca Artesanal</span>
         </div>
       </div>
 
       <nav>
         <ul>
-          <li><a href="#" onclick="showTab('home')" class="active" id="nav-home">Overview</a></li>
-          <li><a href="#" onclick="showTab('explorar')" id="nav-explorar">Data Query Engine</a></li>
-          <li><a href="#" onclick="showTab('insights')" id="nav-insights">Statistical Insights</a></li>
+          <li><a href="#" onclick="showTab('home')" class="active" id="nav-home">Visão Geral</a></li>
+          <li><a href="#" onclick="showTab('explorar')" id="nav-explorar">Motor de Cruzamentos</a></li>
+          <li><a href="#" onclick="showTab('insights')" id="nav-insights">Insights Estatísticos</a></li>
           <li><a href="#" onclick="showTab('mapas')" id="nav-mapas">Geospatial</a></li>
-          <li><a href="#" onclick="showTab('catalogo')" id="nav-catalogo">Data Dictionary</a></li>
-          <li><a href="#" onclick="showTab('roadmap')" id="nav-roadmap">Platform Roadmap</a></li>
-          <li><a href="#" onclick="showTab('login')" class="btn-access" id="nav-login">Sign In</a></li>
+          <li><a href="#" onclick="showTab('catalogo')" id="nav-catalogo">Catálogo de Dados</a></li>
+          <li><a href="#" onclick="showTab('roadmap')" id="nav-roadmap">Roadmap V1</a></li>
+          <li><a href="#" onclick="showTab('login')" class="btn-access" id="nav-login">Acessar</a></li>
         </ul>
       </nav>
+
+      <div class="lang-selector">
+        <div class="lang-btn active">PT</div>
+        <div class="lang-btn">EN</div>
+      </div>
     </div>
   </header>
 
   <!-- ==========================================================================
-       MAIN CONTENT AREA
+       CONTEÚDO PRINCIPAL
        ========================================================================== -->
   <main>
 
-    <!-- TAB 1: OVERVIEW / HOME -->
+    <!-- TELA 1: VISÃO GERAL / HOME -->
     <section id="tab-home" class="tab-content active">
       <div class="hero-banner">
         <div class="hero-text">
           <span class="badge badge-demo">Enterprise Analytics Engine v0.1</span>
-          <h1>Artisanal Fisheries Health & Occupational Safety Data Platform</h1>
-          <p>Plataforma corporativa de inteligência de dados, análise estatística e monitoramento territorial das condições de trabalho e saúde da pesca artesanal no Brasil.</p>
+          <h1>Plataforma de Inteligência de Dados, Saúde e Segurança na Pesca Artesanal</h1>
+          <p>Consulta analítica avançada, cruzamento de dados de pesquisa, monitoramento territorial e acervo metodológico do Projeto Trabalho Saudável e Seguro na Pesca Artesanal.</p>
           <div class="btn-group">
-            <button class="btn btn-primary" onclick="showTab('explorar')">Launch Data Query Engine</button>
-            <button class="btn btn-secondary" onclick="showTab('insights')">Explore Statistical Insights</button>
+            <button class="btn btn-primary" onclick="showTab('explorar')">Acessar Motor de Cruzamentos</button>
+            <button class="btn btn-secondary" onclick="showTab('insights')">Explorar Insights Estatísticos</button>
           </div>
         </div>
       </div>
 
-      <div class="panel-header">Key Dataset Metrics — Full Operational Repository (V1)</div>
+      <!-- MÓDULO DE GALERIA E ARTES CONCEITUAIS (COM NOTA DE ATENÇÃO INSTITUCIONAL) -->
+      <div class="art-preview-container">
+        <div class="panel-header">Identidade Visual & Material Conceitual de Campo</div>
+        <p style="font-size: 0.85rem; color: var(--text-muted); margin-bottom: 1rem;">Ilustração representativa do engajamento comunitário e formação cidadã em saúde e segurança do trabalho.</p>
+
+        <div class="art-grid">
+          <div class="art-card">
+            <!-- Imagem Anexada como Exemplo Conceitual -->
+            <img src="https://lh3.googleusercontent.com/d/1_exemplo_imagem_pesca" alt="Formação Cidadã Pesca Artesanal" id="img-arte-conceitual" onerror="this.src='data:image/svg+xml;utf8,<svg xmlns=\'http://www.w3.org/2000/svg\' width=\'400\' height=\'250\' viewBox=\'0 0 400 250\'><rect width=\'100%\' height=\'100%\' fill=\'%23F3F1E5\'/><text x=\'50%\' y=\'50%\' dominant-baseline=\'middle\' text-anchor=\'middle\' fill=\'%23C27329\' font-family=\'sans-serif\' font-weight=\'bold\'>[ Arte Conceitual de Campo — Pesca Artesanal ]</text></svg>'">
+            <div class="art-caption">
+              <strong>Formação Cidadã e Ação Territorial:</strong> Mais de 40.000 pescadores e pescadoras alcançados em 132 municípios.
+            </div>
+          </div>
+        </div>
+
+        <!-- NOTA DE ATENÇÃO INSTITUCIONAL -->
+        <div class="notice-box">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/>
+          </svg>
+          <div>
+            <strong>Nota de Atenção Metodológica e Autoral:</strong> Esta arte e composição gráfica são apresentadas aqui em caráter temporário e conceitual como exemplo de aplicação da identidade visual do projeto. A incorporação definitiva aguarda o fornecimento da arte final homologada pela equipe de criação e comunicação institucional.
+          </div>
+        </div>
+      </div>
+
+      <!-- METRICAS DA FONTE OPERACIONAL -->
+      <div class="panel-header">Métricas do Repositório Operacional V1 (Full Analítico 01)</div>
 
       <div class="kpi-grid">
         <div class="kpi-card">
           <div class="accent-line" style="background-color: var(--color-yellow);"></div>
-          <span class="kpi-label">Sample Size (N)</span>
-          <div class="kpi-value">16,623</div>
-          <div class="kpi-sub">Total validated survey applications</div>
+          <span class="kpi-label">Amostra Processada (N)</span>
+          <div class="kpi-value">16.623</div>
+          <div class="kpi-sub">Entrevistas e formulários validados</div>
         </div>
         <div class="kpi-card">
           <div class="accent-line" style="background-color: var(--color-green);"></div>
-          <span class="kpi-label">Mapped Features</span>
+          <span class="kpi-label">Atributos Mapeados</span>
           <div class="kpi-value">277</div>
-          <div class="kpi-sub">26 Demographic + 251 Instrument features</div>
+          <div class="kpi-sub">26 cadastrais + 251 do instrumento</div>
         </div>
         <div class="kpi-card">
           <div class="accent-line" style="background-color: var(--color-blue);"></div>
-          <span class="kpi-label">Reconstructed Core Questions</span>
+          <span class="kpi-label">Questões Reconstruídas</span>
           <div class="kpi-value">36</div>
-          <div class="kpi-sub">Normalized semantic quest-mother entities</div>
+          <div class="kpi-sub">Entidades semânticas normalizadas</div>
         </div>
         <div class="kpi-card">
           <div class="accent-line" style="background-color: var(--color-red);"></div>
-          <span class="kpi-label">Option Indicators</span>
+          <span class="kpi-label">Vetoress de Alternativa</span>
           <div class="kpi-value">251</div>
-          <div class="kpi-sub">Binary (0/1) normalized option vectors</div>
+          <div class="kpi-sub">Vetores indicadores binários (0/1)</div>
         </div>
       </div>
     </section>
 
-    <!-- TAB 2: DATA QUERY ENGINE (CROSS-TABULATION) -->
+    <!-- TELA 2: MOTOR DE CRUZAMENTOS (DATA QUERY ENGINE) -->
     <section id="tab-explorar" class="tab-content">
       <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.5rem;">
         <div>
-          <h2>Data Query Engine & Cross-tabulation</h2>
-          <p style="font-size: 0.85rem; color: var(--text-light);">Real-time multidimensional aggregation & microdata exploration</p>
+          <h2>Motor de Cruzamentos & Tabelas Dinâmicas</h2>
+          <p style="font-size: 0.85rem; color: var(--text-light);">Exploração multidimensional do banco relacional em tempo real</p>
         </div>
-        <span class="badge badge-demo">Database V1 Engine Simulator</span>
+        <span class="badge badge-demo">Simulador Query Engine V1</span>
       </div>
 
       <div class="explorer-layout">
-        <!-- Filter Controls -->
+        <!-- Filtros de Seleção -->
         <div class="filter-panel">
-          <div class="panel-header">Dimension Filters</div>
+          <div class="panel-header">Filtros de Dimensão</div>
           
           <div class="filter-group">
-            <label>Research Cycle</label>
+            <label>Projeto / Ciclo</label>
             <select>
-              <option>PTSSPA — National Survey 2026</option>
+              <option>PTSSPA — Pesquisa Nacional 2026</option>
             </select>
           </div>
 
           <div class="filter-group">
-            <label>State / Territory (Cadastral)</label>
+            <label>Estado (Endereço Cadastral)</label>
             <select id="filter-uf">
-              <option value="ALL">All States (BA, MA, PA, PI)</option>
+              <option value="ALL">Todos os Estados (BA, MA, PA, PI)</option>
               <option value="BA">Bahia (BA)</option>
               <option value="MA">Maranhão (MA)</option>
               <option value="PA">Pará (PA)</option>
@@ -674,202 +691,192 @@
           </div>
 
           <div class="filter-group">
-            <label>Primary Demographic Dimension</label>
+            <label>Dimensão Demográfica Primária</label>
             <select id="filter-demo">
-              <option value="SEX">Gender (Sex)</option>
-              <option value="EDU">Educational Attainment (Q01)</option>
-              <option value="ETH">Ethnicity / Race (Q02)</option>
+              <option value="SEX">Gênero / Sexo</option>
+              <option value="EDU">Escolaridade (Q01)</option>
+              <option value="ETH">Grupo Étnico-Racial (Q02)</option>
             </select>
           </div>
 
           <div class="filter-group">
-            <label>Instrument Target Variable</label>
+            <label>Variável do Instrumento</label>
             <select id="filter-var">
-              <option value="Q23">Q23 — Reported Occupational Accidents</option>
-              <option value="Q08">Q08 — Fishing Gear & Techniques Used</option>
-              <option value="Q30">Q30 — Protective Equipment Usage</option>
-              <option value="Q33">Q33 — Self-Reported Morbidity</option>
+              <option value="Q23">Q23 — Tipos de Acidentes de Trabalho</option>
+              <option value="Q08">Q08 — Técnicas e Apetrechos de Pesca</option>
+              <option value="Q30">Q30 — Proteções e Equipamentos Usados</option>
+              <option value="Q33">Q33 — Condições de Saúde e Doenças</option>
             </select>
           </div>
 
-          <button class="btn btn-primary" style="width: 100%; justify-content: center; margin-top: 0.5rem;" onclick="runQuery()">Run Analytical Query</button>
+          <button class="btn btn-primary" style="width: 100%; justify-content: center; margin-top: 0.5rem;" onclick="runQuery()">Executar Cruzamento</button>
         </div>
 
-        <!-- Analytical Output Panel -->
+        <!-- Área de Resultados e Pivoteamento -->
         <div>
-          <!-- Cross-tabulation Interactive Controls -->
           <div class="cross-builder">
-            <div class="cross-builder-title">Quick Pivot & Aggregation Controls</div>
-            <button class="chip-btn active" onclick="setPivot('gender')">Cross-tab by Gender</button>
-            <button class="chip-btn" onclick="setPivot('state')">Breakdown by State</button>
-            <button class="chip-btn" onclick="setPivot('vessel')">Filter by Vessel Usage (Q06)</button>
-            <button class="chip-btn" onclick="setPivot('exposure')">High Sun Exposure (Q09)</button>
+            <div class="cross-builder-title">Controles de Pivoteamento Rápido (Cross-tabulation)</div>
+            <button class="chip-btn active" onclick="setPivot('sexo')">Cruzamento por Sexo</button>
+            <button class="chip-btn" onclick="setPivot('uf')">Detalhamento por Estado (UF)</button>
+            <button class="chip-btn" onclick="setPivot('embarcacao')">Filtro Uso de Embarcação (Q06)</button>
+            <button class="chip-btn" onclick="setPivot('sol')">Exposição Solar Densa (Q09)</button>
           </div>
 
           <div class="card">
             <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem;">
-              <h3 style="font-size: 1rem; font-weight: 700;">Query Results: Q23 Occupational Accidents x Demographic Breakdown</h3>
-              <span style="font-family: var(--font-mono); font-size: 0.78rem; color: var(--text-light);">Metric: Option Selection Count (N)</span>
+              <h3 style="font-size: 1rem; font-weight: 700;">Tabela de Cruzamento: Q23 Acidentes x Demografia</h3>
+              <span style="font-family: var(--font-mono); font-size: 0.78rem; color: var(--text-light);">Métrica: Seleções de Alternativa (N)</span>
             </div>
 
             <div class="data-table-container">
               <table class="data-table">
                 <thead>
                   <tr>
-                    <th>Occupational Accident Category (Q23 Options)</th>
-                    <th>Female (N)</th>
-                    <th>Male (N)</th>
-                    <th>Total Selections</th>
-                    <th>Prevalence (%)</th>
+                    <th>Categoria de Acidente de Trabalho (Opções Q23)</th>
+                    <th>Feminino (N)</th>
+                    <th>Masculino (N)</th>
+                    <th>Total Seleções</th>
+                    <th>Prevalência (%)</th>
                   </tr>
                 </thead>
                 <tbody>
                   <tr>
-                    <td><strong>Cut / Puncture with Fishing Gear</strong></td>
-                    <td>2,140</td>
-                    <td>5,412</td>
-                    <td>7,552</td>
+                    <td><strong>Corte / Perfuração com Apetrechos</strong></td>
+                    <td>2.140</td>
+                    <td>5.412</td>
+                    <td>7.552</td>
                     <td><span class="insight-stat">45.4%</span></td>
                   </tr>
                   <tr>
-                    <td><strong>Slip / Fall on Boat or Mud</strong></td>
-                    <td>1,820</td>
-                    <td>3,110</td>
-                    <td>4,930</td>
+                    <td><strong>Queda na Embarcação ou Lama</strong></td>
+                    <td>1.820</td>
+                    <td>3.110</td>
+                    <td>4.930</td>
                     <td><span class="insight-stat">29.6%</span></td>
                   </tr>
                   <tr>
-                    <td><strong>Venomous Animal Stings / Bites</strong></td>
-                    <td>1,250</td>
-                    <td>2,840</td>
-                    <td>4,090</td>
+                    <td><strong>Ferida por Animal Marinho / Peçonhento</strong></td>
+                    <td>1.250</td>
+                    <td>2.840</td>
+                    <td>4.090</td>
                     <td><span class="insight-stat">24.6%</span></td>
                   </tr>
                   <tr>
-                    <td><strong>Severe Solar Radiation Burn</strong></td>
+                    <td><strong>Queimadura Solar Severa</strong></td>
                     <td>980</td>
-                    <td>1,450</td>
-                    <td>2,430</td>
+                    <td>1.450</td>
+                    <td>2.430</td>
                     <td><span class="insight-stat">14.6%</span></td>
                   </tr>
                   <tr style="background-color: var(--bg-subtle); font-weight: 700;">
-                    <td>No Reported Accidents (Exclusive Option)</td>
-                    <td>2,410</td>
-                    <td>3,131</td>
-                    <td>5,541</td>
+                    <td>Não Sofreu Acidentes (Opção Exclusiva)</td>
+                    <td>2.410</td>
+                    <td>3.131</td>
+                    <td>5.541</td>
                     <td><span class="insight-stat">33.3%</span></td>
                   </tr>
                 </tbody>
               </table>
             </div>
 
-            <div class="metadata-card">
-              <h4>Data Lineage & Governance Specification</h4>
-              <p>• <strong>Primary Source:</strong> Full Analítico 01 (16,623 records x 277 columns).</p>
-              <p>• <strong>Zero-value Semantics:</strong> Unselected binary options (0) are preserved as <em>UNDETERMINED</em> and not automatically transformed into negative responses or non-applicable skips.</p>
-              <p>• <strong>Territorial Scope:</strong> State and Municipal features refer strictly to <em>Cadastral Address</em> and must not be misinterpreted as fishing location or interview location.</p>
+            <div class="metadata-card" style="margin-top: 1.2rem;">
+              <h4>Ficha de Linhagem e Governança do Dado</h4>
+              <p>• <strong>Fonte Primária:</strong> Full Analítico 01 (16.623 registros x 277 colunas).</p>
+              <p>• <strong>Tratamento do Valor Zero:</strong> O valor 0 da representação wide original é mantido como <em>NÃO DETERMINADO</em>, evitando a transformação artificial em resposta negativa explícita ou não aplicabilidade.</p>
+              <p>• <strong>Ressalva Geográfica:</strong> As variáveis territoriais referem-se estritamente ao <em>Endereço Cadastral</em> do pescador e não representam local de pesca ou local da aplicação da entrevista.</p>
             </div>
           </div>
         </div>
       </div>
     </section>
 
-    <!-- TAB 3: STATISTICAL INSIGHTS & AUTOMATED ANALYTICS -->
+    <!-- TELA 3: INSIGHTS ESTATÍSTICOS -->
     <section id="tab-insights" class="tab-content">
       <h2>Automated Statistical Insights & Executive Summary</h2>
-      <p style="font-size: 0.875rem; color: var(--text-light); margin-bottom: 1.5rem;">Algorithmic findings, prevalence rates, and confidence intervals derived from the database.</p>
+      <p style="font-size: 0.875rem; color: var(--text-light); margin-bottom: 1.5rem;">Sumários algorítmicos, intervalos de confiança e achados analíticos automatizados.</p>
 
       <div class="insights-grid">
         <div class="insight-card" style="border-left-color: var(--color-red);">
-          <div class="insight-header">
-            <span class="insight-title">Occupational Hazard Risk</span>
-            <span class="badge badge-validated">p < 0.001</span>
-          </div>
+          <div class="insight-title">Prevalência de Acidentes de Trabalho</div>
           <div class="insight-body">
-            Accident prevalence rate stands at <span class="insight-stat">66.7%</span> across active fishers. Cuts from gear and falls represent over <span class="insight-stat">75%</span> of total reported accident events.
+            A taxa global de acidentes atinge <span class="insight-stat">66.7%</span> da amostra. Cortes com apetrechos e quedas representam mais de <span class="insight-stat">75%</span> do total de eventos relatados.
           </div>
         </div>
 
         <div class="insight-card" style="border-left-color: var(--color-yellow);">
-          <div class="insight-header">
-            <span class="insight-title">Solar Radiation Exposure</span>
-            <span class="badge badge-validated">CI 95% [73.2 - 75.1]</span>
-          </div>
+          <div class="insight-title">Exposição à Radiação Solar</div>
           <div class="insight-body">
-            <span class="insight-stat">74.2%</span> of respondents work under direct sunlight exposure for more than 6 hours daily, with low adoption of official UV protective gear (<span class="insight-stat">18.4%</span>).
+            <span class="insight-stat">74.2%</span> dos entrevistados trabalham expostos ao sol na maior parte da jornada, com baixa adesão a equipamentos de proteção UV regulamentados (<span class="insight-stat">18.4%</span>).
           </div>
         </div>
 
         <div class="insight-card" style="border-left-color: var(--color-blue);">
-          <span class="insight-header">
-            <span class="insight-title">Formal Injury Notification (CAT)</span>
-            <span class="badge badge-dev">Underreporting Gap</span>
-          </span>
+          <div class="insight-title">Subnotificação do Trabalho (CAT)</div>
           <div class="insight-body">
-            Among fishers who suffered work accidents, formal Work Accident Notification (CAT) was issued in only <span class="insight-stat">14.1%</span> of severe cases, indicating significant social security sub-notification.
+            Entre os pescadores que sofreram acidentes de trabalho, a Comunicação de Acidente de Trabalho (CAT) foi emitida em apenas <span class="insight-stat">14.1%</span> dos casos graves.
           </div>
         </div>
       </div>
     </section>
 
-    <!-- TAB 4: GEOSPATIAL -->
+    <!-- TELA 4: MAPAS GEOSPATIAL -->
     <section id="tab-mapas" class="tab-content">
       <h2>Geospatial & Territorial Analytics</h2>
-      <p style="font-size: 0.875rem; color: var(--text-light); margin-bottom: 1.5rem;">Cadastral distribution across coastal and riverine municipalities in BA, MA, PA, and PI.</p>
+      <p style="font-size: 0.875rem; color: var(--text-light); margin-bottom: 1.5rem;">Distribuição territorial por município e estado do endereço cadastral.</p>
 
       <div class="card" style="text-align: center; padding: 3rem;">
         <div style="height: 320px; background-color: var(--bg-subtle); border: 1px dashed var(--border-accent); border-radius: 8px; display: flex; align-items: center; justify-content: center; font-weight: 600; color: var(--text-muted);">
-          [ Interactive Map Layer Engine — GIS Polygon Integration (Municipal Cadastral Granularity) ]
+          [ Módulo de Visualização Geoespacial — Camadas GIS de Municípios Cadastrais ]
         </div>
       </div>
     </section>
 
-    <!-- TAB 5: DATA DICTIONARY -->
+    <!-- TELA 5: CATÁLOGO DE DADOS -->
     <section id="tab-catalogo" class="tab-content">
-      <h2>Data Dictionary & Metadata Catalogue</h2>
-      <p style="font-size: 0.875rem; color: var(--text-light); margin-bottom: 1.5rem;">Full semantic mapping of 36 core questions and 251 binary indicators.</p>
+      <h2>Catálogo de Dados e Dicionário de Metadados</h2>
+      <p style="font-size: 0.875rem; color: var(--text-light); margin-bottom: 1.5rem;">Mapeamento semântico completo das 36 questões e 251 opções binárias.</p>
 
       <div class="card">
         <div class="data-table-container">
           <table class="data-table">
             <thead>
               <tr>
-                <th>Code</th>
-                <th>Core Question Description (Enunciado)</th>
-                <th>Option Count</th>
-                <th>Empirical Behavior (Audited)</th>
+                <th>Código</th>
+                <th>Enunciado da Questão Reconstruída</th>
+                <th>Qtd Alternativas</th>
+                <th>Comportamento Empírico Observado</th>
               </tr>
             </thead>
             <tbody>
               <tr>
                 <td><strong>Q01</strong></td>
-                <td>Educational Attainment Level</td>
+                <td>Qual é a sua escolaridade?</td>
                 <td>10</td>
-                <td>Single Selection Observed (Max = 1)</td>
+                <td>Seleção Única Observada (Máx = 1)</td>
               </tr>
               <tr>
                 <td><strong>Q02</strong></td>
-                <td>Ethnic / Racial Self-Identification</td>
+                <td>Com qual grupo étnico-racial você se identifica?</td>
                 <td>8</td>
-                <td>Multiple Selection Observed (Max = 3)</td>
+                <td>Múltipla Seleção Observada (Máx = 3)</td>
               </tr>
               <tr>
                 <td><strong>Q08</strong></td>
-                <td>Fishing Techniques & Gear Utilized</td>
+                <td>Quais técnicas e apetrechos de pesca usa?</td>
                 <td>11</td>
-                <td>Multiple Selection Observed (Max = 11)</td>
+                <td>Múltipla Seleção Observada (Máx = 11)</td>
               </tr>
               <tr>
                 <td><strong>Q23</strong></td>
-                <td>Occupational Accident Types Experienced</td>
+                <td>Qual(is) tipo(s) de acidente você já sofreu?</td>
                 <td>14</td>
-                <td>Multiple Selection Observed (Max = 13)</td>
+                <td>Múltipla Seleção Observada (Máx = 13)</td>
               </tr>
               <tr>
                 <td><strong>Q33</strong></td>
-                <td>Self-Reported Health Conditions & Morbidity</td>
+                <td>Você tem alguma dessas doenças?</td>
                 <td>24</td>
-                <td>Multiple Selection Observed (Max = 17)</td>
+                <td>Múltipla Seleção Observada (Máx = 17)</td>
               </tr>
             </tbody>
           </table>
@@ -877,56 +884,52 @@
       </div>
     </section>
 
-    <!-- TAB 6: ROADMAP -->
+    <!-- TELA 6: ROADMAP -->
     <section id="tab-roadmap" class="tab-content">
       <h2>Platform Implementation & Engineering Roadmap</h2>
-      <p style="font-size: 0.875rem; color: var(--text-light); margin-bottom: 1.5rem;">Tracking physical database deployment (PostgreSQL / Cloud SQL) and analytics delivery.</p>
+      <p style="font-size: 0.875rem; color: var(--text-light); margin-bottom: 1.5rem;">Acompanhamento do progresso de implantação física do PostgreSQL e frontend.</p>
 
-      <div class="timeline">
-        <div class="timeline-item completed">
-          <span class="badge badge-validated">Completed</span>
-          <h3 style="font-size: 0.95rem; margin-top: 0.4rem;">Gate G0 — Conceptual & Logical Modeling v0.1</h3>
-          <p style="font-size: 0.82rem; color: var(--text-muted);">Audited normalization of 251 wide binary features into 3Core relational entities (Person, Application, Question, Option, Selection).</p>
-        </div>
-
-        <div class="timeline-item active">
-          <span class="badge badge-dev">In Progress</span>
-          <h3 style="font-size: 0.95rem; margin-top: 0.4rem;">Gate G1-G4 — DDL Execution & PostgreSQL Ingestion Pipeline</h3>
-          <p style="font-size: 0.82rem; color: var(--text-muted);">Physical schema deployment in Google Cloud SQL, metadata seed ingestion, and ETL execution.</p>
-        </div>
-
-        <div class="timeline-item">
-          <span class="badge badge-demo">Scheduled</span>
-          <h3 style="font-size: 0.95rem; margin-top: 0.4rem;">Gate G5-G7 — Conservation Invariance ($S=N$) & Idempotency Testing</h3>
-          <p style="font-size: 0.82rem; color: var(--text-muted);">Validation queries verifying 100% preservation of positive selections without row inflation.</p>
+      <div class="card">
+        <div style="display: flex; flex-direction: column; gap: 1rem;">
+          <div>
+            <span class="badge badge-validated">Concluído</span>
+            <h4 style="margin-top: 0.3rem;">Gate G0 — Modelagem Conceitual e Lógica v0.1</h4>
+            <p style="font-size: 0.82rem; color: var(--text-muted);">Normalização aprovada das 251 colunas wide em estrutura relacional de 3a Forma Normal.</p>
+          </div>
+          <hr style="border: 0; border-top: 1px solid var(--border-subtle);">
+          <div>
+            <span class="badge badge-dev">Em Execução</span>
+            <h4 style="margin-top: 0.3rem;">Gate G1-G4 — Carga e Ingestão PostgreSQL</h4>
+            <p style="font-size: 0.82rem; color: var(--text-muted);">Execução dos DDLs, carga de metadados e ETL do repositório Full Analítico 01 no Google Cloud SQL.</p>
+          </div>
         </div>
       </div>
     </section>
 
-    <!-- TAB 7: SIGN IN -->
+    <!-- TELA 7: LOGIN / ACESSO -->
     <section id="tab-login" class="tab-content">
       <div style="max-width: 400px; margin: 3rem auto;" class="card">
-        <span class="badge badge-demo" style="margin-bottom: 1rem;">Restricted Access Portal</span>
-        <h3 style="margin-bottom: 1.2rem; font-size: 1.1rem;">Sign In to Data Platform</h3>
+        <span class="badge badge-demo" style="margin-bottom: 1rem;">Portal Restrito</span>
+        <h3 style="margin-bottom: 1.2rem; font-size: 1.1rem;">Acessar Plataforma de Dados</h3>
         
         <div class="filter-group">
-          <label>Institutional Email</label>
-          <input type="email" placeholder="researcher@fundacentro.gov.br">
+          <label>E-mail Institucional</label>
+          <input type="email" placeholder="pesquisador@fundacentro.gov.br">
         </div>
 
         <div class="filter-group">
-          <label>Password</label>
+          <label>Senha</label>
           <input type="password" placeholder="••••••••">
         </div>
 
-        <button class="btn btn-primary" style="width: 100%; justify-content: center; margin-top: 0.5rem;" onclick="alert('Demo Login Interface. Real OIDC authentication will connect at Gate G8.')">Sign In</button>
+        <button class="btn btn-primary" style="width: 100%; justify-content: center; margin-top: 0.5rem;" onclick="alert('Ambiente demonstrativo. Autenticação real OIDC será conectada no Gate G8.')">Entrar</button>
       </div>
     </section>
 
   </main>
 
   <!-- ==========================================================================
-       FOOTER
+       RODAPÉ
        ========================================================================== -->
   <footer>
     <div class="footer-container">
@@ -935,7 +938,7 @@
         <p style="font-size: 0.78rem;">Projeto Trabalho Saudável e Seguro na Pesca Artesanal</p>
       </div>
       <div>
-        <p style="font-size: 0.78rem;">Single-Page Static Prototype v0.1 • GitHub Pages Release</p>
+        <p style="font-size: 0.78rem;">Protótipo Estático v0.1 • Publicação via GitHub Pages</p>
       </div>
     </div>
   </footer>
@@ -968,7 +971,7 @@
     }
 
     function runQuery() {
-      alert('Data Query Engine executou o cruzamento no banco de dados!');
+      alert('Motor de Cruzamentos executou a consulta analítica no banco de dados!');
     }
   </script>
 </body>
