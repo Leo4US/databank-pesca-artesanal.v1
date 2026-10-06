@@ -3,14 +3,14 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Plataforma Fundacentro de Dados & Analytics — Pesca Artesanal</title>
+  <title>Plataforma Fundacentro de Dados e Analytics — Pesca Artesanal</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
   
   <style>
     /* ==========================================================================
-       1. IDENTIDADE VISUAL CORPORATIVA & PALETA GEOMÉTRICA
+       1. IDENTIDADE VISUAL CORPORATIVA E PALETA GEOMÉTRICA
        ========================================================================== */
     :root {
       --bg-cream: #FBF9F0;
@@ -22,7 +22,7 @@
       --border-subtle: #E2E0D2;
       --border-accent: #CBD5E1;
       
-      /* Cores do Mosaico Geométrico (Acentos) */
+      /* Cores do Mosaico Geométrico */
       --color-yellow: #E4C027;
       --color-ochre: #C27329;
       --color-green: #22C55E;
@@ -49,7 +49,7 @@
       min-height: 100vh;
       -webkit-font-smoothing: antialiased;
       
-      /* Padrão Abstrato Sutil (Rede de Pesca & Malha de Dados) */
+      /* Padrão Abstrato Sutil nas Bordas (Rede de Pesca e Dados) */
       background-image: radial-gradient(rgba(15, 23, 42, 0.05) 1px, transparent 0);
       background-size: 24px 24px;
     }
@@ -57,10 +57,10 @@
     a { color: inherit; text-decoration: none; }
 
     /* ==========================================================================
-       2. CABEÇALHO & NAVEGAÇÃO INTERNACIONAL
+       2. CABEÇALHO E NAVEGAÇÃO REORGANIZADA
        ========================================================================== */
     header {
-      background-color: rgba(251, 249, 240, 0.92);
+      background-color: rgba(251, 249, 240, 0.94);
       backdrop-filter: blur(12px);
       border-bottom: 1px solid var(--border-subtle);
       position: sticky;
@@ -152,7 +152,7 @@
     }
 
     /* ==========================================================================
-       3. COMPONENTES VISUAIS & ESTRUTURA
+       3. ESTRUTURA E CARDS MODERNOS
        ========================================================================== */
     main {
       flex: 1;
@@ -190,7 +190,6 @@
 
     .badge-demo { background-color: rgba(228, 192, 39, 0.18); color: #856404; }
     .badge-validated { background-color: rgba(34, 197, 94, 0.15); color: #15803D; }
-    .badge-dev { background-color: rgba(29, 79, 177, 0.15); color: var(--color-blue); }
 
     .badge::before {
       content: '';
@@ -200,7 +199,7 @@
       background-color: currentColor;
     }
 
-    /* Hero Banner Moderno */
+    /* Hero Banner de Abertura */
     .hero-banner {
       background-color: var(--bg-card);
       border: 1px solid var(--border-subtle);
@@ -234,7 +233,7 @@
     .hero-text p {
       font-size: 1.05rem;
       color: var(--text-muted);
-      max-width: 720px;
+      max-width: 760px;
       margin-bottom: 1.8rem;
     }
 
@@ -258,7 +257,7 @@
     .btn-secondary { background-color: var(--bg-subtle); color: var(--text-main); border-color: var(--border-subtle); }
     .btn-secondary:hover { background-color: #E6E3D3; }
 
-    /* KPI Grid Corporativo */
+    /* KPI Grid */
     .kpi-grid {
       display: grid;
       grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
@@ -301,52 +300,14 @@
     .kpi-sub { font-size: 0.78rem; color: var(--text-muted); margin-top: 0.5rem; }
 
     /* ==========================================================================
-       4. GALERIA & ARTES CONCEITUAIS (COM NOTA DE ATENÇÃO)
+       4. NOTA DE ATENÇÃO INSTITUCIONAL E MOLDURAS
        ========================================================================== */
-    .art-preview-container {
-      background-color: var(--bg-card);
-      border: 1px solid var(--border-subtle);
-      border-radius: 10px;
-      padding: 1.5rem;
-      margin-bottom: 2.5rem;
-    }
-
-    .art-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
-      gap: 1.5rem;
-      margin-top: 1rem;
-    }
-
-    .art-card {
-      border: 1px solid var(--border-subtle);
-      border-radius: 8px;
-      overflow: hidden;
-      background-color: var(--bg-cream);
-    }
-
-    .art-card img {
-      width: 100%;
-      height: auto;
-      display: block;
-      object-fit: cover;
-    }
-
-    .art-caption {
-      padding: 0.85rem;
-      font-size: 0.8rem;
-      color: var(--text-muted);
-      border-top: 1px solid var(--border-subtle);
-      background-color: var(--bg-card);
-    }
-
-    /* Nota de Atenção Institucional */
     .notice-box {
       background-color: rgba(228, 192, 39, 0.12);
       border: 1px solid var(--color-yellow);
       border-radius: 8px;
       padding: 1rem 1.25rem;
-      margin-top: 1rem;
+      margin-bottom: 2rem;
       display: flex;
       align-items: flex-start;
       gap: 0.75rem;
@@ -357,7 +318,7 @@
     .notice-box svg { flex-shrink: 0; margin-top: 0.1rem; }
 
     /* ==========================================================================
-       5. DATA EXPLORER & PIVOT TABLE
+       5. MOTOR DE CRUZAMENTOS E DATA VISUALIZATION
        ========================================================================== */
     .explorer-layout {
       display: grid;
@@ -395,7 +356,7 @@
       margin-bottom: 0.4rem;
     }
 
-    .filter-group select, .filter-group input {
+    .filter-group select {
       width: 100%;
       padding: 0.6rem 0.8rem;
       border: 1px solid var(--border-subtle);
@@ -476,6 +437,41 @@
 
     .data-table tr:last-child td { border-bottom: none; }
 
+    /* Grid de Gráficos e Visualizações */
+    .datavis-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(450px, 1fr));
+      gap: 1.5rem;
+      margin-top: 1.5rem;
+    }
+
+    .chart-card {
+      background-color: var(--bg-card);
+      border: 1px solid var(--border-subtle);
+      border-radius: 10px;
+      padding: 1.5rem;
+    }
+
+    .chart-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 1.2rem;
+    }
+
+    .chart-title {
+      font-size: 0.95rem;
+      font-weight: 700;
+      color: var(--text-main);
+    }
+
+    /* Container Canvas dos Gráficos */
+    .chart-container {
+      position: relative;
+      height: 280px;
+      width: 100%;
+    }
+
     /* Insights Grid */
     .insights-grid {
       display: grid;
@@ -503,11 +499,11 @@
     .insight-body { font-size: 0.875rem; color: var(--text-muted); }
     .insight-stat { font-family: var(--font-mono); font-weight: 700; color: var(--color-ochre); }
 
-    /* Footer */
+    /* Footer Secundário para Metodologia e Catálogo */
     footer {
       background-color: var(--bg-card);
       border-top: 1px solid var(--border-subtle);
-      padding: 2.5rem 1.5rem 1.5rem;
+      padding: 3rem 1.5rem 1.5rem;
       margin-top: 4rem;
       font-size: 0.82rem;
       color: var(--text-muted);
@@ -516,18 +512,37 @@
     .footer-container {
       max-width: 1400px;
       margin: 0 auto;
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 2rem;
+      margin-bottom: 2rem;
+    }
+
+    .footer-col h4 {
+      font-size: 0.85rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      color: var(--text-main);
+      margin-bottom: 0.8rem;
+    }
+
+    .footer-col ul {
+      list-style: none;
       display: flex;
-      justify-content: space-between;
-      align-items: center;
-      flex-wrap: wrap;
-      gap: 1.5rem;
+      flex-direction: column;
+      gap: 0.4rem;
+    }
+
+    .footer-col a:hover {
+      color: var(--color-blue);
+      text-decoration: underline;
     }
 
     .mosaic-strip { height: 4px; width: 100%; display: flex; }
     .m-block { flex: 1; }
 
     @media (max-width: 900px) {
-      .explorer-layout { grid-template-columns: 1fr; }
+      .explorer-layout, .datavis-grid { grid-template-columns: 1fr; }
       .hero-banner { flex-direction: column; align-items: flex-start; }
     }
   </style>
@@ -543,12 +558,12 @@
   </div>
 
   <!-- ==========================================================================
-       CABEÇALHO & NAVEGAÇÃO
+       CABEÇALHO E NAVEGAÇÃO
        ========================================================================== -->
   <header>
     <div class="nav-container">
       <div class="brand">
-        <!-- SVG Abstrato: Mosaico do Peixe Geométrico + Ícone de Saúde e Segurança -->
+        <!-- SVG Abstrato: Mosaico Geométrico Peixe -->
         <svg width="38" height="38" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
           <path d="M 10 35 L 35 10 L 60 35 L 35 60 Z" fill="#E4C027"/>
           <path d="M 60 10 L 85 10 L 85 35 L 60 35 Z" fill="#22C55E"/>
@@ -557,19 +572,18 @@
           <path d="M 60 85 L 85 85 L 60 98 Z" fill="#E22927"/>
         </svg>
         <div>
-          <span class="brand-title">Fundacentro Data & Analytics</span>
+          <span class="brand-title">Fundacentro Data e Analytics</span>
           <span class="brand-subtitle">Plataforma de Dados da Pesca Artesanal</span>
         </div>
       </div>
 
       <nav>
         <ul>
-          <li><a href="#" onclick="showTab('home')" class="active" id="nav-home">Visão Geral</a></li>
+          <li><a href="#" onclick="showTab('home')" class="active" id="nav-home">Visao Geral</a></li>
           <li><a href="#" onclick="showTab('explorar')" id="nav-explorar">Motor de Cruzamentos</a></li>
-          <li><a href="#" onclick="showTab('insights')" id="nav-insights">Insights Estatísticos</a></li>
+          <li><a href="#" onclick="showTab('datavis')" id="nav-datavis">Visualizacao de Dados</a></li>
+          <li><a href="#" onclick="showTab('insights')" id="nav-insights">Insights Estatisticos</a></li>
           <li><a href="#" onclick="showTab('mapas')" id="nav-mapas">Geospatial</a></li>
-          <li><a href="#" onclick="showTab('catalogo')" id="nav-catalogo">Catálogo de Dados</a></li>
-          <li><a href="#" onclick="showTab('roadmap')" id="nav-roadmap">Roadmap V1</a></li>
           <li><a href="#" onclick="showTab('login')" class="btn-access" id="nav-login">Acessar</a></li>
         </ul>
       </nav>
@@ -586,55 +600,39 @@
        ========================================================================== -->
   <main>
 
-    <!-- TELA 1: VISÃO GERAL / HOME -->
+    <!-- TELA 1: VISAO GERAL / HOME -->
     <section id="tab-home" class="tab-content active">
       <div class="hero-banner">
         <div class="hero-text">
           <span class="badge badge-demo">Enterprise Analytics Engine v0.1</span>
-          <h1>Plataforma de Inteligência de Dados, Saúde e Segurança na Pesca Artesanal</h1>
-          <p>Consulta analítica avançada, cruzamento de dados de pesquisa, monitoramento territorial e acervo metodológico do Projeto Trabalho Saudável e Seguro na Pesca Artesanal.</p>
+          <h1>Plataforma de Inteligencia de Dados, Saude e Seguranca na Pesca Artesanal</h1>
+          <p>Consulta analitica avancada, cruzamento de dados de pesquisa, monitoramento territorial e acervo metodologico do Projeto Trabalho Saudavel e Seguro na Pesca Artesanal.</p>
           <div class="btn-group">
             <button class="btn btn-primary" onclick="showTab('explorar')">Acessar Motor de Cruzamentos</button>
-            <button class="btn btn-secondary" onclick="showTab('insights')">Explorar Insights Estatísticos</button>
+            <button class="btn btn-secondary" onclick="showTab('datavis')">Ver Visualizacoes de Dados</button>
           </div>
         </div>
       </div>
 
-      <!-- MÓDULO DE GALERIA E ARTES CONCEITUAIS (COM NOTA DE ATENÇÃO INSTITUCIONAL) -->
-      <div class="art-preview-container">
-        <div class="panel-header">Identidade Visual & Material Conceitual de Campo</div>
-        <p style="font-size: 0.85rem; color: var(--text-muted); margin-bottom: 1rem;">Ilustração representativa do engajamento comunitário e formação cidadã em saúde e segurança do trabalho.</p>
-
-        <div class="art-grid">
-          <div class="art-card">
-            <!-- Imagem Anexada como Exemplo Conceitual -->
-            <img src="https://lh3.googleusercontent.com/d/1_exemplo_imagem_pesca" alt="Formação Cidadã Pesca Artesanal" id="img-arte-conceitual" onerror="this.src='data:image/svg+xml;utf8,<svg xmlns=\'http://www.w3.org/2000/svg\' width=\'400\' height=\'250\' viewBox=\'0 0 400 250\'><rect width=\'100%\' height=\'100%\' fill=\'%23F3F1E5\'/><text x=\'50%\' y=\'50%\' dominant-baseline=\'middle\' text-anchor=\'middle\' fill=\'%23C27329\' font-family=\'sans-serif\' font-weight=\'bold\'>[ Arte Conceitual de Campo — Pesca Artesanal ]</text></svg>'">
-            <div class="art-caption">
-              <strong>Formação Cidadã e Ação Territorial:</strong> Mais de 40.000 pescadores e pescadoras alcançados em 132 municípios.
-            </div>
-          </div>
-        </div>
-
-        <!-- NOTA DE ATENÇÃO INSTITUCIONAL -->
-        <div class="notice-box">
-          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-            <circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/>
-          </svg>
-          <div>
-            <strong>Nota de Atenção Metodológica e Autoral:</strong> Esta arte e composição gráfica são apresentadas aqui em caráter temporário e conceitual como exemplo de aplicação da identidade visual do projeto. A incorporação definitiva aguarda o fornecimento da arte final homologada pela equipe de criação e comunicação institucional.
-          </div>
+      <!-- NOTA DE ATENÇÃO INSTITUCIONAL -->
+      <div class="notice-box">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/>
+        </svg>
+        <div>
+          <strong>Nota de Atencao Metodologica:</strong> Esta plataforma apresenta dados processados do repositorio operacional V1. Eventuais artes visuais institucionais finais serao incorporadas apos aprovacao oficial da equipe de criacao e comunicacao.
         </div>
       </div>
 
       <!-- METRICAS DA FONTE OPERACIONAL -->
-      <div class="panel-header">Métricas do Repositório Operacional V1 (Full Analítico 01)</div>
+      <div class="panel-header">Metricas do Repositorio Operacional V1 (Full Analitico 01)</div>
 
       <div class="kpi-grid">
         <div class="kpi-card">
           <div class="accent-line" style="background-color: var(--color-yellow);"></div>
           <span class="kpi-label">Amostra Processada (N)</span>
           <div class="kpi-value">16.623</div>
-          <div class="kpi-sub">Entrevistas e formulários validados</div>
+          <div class="kpi-sub">Entrevistas e formularios validados</div>
         </div>
         <div class="kpi-card">
           <div class="accent-line" style="background-color: var(--color-green);"></div>
@@ -644,118 +642,116 @@
         </div>
         <div class="kpi-card">
           <div class="accent-line" style="background-color: var(--color-blue);"></div>
-          <span class="kpi-label">Questões Reconstruídas</span>
+          <span class="kpi-label">Questoes Reconstruidas</span>
           <div class="kpi-value">36</div>
-          <div class="kpi-sub">Entidades semânticas normalizadas</div>
+          <div class="kpi-sub">Entidades semanticas normalizadas</div>
         </div>
         <div class="kpi-card">
           <div class="accent-line" style="background-color: var(--color-red);"></div>
-          <span class="kpi-label">Vetoress de Alternativa</span>
+          <span class="kpi-label">Vetores de Alternativa</span>
           <div class="kpi-value">251</div>
-          <div class="kpi-sub">Vetores indicadores binários (0/1)</div>
+          <div class="kpi-sub">Vetores indicadores binarios (0/1)</div>
         </div>
       </div>
     </section>
 
-    <!-- TELA 2: MOTOR DE CRUZAMENTOS (DATA QUERY ENGINE) -->
+    <!-- TELA 2: MOTOR DE CRUZAMENTOS -->
     <section id="tab-explorar" class="tab-content">
       <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.5rem;">
         <div>
-          <h2>Motor de Cruzamentos & Tabelas Dinâmicas</h2>
-          <p style="font-size: 0.85rem; color: var(--text-light);">Exploração multidimensional do banco relacional em tempo real</p>
+          <h2>Motor de Cruzamentos e Tabelas Dinamicas</h2>
+          <p style="font-size: 0.85rem; color: var(--text-light);">Exploracao multidimensional do banco relacional em tempo real</p>
         </div>
         <span class="badge badge-demo">Simulador Query Engine V1</span>
       </div>
 
       <div class="explorer-layout">
-        <!-- Filtros de Seleção -->
         <div class="filter-panel">
-          <div class="panel-header">Filtros de Dimensão</div>
+          <div class="panel-header">Filtros de Dimensao</div>
           
           <div class="filter-group">
             <label>Projeto / Ciclo</label>
             <select>
-              <option>PTSSPA — Pesquisa Nacional 2026</option>
+              <option>PTSSPA Pesquisa Nacional 2026</option>
             </select>
           </div>
 
           <div class="filter-group">
-            <label>Estado (Endereço Cadastral)</label>
+            <label>Estado (Endereco Cadastral)</label>
             <select id="filter-uf">
               <option value="ALL">Todos os Estados (BA, MA, PA, PI)</option>
               <option value="BA">Bahia (BA)</option>
-              <option value="MA">Maranhão (MA)</option>
-              <option value="PA">Pará (PA)</option>
-              <option value="PI">Piauí (PI)</option>
+              <option value="MA">Maranhao (MA)</option>
+              <option value="PA">Para (PA)</option>
+              <option value="PI">Piaui (PI)</option>
             </select>
           </div>
 
           <div class="filter-group">
-            <label>Dimensão Demográfica Primária</label>
+            <label>Dimensao Demografica Primaria</label>
             <select id="filter-demo">
-              <option value="SEX">Gênero / Sexo</option>
+              <option value="SEX">Genero / Sexo</option>
               <option value="EDU">Escolaridade (Q01)</option>
-              <option value="ETH">Grupo Étnico-Racial (Q02)</option>
+              <option value="ETH">Grupo Etnico-Racial (Q02)</option>
             </select>
           </div>
 
           <div class="filter-group">
-            <label>Variável do Instrumento</label>
+            <label>Variavel do Instrumento</label>
             <select id="filter-var">
-              <option value="Q23">Q23 — Tipos de Acidentes de Trabalho</option>
-              <option value="Q08">Q08 — Técnicas e Apetrechos de Pesca</option>
-              <option value="Q30">Q30 — Proteções e Equipamentos Usados</option>
-              <option value="Q33">Q33 — Condições de Saúde e Doenças</option>
+              <option value="Q23">Q23 Tipos de Acidentes de Trabalho</option>
+              <option value="Q08">Q08 Tecnicas e Apetrechos de Pesca</option>
+              <option value="Q30">Q30 Protecoes e Equipamentos Usados</option>
+              <option value="Q33">Q33 Condicoes de Saude e Doencas</option>
             </select>
           </div>
 
           <button class="btn btn-primary" style="width: 100%; justify-content: center; margin-top: 0.5rem;" onclick="runQuery()">Executar Cruzamento</button>
         </div>
 
-        <!-- Área de Resultados e Pivoteamento -->
         <div>
           <div class="cross-builder">
-            <div class="cross-builder-title">Controles de Pivoteamento Rápido (Cross-tabulation)</div>
+            <div class="cross-builder-title">Controles de Pivoteamento Rapido (Cross-tabulation)</div>
             <button class="chip-btn active" onclick="setPivot('sexo')">Cruzamento por Sexo</button>
             <button class="chip-btn" onclick="setPivot('uf')">Detalhamento por Estado (UF)</button>
-            <button class="chip-btn" onclick="setPivot('embarcacao')">Filtro Uso de Embarcação (Q06)</button>
-            <button class="chip-btn" onclick="setPivot('sol')">Exposição Solar Densa (Q09)</button>
+            <button class="chip-btn" onclick="setPivot('embarcacao')">Filtro Uso de Embarcacao (Q06)</button>
+            <button class="chip-btn" onclick="setPivot('sol')">Exposicao Solar Densa (Q09)</button>
           </div>
 
           <div class="card">
             <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem;">
               <h3 style="font-size: 1rem; font-weight: 700;">Tabela de Cruzamento: Q23 Acidentes x Demografia</h3>
-              <span style="font-family: var(--font-mono); font-size: 0.78rem; color: var(--text-light);">Métrica: Seleções de Alternativa (N)</span>
+              <span style="font-family: var(--font-mono); font-size: 0.78rem; color: var(--text-light);">Metrica: Selecoes de Alternativa (N)</span>
             </div>
 
             <div class="data-table-container">
               <table class="data-table">
                 <thead>
                   <tr>
-                    <th>Categoria de Acidente de Trabalho (Opções Q23)</th>
+                    <th>Categoria de Acidente de Trabalho (Opcoes Q23)</th>
                     <th>Feminino (N)</th>
                     <th>Masculino (N)</th>
-                    <th>Total Seleções</th>
-                    <th>Prevalência (%)</th>
+                    <th>Total Selecoes</th>
+                    <th>Prevalencia (%)</th>
                   </tr>
                 </thead>
                 <tbody>
                   <tr>
-                    <td><strong>Corte / Perfuração com Apetrechos</strong></td>
+                    <td><strong>Corte / Perfuracao com Apetrechos</strong></td>
                     <td>2.140</td>
                     <td>5.412</td>
                     <td>7.552</td>
                     <td><span class="insight-stat">45.4%</span></td>
                   </tr>
                   <tr>
-                    <td><strong>Queda na Embarcação ou Lama</strong></td>
+                    <td><strong>Queda na Embarcacao ou Lama</strong></td>
                     <td>1.820</td>
                     <td>3.110</td>
                     <td>4.930</td>
                     <td><span class="insight-stat">29.6%</span></td>
                   </tr>
                   <tr>
-                    <td><strong>Ferida por Animal Marinho / Peçonhento</strong></td>
+                    <td><strong>Ferida por Animal Marinho / Peconhento</strong></td>
                     <td>1.250</td>
                     <td>2.840</td>
                     <td>4.090</td>
@@ -769,7 +765,7 @@
                     <td><span class="insight-stat">14.6%</span></td>
                   </tr>
                   <tr style="background-color: var(--bg-subtle); font-weight: 700;">
-                    <td>Não Sofreu Acidentes (Opção Exclusiva)</td>
+                    <td>Nao Sofreu Acidentes (Opcao Exclusiva)</td>
                     <td>2.410</td>
                     <td>3.131</td>
                     <td>5.541</td>
@@ -778,130 +774,125 @@
                 </tbody>
               </table>
             </div>
-
-            <div class="metadata-card" style="margin-top: 1.2rem;">
-              <h4>Ficha de Linhagem e Governança do Dado</h4>
-              <p>• <strong>Fonte Primária:</strong> Full Analítico 01 (16.623 registros x 277 colunas).</p>
-              <p>• <strong>Tratamento do Valor Zero:</strong> O valor 0 da representação wide original é mantido como <em>NÃO DETERMINADO</em>, evitando a transformação artificial em resposta negativa explícita ou não aplicabilidade.</p>
-              <p>• <strong>Ressalva Geográfica:</strong> As variáveis territoriais referem-se estritamente ao <em>Endereço Cadastral</em> do pescador e não representam local de pesca ou local da aplicação da entrevista.</p>
-            </div>
           </div>
         </div>
       </div>
     </section>
 
-    <!-- TELA 3: INSIGHTS ESTATÍSTICOS -->
+    <!-- TELA 3: VISUALIZACAO DE DADOS (DATAVIS) -->
+    <section id="tab-datavis" class="tab-content">
+      <h2>Visualizacao de Dados e Graficos de Amostra</h2>
+      <p style="font-size: 0.875rem; color: var(--text-light); margin-bottom: 1.5rem;">Representacao grafica das distribuicoes percentuais e prevalencias em saude e seguranca.</p>
+
+      <div class="datavis-grid">
+        <!-- Grafico 1: Tipos de Acidentes -->
+        <div class="chart-card">
+          <div class="chart-header">
+            <div class="chart-title">Prevalencia de Tipos de Acidentes de Trabalho (Q23)</div>
+            <span class="badge badge-validated">DataViz</span>
+          </div>
+          <div class="chart-container">
+            <canvas id="chartAcidentes"></canvas>
+          </div>
+        </div>
+
+        <!-- Grafico 2: Distribuicao Amostral por Sexo -->
+        <div class="chart-card">
+          <div class="chart-header">
+            <div class="chart-title">Proporcao Amostral por Sexo (Cadastro)</div>
+            <span class="badge badge-validated">DataViz</span>
+          </div>
+          <div class="chart-container">
+            <canvas id="chartSexo"></canvas>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- TELA 4: INSIGHTS ESTATISTICOS -->
     <section id="tab-insights" class="tab-content">
-      <h2>Automated Statistical Insights & Executive Summary</h2>
-      <p style="font-size: 0.875rem; color: var(--text-light); margin-bottom: 1.5rem;">Sumários algorítmicos, intervalos de confiança e achados analíticos automatizados.</p>
+      <h2>Automated Statistical Insights e Executive Summary</h2>
+      <p style="font-size: 0.875rem; color: var(--text-light); margin-bottom: 1.5rem;">Sumarios algoritmicos, intervalos de confianca e achados analiticos automatizados.</p>
 
       <div class="insights-grid">
         <div class="insight-card" style="border-left-color: var(--color-red);">
-          <div class="insight-title">Prevalência de Acidentes de Trabalho</div>
+          <div class="insight-title">Prevalencia de Acidentes de Trabalho</div>
           <div class="insight-body">
             A taxa global de acidentes atinge <span class="insight-stat">66.7%</span> da amostra. Cortes com apetrechos e quedas representam mais de <span class="insight-stat">75%</span> do total de eventos relatados.
           </div>
         </div>
 
         <div class="insight-card" style="border-left-color: var(--color-yellow);">
-          <div class="insight-title">Exposição à Radiação Solar</div>
+          <div class="insight-title">Exposicao a Radiacao Solar</div>
           <div class="insight-body">
-            <span class="insight-stat">74.2%</span> dos entrevistados trabalham expostos ao sol na maior parte da jornada, com baixa adesão a equipamentos de proteção UV regulamentados (<span class="insight-stat">18.4%</span>).
+            <span class="insight-stat">74.2%</span> dos entrevistados trabalham expostos ao sol na maior parte da jornada, com baixa adesao a equipamentos de protecao UV regulamentados (<span class="insight-stat">18.4%</span>).
           </div>
         </div>
 
         <div class="insight-card" style="border-left-color: var(--color-blue);">
-          <div class="insight-title">Subnotificação do Trabalho (CAT)</div>
+          <div class="insight-title">Subnotificacao do Trabalho (CAT)</div>
           <div class="insight-body">
-            Entre os pescadores que sofreram acidentes de trabalho, a Comunicação de Acidente de Trabalho (CAT) foi emitida em apenas <span class="insight-stat">14.1%</span> dos casos graves.
+            Entre os pescadores que sofreram acidentes de trabalho, a Comunicacao de Acidente de Trabalho (CAT) foi emitida em apenas <span class="insight-stat">14.1%</span> dos casos graves.
           </div>
         </div>
       </div>
     </section>
 
-    <!-- TELA 4: MAPAS GEOSPATIAL -->
+    <!-- TELA 5: MAPAS GEOSPATIAL -->
     <section id="tab-mapas" class="tab-content">
-      <h2>Geospatial & Territorial Analytics</h2>
-      <p style="font-size: 0.875rem; color: var(--text-light); margin-bottom: 1.5rem;">Distribuição territorial por município e estado do endereço cadastral.</p>
+      <h2>Geospatial e Territorial Analytics</h2>
+      <p style="font-size: 0.875rem; color: var(--text-light); margin-bottom: 1.5rem;">Distribuicao territorial por municipio e estado do endereco cadastral.</p>
 
       <div class="card" style="text-align: center; padding: 3rem;">
         <div style="height: 320px; background-color: var(--bg-subtle); border: 1px dashed var(--border-accent); border-radius: 8px; display: flex; align-items: center; justify-content: center; font-weight: 600; color: var(--text-muted);">
-          [ Módulo de Visualização Geoespacial — Camadas GIS de Municípios Cadastrais ]
+          [ Modulo de Visualizacao Geoespacial Camadas GIS de Municipios Cadastrais ]
         </div>
       </div>
     </section>
 
-    <!-- TELA 5: CATÁLOGO DE DADOS -->
+    <!-- TELA 6: CATÁLOGO E METODOLOGIA (PÁGINA SECUNDÁRIA) -->
     <section id="tab-catalogo" class="tab-content">
-      <h2>Catálogo de Dados e Dicionário de Metadados</h2>
-      <p style="font-size: 0.875rem; color: var(--text-light); margin-bottom: 1.5rem;">Mapeamento semântico completo das 36 questões e 251 opções binárias.</p>
+      <h2>Catalogo de Dados e Dicionario de Metadados</h2>
+      <p style="font-size: 0.875rem; color: var(--text-light); margin-bottom: 1.5rem;">Mapeamento semantico completo das 36 questoes e 251 opçoes binarias.</p>
 
       <div class="card">
         <div class="data-table-container">
           <table class="data-table">
             <thead>
               <tr>
-                <th>Código</th>
-                <th>Enunciado da Questão Reconstruída</th>
+                <th>Codigo</th>
+                <th>Enunciado da Questao Reconstruida</th>
                 <th>Qtd Alternativas</th>
-                <th>Comportamento Empírico Observado</th>
+                <th>Comportamento Empirico Observado</th>
               </tr>
             </thead>
             <tbody>
               <tr>
                 <td><strong>Q01</strong></td>
-                <td>Qual é a sua escolaridade?</td>
+                <td>Qual e a sua escolaridade?</td>
                 <td>10</td>
-                <td>Seleção Única Observada (Máx = 1)</td>
+                <td>Selecao Unica Observada (Max = 1)</td>
               </tr>
               <tr>
                 <td><strong>Q02</strong></td>
-                <td>Com qual grupo étnico-racial você se identifica?</td>
+                <td>Com qual grupo etnico-racial voce se identifica?</td>
                 <td>8</td>
-                <td>Múltipla Seleção Observada (Máx = 3)</td>
+                <td>Multipla Selecao Observada (Max = 3)</td>
               </tr>
               <tr>
                 <td><strong>Q08</strong></td>
-                <td>Quais técnicas e apetrechos de pesca usa?</td>
+                <td>Quais tecnicas e apetrechos de pesca usa?</td>
                 <td>11</td>
-                <td>Múltipla Seleção Observada (Máx = 11)</td>
+                <td>Multipla Selecao Observada (Max = 11)</td>
               </tr>
               <tr>
                 <td><strong>Q23</strong></td>
-                <td>Qual(is) tipo(s) de acidente você já sofreu?</td>
+                <td>Qual(is) tipo(s) de acidente voce ja sofreu?</td>
                 <td>14</td>
-                <td>Múltipla Seleção Observada (Máx = 13)</td>
-              </tr>
-              <tr>
-                <td><strong>Q33</strong></td>
-                <td>Você tem alguma dessas doenças?</td>
-                <td>24</td>
-                <td>Múltipla Seleção Observada (Máx = 17)</td>
+                <td>Multipla Selecao Observada (Max = 13)</td>
               </tr>
             </tbody>
           </table>
-        </div>
-      </div>
-    </section>
-
-    <!-- TELA 6: ROADMAP -->
-    <section id="tab-roadmap" class="tab-content">
-      <h2>Platform Implementation & Engineering Roadmap</h2>
-      <p style="font-size: 0.875rem; color: var(--text-light); margin-bottom: 1.5rem;">Acompanhamento do progresso de implantação física do PostgreSQL e frontend.</p>
-
-      <div class="card">
-        <div style="display: flex; flex-direction: column; gap: 1rem;">
-          <div>
-            <span class="badge badge-validated">Concluído</span>
-            <h4 style="margin-top: 0.3rem;">Gate G0 — Modelagem Conceitual e Lógica v0.1</h4>
-            <p style="font-size: 0.82rem; color: var(--text-muted);">Normalização aprovada das 251 colunas wide em estrutura relacional de 3a Forma Normal.</p>
-          </div>
-          <hr style="border: 0; border-top: 1px solid var(--border-subtle);">
-          <div>
-            <span class="badge badge-dev">Em Execução</span>
-            <h4 style="margin-top: 0.3rem;">Gate G1-G4 — Carga e Ingestão PostgreSQL</h4>
-            <p style="font-size: 0.82rem; color: var(--text-muted);">Execução dos DDLs, carga de metadados e ETL do repositório Full Analítico 01 no Google Cloud SQL.</p>
-          </div>
         </div>
       </div>
     </section>
@@ -922,23 +913,37 @@
           <input type="password" placeholder="••••••••">
         </div>
 
-        <button class="btn btn-primary" style="width: 100%; justify-content: center; margin-top: 0.5rem;" onclick="alert('Ambiente demonstrativo. Autenticação real OIDC será conectada no Gate G8.')">Entrar</button>
+        <button class="btn btn-primary" style="width: 100%; justify-content: center; margin-top: 0.5rem;" onclick="alert('Ambiente demonstrativo.')">Entrar</button>
       </div>
     </section>
 
   </main>
 
   <!-- ==========================================================================
-       RODAPÉ
+       RODAPÉ SECUNDÁRIO COM LINKS PARA MÉTODOS E CATÁLOGO
        ========================================================================== -->
   <footer>
     <div class="footer-container">
-      <div>
-        <p style="font-weight: 700; color: var(--text-main);">Fundacentro Data & Analytics Platform</p>
-        <p style="font-size: 0.78rem;">Projeto Trabalho Saudável e Seguro na Pesca Artesanal</p>
+      <div class="footer-col">
+        <h4>Fundacentro Data e Analytics</h4>
+        <p style="font-size: 0.78rem;">Projeto Trabalho Saudavel e Seguro na Pesca Artesanal.</p>
       </div>
-      <div>
-        <p style="font-size: 0.78rem;">Protótipo Estático v0.1 • Publicação via GitHub Pages</p>
+
+      <div class="footer-col">
+        <h4>Metadados e Documentos</h4>
+        <ul>
+          <li><a href="#" onclick="showTab('catalogo')">Catalogo de Dados</a></li>
+          <li><a href="#" onclick="showTab('catalogo')">Dicionario de Variaveis</a></li>
+          <li><a href="#" onclick="showTab('home')">Notas Metodologicas</a></li>
+        </ul>
+      </div>
+
+      <div class="footer-col">
+        <h4>Governança</h4>
+        <ul>
+          <li><a href="#">Segregacao de PII</a></li>
+          <li><a href="#">Termos de Uso</a></li>
+        </ul>
       </div>
     </div>
   </footer>
@@ -950,6 +955,9 @@
     <div class="m-block" style="background-color: var(--color-blue);"></div>
     <div class="m-block" style="background-color: var(--color-red);"></div>
   </div>
+
+  <!-- INCLUSÃO DA BIBLIOTECA CHART.JS PARA VISUALIZAÇÕES -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
   <script>
     function showTab(tabId) {
@@ -963,6 +971,11 @@
       if (targetNav) targetNav.classList.add('active');
 
       window.scrollTo({ top: 0, behavior: 'smooth' });
+
+      // Renderiza os gráficos ao abrir a aba DataVis
+      if (tabId === 'datavis') {
+        renderCharts();
+      }
     }
 
     function setPivot(pivotType) {
@@ -971,7 +984,58 @@
     }
 
     function runQuery() {
-      alert('Motor de Cruzamentos executou a consulta analítica no banco de dados!');
+      alert('Motor de Cruzamentos executou a consulta analitica no banco de dados.');
+    }
+
+    /* RENDERIZAÇÃO DOS GRÁFICOS DE EXEMPLO (CHART.JS) */
+    let chartInstance1 = null;
+    let chartInstance2 = null;
+
+    function renderCharts() {
+      if (chartInstance1) chartInstance1.destroy();
+      if (chartInstance2) chartInstance2.destroy();
+
+      // Gráfico 1: Barras Horizontais (Tipos de Acidentes)
+      const ctx1 = document.getElementById('chartAcidentes').getContext('2d');
+      chartInstance1 = new Chart(ctx1, {
+        type: 'bar',
+        data: {
+          labels: ['Corte/Perfuracao', 'Queda', 'Animal Marinho', 'Queimadura Solar', 'Nenhum'],
+          datasets: [{
+            label: 'Prevalencia (%)',
+            data: [45.4, 29.6, 24.6, 14.6, 33.3],
+            backgroundColor: ['#1D4FB1', '#C27329', '#E4C027', '#E22927', '#22C55E'],
+            borderRadius: 6
+          }]
+        },
+        options: {
+          indexAxis: 'y',
+          responsive: true,
+          maintainAspectRatio: false,
+          plugins: { legend: { display: false } },
+          scales: { x: { grid: { display: false } }, y: { grid: { display: false } } }
+        }
+      });
+
+      // Gráfico 2: Rosca (Proporção por Sexo)
+      const ctx2 = document.getElementById('chartSexo').getContext('2d');
+      chartInstance2 = new Chart(ctx2, {
+        type: 'doughnut',
+        data: {
+          labels: ['Feminino', 'Masculino'],
+          datasets: [{
+            data: [48.2, 51.8],
+            backgroundColor: ['#C27329', '#1D4FB1'],
+            borderWidth: 2,
+            borderColor: '#FFFFFF'
+          }]
+        },
+        options: {
+          responsive: true,
+          maintainAspectRatio: false,
+          plugins: { legend: { position: 'bottom' } }
+        }
+      });
     }
   </script>
 </body>
