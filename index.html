@@ -1,0 +1,855 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Plataforma Banco de Dados Fundacentro e Produções (v.1)</title>
+  <style>
+    /* ==========================================================================
+       1. IDENTIDADE VISUAL & VARIÁVEIS DE COR (Fiel ao Banner & Roteiro v0.1)
+       ========================================================================== */
+    :root {
+      --bg-cream: #FBF9ED;
+      --bg-card: #FFFFFF;
+      --text-dark: #1E2022;
+      --border-dark: #1E2022;
+      --border-width: 2px;
+      
+      /* Cores Geométricas Originais */
+      --color-yellow: #E4C027;
+      --color-ochre: #C27329;
+      --color-green: #51A348;
+      --color-blue: #1D4FB1;
+      --color-red: #E22927;
+      
+      --font-main: 'Segoe UI', system-ui, -apple-system, sans-serif;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      background-color: var(--bg-cream);
+      color: var(--text-dark);
+      font-family: var(--font-main);
+      line-height: 1.5;
+      display: flex;
+      flex-direction: column;
+      min-height: 100vh;
+    }
+
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
+
+    /* ==========================================================================
+       2. CABEÇALHO E NAVEGAÇÃO
+       ========================================================================== */
+    header {
+      background-color: var(--bg-cream);
+      border-bottom: var(--border-width) solid var(--border-dark);
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+
+    .nav-container {
+      max-width: 1300px;
+      margin: 0 auto;
+      padding: 1rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1rem;
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+    }
+
+    .brand-title {
+      font-weight: 800;
+      font-size: 1.1rem;
+      text-transform: uppercase;
+      letter-spacing: -0.5px;
+      line-height: 1.2;
+    }
+
+    .brand-subtitle {
+      font-size: 0.75rem;
+      font-weight: 600;
+      color: var(--color-ochre);
+      display: block;
+    }
+
+    nav ul {
+      display: flex;
+      list-style: none;
+      gap: 0.5rem;
+      flex-wrap: wrap;
+    }
+
+    nav a {
+      padding: 0.5rem 0.8rem;
+      font-size: 0.85rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      border: var(--border-width) solid transparent;
+      border-radius: 4px;
+      transition: all 0.2s ease;
+    }
+
+    nav a:hover, nav a.active {
+      border-color: var(--border-dark);
+      background-color: var(--bg-card);
+    }
+
+    .btn-login {
+      background-color: var(--color-yellow);
+      border: var(--border-width) solid var(--border-dark) !important;
+      box-shadow: 2px 2px 0px var(--border-dark);
+    }
+
+    .btn-login:hover {
+      transform: translate(-1px, -1px);
+      box-shadow: 3px 3px 0px var(--border-dark);
+    }
+
+    /* ==========================================================================
+       3. CONTEÚDO PRINCIPAL & TELAS (Single Page Navigation)
+       ========================================================================== */
+    main {
+      flex: 1;
+      max-width: 1300px;
+      width: 100%;
+      margin: 0 auto;
+      padding: 2rem 1rem;
+    }
+
+    .tab-content {
+      display: none;
+    }
+
+    .tab-content.active {
+      display: block;
+    }
+
+    /* ==========================================================================
+       4. COMPONENTES VISUAIS & BANNERS
+       ========================================================================== */
+    .status-badge {
+      display: inline-block;
+      padding: 0.25rem 0.6rem;
+      font-size: 0.7rem;
+      font-weight: 800;
+      text-transform: uppercase;
+      border: var(--border-width) solid var(--border-dark);
+      border-radius: 3px;
+      margin-bottom: 0.5rem;
+    }
+
+    .status-demo { background-color: var(--color-yellow); }
+    .status-validado { background-color: var(--color-green); color: white; }
+    .status-dev { background-color: var(--color-blue); color: white; }
+
+    .hero-banner {
+      background-color: var(--bg-card);
+      border: var(--border-width) solid var(--border-dark);
+      border-radius: 8px;
+      padding: 2.5rem;
+      box-shadow: 4px 4px 0px var(--border-dark);
+      margin-bottom: 2rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 2rem;
+    }
+
+    .hero-text h1 {
+      font-size: 2.2rem;
+      font-weight: 900;
+      line-height: 1.1;
+      margin-bottom: 1rem;
+    }
+
+    .hero-text p {
+      font-size: 1.05rem;
+      margin-bottom: 1.5rem;
+      max-width: 700px;
+    }
+
+    .hero-buttons {
+      display: flex;
+      gap: 1rem;
+    }
+
+    .btn {
+      display: inline-block;
+      padding: 0.8rem 1.5rem;
+      font-weight: 800;
+      font-size: 0.9rem;
+      text-transform: uppercase;
+      border: var(--border-width) solid var(--border-dark);
+      border-radius: 4px;
+      cursor: pointer;
+      box-shadow: 3px 3px 0px var(--border-dark);
+      transition: all 0.15s ease;
+    }
+
+    .btn-primary { background-color: var(--color-blue); color: white; }
+    .btn-secondary { background-color: var(--color-yellow); color: var(--text-dark); }
+    
+    .btn:hover {
+      transform: translate(-2px, -2px);
+      box-shadow: 5px 5px 0px var(--border-dark);
+    }
+
+    /* Grid de Estatísticas Numeradas (Home) */
+    .kpi-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      gap: 1.5rem;
+      margin-bottom: 2.5rem;
+    }
+
+    .kpi-card {
+      background-color: var(--bg-card);
+      border: var(--border-width) solid var(--border-dark);
+      border-radius: 6px;
+      padding: 1.5rem;
+      box-shadow: 3px 3px 0px var(--border-dark);
+      border-left: 8px solid var(--color-ochre);
+    }
+
+    .kpi-value {
+      font-size: 2.5rem;
+      font-weight: 900;
+      line-height: 1;
+      margin-bottom: 0.5rem;
+    }
+
+    .kpi-label {
+      font-size: 0.85rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      color: #555;
+    }
+
+    .kpi-sub {
+      font-size: 0.75rem;
+      color: #777;
+      margin-top: 0.5rem;
+    }
+
+    /* Layout da Tela de Exploração */
+    .explorer-layout {
+      display: grid;
+      grid-template-columns: 300px 1fr;
+      gap: 1.5rem;
+    }
+
+    .filter-panel {
+      background-color: var(--bg-card);
+      border: var(--border-width) solid var(--border-dark);
+      border-radius: 6px;
+      padding: 1.5rem;
+      box-shadow: 3px 3px 0px var(--border-dark);
+      height: fit-content;
+    }
+
+    .filter-group {
+      margin-bottom: 1.2rem;
+    }
+
+    .filter-group label {
+      display: block;
+      font-size: 0.8rem;
+      font-weight: 800;
+      text-transform: uppercase;
+      margin-bottom: 0.4rem;
+    }
+
+    .filter-group select, .filter-group input {
+      width: 100%;
+      padding: 0.6rem;
+      border: var(--border-width) solid var(--border-dark);
+      border-radius: 4px;
+      background-color: var(--bg-cream);
+      font-family: inherit;
+      font-weight: 600;
+    }
+
+    .results-panel {
+      background-color: var(--bg-card);
+      border: var(--border-width) solid var(--border-dark);
+      border-radius: 6px;
+      padding: 1.5rem;
+      box-shadow: 3px 3px 0px var(--border-dark);
+    }
+
+    /* Tabelas com id visual */
+    .data-table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 1rem;
+      font-size: 0.9rem;
+    }
+
+    .data-table th, .data-table td {
+      border: var(--border-width) solid var(--border-dark);
+      padding: 0.75rem;
+      text-align: left;
+    }
+
+    .data-table th {
+      background-color: var(--bg-cream);
+      font-weight: 800;
+      text-transform: uppercase;
+    }
+
+    .data-table tr:nth-child(even) {
+      background-color: #FAF9F0;
+    }
+
+    /* Card de Metadados 'Sobre este resultado' */
+    .metadata-box {
+      background-color: var(--bg-cream);
+      border: var(--border-width) solid var(--border-dark);
+      border-radius: 6px;
+      padding: 1rem;
+      margin-top: 1.5rem;
+      font-size: 0.85rem;
+    }
+
+    .metadata-box h4 {
+      text-transform: uppercase;
+      margin-bottom: 0.5rem;
+      color: var(--color-ochre);
+    }
+
+    /* Linha do Tempo / Roadmap */
+    .roadmap-timeline {
+      display: flex;
+      flex-direction: column;
+      gap: 1.5rem;
+      position: relative;
+      padding-left: 2rem;
+      border-left: 4px solid var(--border-dark);
+      margin-top: 1.5rem;
+    }
+
+    .roadmap-step {
+      background-color: var(--bg-card);
+      border: var(--border-width) solid var(--border-dark);
+      border-radius: 6px;
+      padding: 1.5rem;
+      position: relative;
+      box-shadow: 3px 3px 0px var(--border-dark);
+    }
+
+    .roadmap-step::before {
+      content: '';
+      position: absolute;
+      left: -2.7rem;
+      top: 1.5rem;
+      width: 1.2rem;
+      height: 1.2rem;
+      background-color: var(--color-yellow);
+      border: var(--border-width) solid var(--border-dark);
+      border-radius: 50%;
+    }
+
+    .roadmap-step.done::before { background-color: var(--color-green); }
+    .roadmap-step.next::before { background-color: var(--color-blue); }
+
+    /* Forms demonstrativos (Login / Cadastro) */
+    .form-container {
+      max-width: 450px;
+      margin: 2rem auto;
+      background-color: var(--bg-card);
+      border: var(--border-width) solid var(--border-dark);
+      border-radius: 6px;
+      padding: 2rem;
+      box-shadow: 4px 4px 0px var(--border-dark);
+    }
+
+    /* Rodapé */
+    footer {
+      background-color: var(--bg-card);
+      border-top: var(--border-width) solid var(--border-dark);
+      padding: 2rem 1rem;
+      margin-top: 3rem;
+      font-size: 0.85rem;
+    }
+
+    .footer-container {
+      max-width: 1300px;
+      margin: 0 auto;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 1rem;
+    }
+
+    /* Mosaico Geométrico Decorativo no Rodapé */
+    .mosaic-strip {
+      height: 10px;
+      width: 100%;
+      display: flex;
+    }
+    .mosaic-block { flex: 1; }
+    .m-yellow { background-color: var(--color-yellow); }
+    .m-ochre { background-color: var(--color-ochre); }
+    .m-green { background-color: var(--color-green); }
+    .m-blue { background-color: var(--color-blue); }
+    .m-red { background-color: var(--color-red); }
+
+    @media (max-width: 850px) {
+      .explorer-layout { grid-template-columns: 1fr; }
+      .hero-banner { flex-direction: column; text-align: center; }
+      .nav-container { flex-direction: column; align-items: flex-start; }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="mosaic-strip">
+    <div class="mosaic-block m-yellow"></div>
+    <div class="mosaic-block m-ochre"></div>
+    <div class="mosaic-block m-green"></div>
+    <div class="mosaic-block m-blue"></div>
+    <div class="mosaic-block m-red"></div>
+  </div>
+
+  <!-- ==========================================================================
+       CABEÇALHO COM A LOGO PEIXE VETORIAL EM SVG NATIVO
+       ========================================================================== -->
+  <header>
+    <div class="nav-container">
+      <div class="brand">
+        <!-- SVG Exato do Símbolo Geométrico da Pesca Artesanal -->
+        <svg width="42" height="42" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M 10 35 L 35 10 L 60 35 L 35 60 Z" fill="#E4C027" stroke="#1E2022" stroke-width="5"/>
+          <path d="M 60 10 L 85 10 L 85 35 L 60 35 Z" fill="#51A348" stroke="#1E2022" stroke-width="5"/>
+          <path d="M 35 35 L 85 35 L 85 85 L 35 85 Z" fill="#C27329" stroke="#1E2022" stroke-width="5"/>
+          <path d="M 10 60 L 35 60 L 35 85 Z" fill="#1D4FB1" stroke="#1E2022" stroke-width="5"/>
+          <path d="M 60 85 L 85 85 L 60 98 Z" fill="#E22927" stroke="#1E2022" stroke-width="5"/>
+        </svg>
+        <div>
+          <span class="brand-title">Banco de Dados Fundacentro & Produções</span>
+          <span class="brand-subtitle">Trabalho Saudável e Seguro na Pesca Artesanal</span>
+        </div>
+      </div>
+
+      <nav>
+        <ul>
+          <li><a href="#" onclick="showTab('home')" class="active" id="nav-home">Início</a></li>
+          <li><a href="#" onclick="showTab('explorar')" id="nav-explorar">Explorar Dados</a></li>
+          <li><a href="#" onclick="showTab('indicadores')" id="nav-indicadores">Indicadores</a></li>
+          <li><a href="#" onclick="showTab('mapas')" id="nav-mapas">Mapas</a></li>
+          <li><a href="#" onclick="showTab('producoes')" id="nav-producoes">Produções</a></li>
+          <li><a href="#" onclick="showTab('catalogo')" id="nav-catalogo">Catálogo</a></li>
+          <li><a href="#" onclick="showTab('roadmap')" id="nav-roadmap">Roadmap</a></li>
+          <li><a href="#" onclick="showTab('login')" class="btn-login" id="nav-login">Acessar</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <!-- ==========================================================================
+       CONTEÚDO DAS TELAS NAVEGÁVEIS
+       ========================================================================== -->
+  <main>
+
+    <!-- TELA 1: HOME / INÍCIO -->
+    <section id="tab-home" class="tab-content active">
+      <div class="hero-banner">
+        <div class="hero-text">
+          <span class="status-badge status-demo">Protótipo Funcional v0.1</span>
+          <h1>Plataforma Integrada de Dados da Pesca Artesanal</h1>
+          <p>Consulta, análise territorial, acervo metodológico e monitoramento de condições de trabalho e saúde dos pescadores e pescadoras artesanais do Brasil.</p>
+          <div class="hero-buttons">
+            <button class="btn btn-primary" onclick="showTab('explorar')">Explorar os Dados</button>
+            <button class="btn btn-secondary" onclick="showTab('roadmap')">Ver Estado da V1</button>
+          </div>
+        </div>
+      </div>
+
+      <h2>O Banco em Números (Fonte Operacional V1)</h2>
+      <p style="margin-bottom: 1.5rem; font-size: 0.9rem;">Métricas validadas do repositório primário (Full Analítico 01) em processo de carga no banco relacional PostgreSQL.</p>
+
+      <div class="kpi-grid">
+        <div class="kpi-card" style="border-left-color: var(--color-yellow);">
+          <div class="kpi-value">16.623</div>
+          <div class="kpi-label">Registros Individuais</div>
+          <div class="kpi-sub">Entrevistas e formulários processados</div>
+        </div>
+        <div class="kpi-card" style="border-left-color: var(--color-green);">
+          <div class="kpi-value">277</div>
+          <div class="kpi-label">Campos Mapeados</div>
+          <div class="kpi-sub">26 cadastrais + 251 do instrumento</div>
+        </div>
+        <div class="kpi-card" style="border-left-color: var(--color-blue);">
+          <div class="kpi-value">36</div>
+          <div class="kpi-label">Questões Reconstruídas</div>
+          <div class="kpi-sub">Agrupamento semântico das alternativas</div>
+        </div>
+        <div class="kpi-card" style="border-left-color: var(--color-red);">
+          <div class="kpi-value">251</div>
+          <div class="kpi-label">Alternativas Normalizadas</div>
+          <div class="kpi-sub">Codificação binária 0/1 auditada</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- TELA 2: EXPLORAR DADOS -->
+    <section id="tab-explorar" class="tab-content">
+      <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.5rem;">
+        <h2>Exploração de Dados e Cruzamentos Analíticos</h2>
+        <span class="status-badge status-demo">Simulação de Consulta de Prova V1</span>
+      </div>
+
+      <div class="explorer-layout">
+        <!-- Painel de Filtros -->
+        <div class="filter-panel">
+          <h3>Filtros de Pesquisa</h3>
+          <hr style="margin: 1rem 0; border: 0; border-top: 1rem;">
+          
+          <div class="filter-group">
+            <label>Pesquisa / Projeto</label>
+            <select>
+              <option>Trabalho Saudável e Seguro na Pesca</option>
+            </select>
+          </div>
+
+          <div class="filter-group">
+            <label>Rodada de Coleta</label>
+            <select>
+              <option>Rodada 1 (Coleta Nacional 2026)</option>
+            </select>
+          </div>
+
+          <div class="filter-group">
+            <label>UF (Endereço Cadastral)</label>
+            <select>
+              <option value="">Todas as UFs</option>
+              <option>Bahia (BA)</option>
+              <option>Maranhão (MA)</option>
+              <option>Pará (PA)</option>
+              <option>Piauí (PI)</option>
+            </select>
+          </div>
+
+          <div class="filter-group">
+            <label>Caracterização (Demografia)</label>
+            <select>
+              <option>Sexo (Feminino / Masculino)</option>
+              <option>Escolaridade (Q01)</option>
+              <option>Grupo Étnico-Racial (Q02)</option>
+            </select>
+          </div>
+
+          <div class="filter-group">
+            <label>Questão do Instrumento</label>
+            <select>
+              <option>Q23 - Qual(is) tipo(s) de acidente você já sofreu?</option>
+              <option>Q08 - Técnicas e apetrechos de pesca</option>
+              <option>Q30 - Proteções utilizadas na pesca</option>
+              <option>Q33 - Ocorrência de doenças relatas</option>
+            </select>
+          </div>
+
+          <button class="btn btn-primary" style="width: 100%; margin-top: 0.5rem;" onclick="alert('Consulta filtrada no banco V1!')">Aplicar Filtros</button>
+        </div>
+
+        <!-- Painel de Resultados -->
+        <div class="results-panel">
+          <h3>Resultado: Q23 - Tipos de Acidente por Sexo</h3>
+          <p style="font-size: 0.85rem; color: #555; margin-bottom: 1rem;">Unidade de Contagem: <strong>Seleções de Alternativa (Múltipla Escolha)</strong> | Total de Aplicações Analisadas: 16.623</p>
+
+          <table class="data-table">
+            <thead>
+              <tr>
+                <th>Alternativa / Categoria de Acidente</th>
+                <th>Feminino (N)</th>
+                <th>Masculino (N)</th>
+                <th>Total Seleções</th>
+                <th>% do Total</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>Corte / Perfuração com apetrecho</td>
+                <td>2.140</td>
+                <td>5.412</td>
+                <td>7.552</td>
+                <td>45,4%</td>
+              </tr>
+              <tr>
+                <td>Queda na embarcação / lama</td>
+                <td>1.820</td>
+                <td>3.110</td>
+                <td>4.930</td>
+                <td>29,6%</td>
+              </tr>
+              <tr>
+                <td>Picada / Ferida por animal marinho</td>
+                <td>1.250</td>
+                <td>2.840</td>
+                <td>4.090</td>
+                <td>24,6%</td>
+              </tr>
+              <tr>
+                <td>Queimadura solar severa</td>
+                <td>980</td>
+                <td>1.450</td>
+                <td>2.430</td>
+                <td>14,6%</td>
+              </tr>
+              <tr style="font-weight: 800; background-color: var(--bg-cream);">
+                <td>Não sofreu acidentes (Exclusiva)</td>
+                <td>2.410</td>
+                <td>3.131</td>
+                <td>5.541</td>
+                <td>33,3%</td>
+              </tr>
+            </tbody>
+          </table>
+
+          <!-- Ficha de Contexto 'Sobre este resultado' -->
+          <div class="metadata-box">
+            <h4>Sobre este resultado (Ficha Metodológica)</h4>
+            <p><strong>Origem dos Dados:</strong> Full Analítico 01 (Fonte Operacional Primária V1).</p>
+            <p><strong>Nota Semântica sobre o Valor 0:</strong> O valor 0 da planilha wide original não é convertido em resposta negativa explícita, preservando a diferenciação entre não resposta e skip logic.</p>
+            <p><strong>Ressalva Territorial:</strong> A variável geográfica reflete o <em>Endereço Cadastral</em> do pescador e não deve ser interpretada como local da pesca ou local da aplicação.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- TELA 3: INDICADORES -->
+    <section id="tab-indicadores" class="tab-content">
+      <h2>Indicadores Consolidados da Pesca Artesanal</h2>
+      <p style="margin-bottom: 1.5rem;">Painéis sintéticos previamente homologados pela equipe técnica e comitê científico.</p>
+
+      <div class="kpi-grid">
+        <div class="kpi-card" style="border-left-color: var(--color-red);">
+          <span class="status-badge status-validado">Homologado</span>
+          <div class="kpi-value">66,7%</div>
+          <div class="kpi-label">Prevalência de Acidentes</div>
+          <div class="kpi-sub">Relataram ao menos 1 tipo de acidente de trabalho na pesca (Q23)</div>
+        </div>
+
+        <div class="kpi-card" style="border-left-color: var(--color-blue);">
+          <span class="status-badge status-validado">Homologado</span>
+          <div class="kpi-value">74,2%</div>
+          <div class="kpi-label">Exposição Solar Densa</div>
+          <div class="kpi-sub">Trabalham expostos ao sol na maior parte do tempo (Q09)</div>
+        </div>
+
+        <div class="kpi-card" style="border-left-color: var(--color-ochre);">
+          <span class="status-badge status-demo">Em Validação</span>
+          <div class="kpi-value">14,1%</div>
+          <div class="kpi-label">Emissão de CAT</div>
+          <div class="kpi-sub">Comunicação de Acidente de Trabalho emitida em acidentes (Q27)</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- TELA 4: MAPAS -->
+    <section id="tab-mapas" class="tab-content">
+      <h2>Distribuição Territorial por Endereço Cadastral</h2>
+      <span class="status-badge status-demo">Visualização Demonstrativa por UF/Município</span>
+
+      <div style="background-color: var(--bg-card); border: var(--border-width) solid var(--border-dark); padding: 2rem; border-radius: 6px; margin-top: 1rem; text-align: center;">
+        <div style="height: 300px; background-color: var(--bg-cream); border: 2px dashed var(--border-dark); display: flex; align-items: center; justify-content: center; font-weight: 800;">
+          [ Módulo de Mapa Interativo - GeoJSON de Municípios Cadastrais ]
+        </div>
+        <p style="font-size: 0.85rem; margin-top: 1rem; color: #555;">Conforme diretriz do Gate 2, os dados territoriais atuais refletem estritamente o <strong>Endereço Cadastral</strong> dos cadastrados no sistema.</p>
+      </div>
+    </section>
+
+    <!-- TELA 5: PRODUÇÕES -->
+    <section id="tab-producoes" class="tab-content">
+      <h2>Acervo de Produções Científicas e Técnicas</h2>
+      <p style="margin-bottom: 1.5rem;">Relatórios técnicos, memórias de modelagem, apresentações e notas da Fundacentro.</p>
+
+      <div style="display: flex; flex-direction: column; gap: 1rem;">
+        <div class="kpi-card" style="border-left-color: var(--color-green);">
+          <h3>Modelagem Conceitual e Lógica da V1 (Relatório Checkpoint 05)</h3>
+          <p style="font-size: 0.85rem; margin: 0.5rem 0;">Consolidação da memória técnica de normalização das 251 colunas do instrumento e ontologia do banco relacional.</p>
+          <span class="status-badge status-validado">Documento Técnico</span>
+        </div>
+
+        <div class="kpi-card" style="border-left-color: var(--color-blue);">
+          <h3>Plano de Implementação da V1 (Engenharia e Operação)</h3>
+          <p style="font-size: 0.85rem; margin: 0.5rem 0;">Roteiro de execução por Gates (G0 a G9) para carga do PostgreSQL no Google Cloud SQL.</p>
+          <span class="status-badge status-dev">Plano Operacional</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- TELA 6: CATÁLOGO DE DADOS -->
+    <section id="tab-catalogo" class="tab-content">
+      <h2>Catálogo de Dados e Dicionário de Metadados</h2>
+      <p style="margin-bottom: 1.5rem;">Mapeamento completo das 36 questões-mãe reconstruídas e 251 alternativas do instrumento.</p>
+
+      <table class="data-table">
+        <thead>
+          <tr>
+            <th>Código</th>
+            <th>Enunciado da Questão Reconstruída</th>
+            <th>Nº Alternativas</th>
+            <th>Classificação Empírica (Auditoria)</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Q01</td>
+            <td>Qual é a sua escolaridade?</td>
+            <td>10</td>
+            <td>Seleção Única Observada (Máx 1)</td>
+          </tr>
+          <tr>
+            <td>Q02</td>
+            <td>Com qual grupo étnico-racial você se identifica?</td>
+            <td>8</td>
+            <td>Múltipla Seleção Observada (Máx 3)</td>
+          </tr>
+          <tr>
+            <td>Q08</td>
+            <td>Quais técnicas e apetrechos de pesca usa?</td>
+            <td>11</td>
+            <td>Múltipla Seleção Observada (Máx 11)</td>
+          </tr>
+          <tr>
+            <td>Q23</td>
+            <td>Qual(is) tipo(s) de acidente você já sofreu?</td>
+            <td>14</td>
+            <td>Múltipla Seleção Observada (Máx 13)</td>
+          </tr>
+          <tr>
+            <td>Q33</td>
+            <td>Você tem alguma dessas doenças?</td>
+            <td>24</td>
+            <td>Múltipla Seleção Observada (Máx 17)</td>
+          </tr>
+        </tbody>
+      </table>
+    </section>
+
+    <!-- TELA 7: ROADMAP DA PLATAFORMA -->
+    <section id="tab-roadmap" class="tab-content">
+      <h2>Roadmap de Desenvolvimento e Evolução da V1</h2>
+      <p>Acompanhamento do progresso de engenharia do banco relacional e da plataforma web.</p>
+
+      <div class="roadmap-timeline">
+        <div class="roadmap-step done">
+          <span class="status-badge status-validado">Concluído</span>
+          <h3>Gate G0 - Alinhamento e Modelagem Conceitual/Lógica</h3>
+          <p style="font-size: 0.85rem;">Fechamento do Modelo Conceitual v0.1 e aprovação do Gate 2 de auditoria lógica.</p>
+        </div>
+
+        <div class="roadmap-step next">
+          <span class="status-badge status-dev">Em Execução</span>
+          <h3>Gate G1 a G4 - DDL, Metadados e Carga no PostgreSQL</h3>
+          <p style="font-size: 0.85rem;">Criação do schema físico no Cloud SQL, carga de metadados das 36 questões e normalização das 251 colunas wide.</p>
+        </div>
+
+        <div class="roadmap-step">
+          <span class="status-badge status-demo">Futuro</span>
+          <h3>Gate G5 a G7 - Testes de Conservação ($S=N$) e Idempotência</h3>
+          <p style="font-size: 0.85rem;">Execução das consultas de validação para garantir conservação dos 1s e não-duplicação de registros.</p>
+        </div>
+
+        <div class="roadmap-step">
+          <span class="status-badge status-demo">Futuro</span>
+          <h3>Gate G8 e G9 - Views Seguras, API e Conexão com Frontend</h3>
+          <p style="font-size: 0.85rem;">Disponibilização de rotas protegidas com PII segregado e consumo em tempo real nesta interface.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- TELA 8: LOGIN / ACESSO (DEMONSTRATIVO) -->
+    <section id="tab-login" class="tab-content">
+      <div class="form-container">
+        <span class="status-badge status-demo">Acesso Demonstrativo</span>
+        <h3 style="margin-bottom: 1rem;">Acessar Área Restrita</h3>
+        
+        <div class="filter-group">
+          <label>E-mail Institucional</label>
+          <input type="email" placeholder="usuario@fundacentro.gov.br">
+        </div>
+
+        <div class="filter-group">
+          <label>Senha</label>
+          <input type="password" placeholder="••••••••">
+        </div>
+
+        <button class="btn btn-primary" style="width: 100%;" onclick="alert('Funcionalidade demonstrativa. O ambiente real de autenticação será conectado no Gate G8.')">Entrar na Plataforma</button>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- ==========================================================================
+       RODAPÉ COM IDENTIDADE VISUAL E LINKS
+       ========================================================================== -->
+  <footer>
+    <div class="footer-container">
+      <div>
+        <p><strong>Banco de Dados Fundacentro e Produções</strong></p>
+        <p style="font-size: 0.75rem; color: #666;">Projeto Trabalho Saudável e Seguro na Pesca Artesanal</p>
+      </div>
+      <div>
+        <p style="font-size: 0.75rem; color: #666;">Protótipo HTML v0.1 • Publicação via GitHub Pages</p>
+      </div>
+    </div>
+  </footer>
+
+  <div class="mosaic-strip">
+    <div class="mosaic-block m-yellow"></div>
+    <div class="mosaic-block m-ochre"></div>
+    <div class="mosaic-block m-green"></div>
+    <div class="mosaic-block m-blue"></div>
+    <div class="mosaic-block m-red"></div>
+  </div>
+
+  <!-- ==========================================================================
+       SCRIPT DE NAVEGAÇÃO ENTRE ABAS (SINGLE-PAGE APPLICATION ESTÁTICA)
+       ========================================================================== -->
+  <script>
+    function showTab(tabId) {
+      // Oculta todas as telas
+      const tabs = document.querySelectorAll('.tab-content');
+      tabs.forEach(tab => tab.classList.remove('active'));
+
+      // Remove classe ativa de todos os botões da nav
+      const navLinks = document.querySelectorAll('nav a');
+      navLinks.forEach(link => link.classList.remove('active'));
+
+      // Exibe a tela selecionada
+      const targetTab = document.getElementById('tab-' + tabId);
+      if (targetTab) {
+        targetTab.classList.add('active');
+      }
+
+      // Ativa o link da nav
+      const targetNav = document.getElementById('nav-' + tabId);
+      if (targetNav) {
+        targetNav.classList.add('active');
+      }
+
+      // Sobe a tela para o topo
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+  </script>
+</body>
+</html>
