@@ -1,0 +1,1320 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Plataforma Fundacentro de Dados e Analytics — Pesca Artesanal</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+  
+  <style>
+    /* ==========================================================================
+       1. SISTEMA VISUAL EDITORIAL E IDENTIDADE CORPORATIVA (ESPECIFICAÇÃO v0.2)
+       ========================================================================== */
+    :root {
+      --bg-cream: #FBF9F0;
+      --bg-card: #FFFFFF;
+      --bg-subtle: #F3F1E5;
+      --text-main: #0F172A;
+      --text-muted: #475569;
+      --text-light: #64748B;
+      --border-subtle: #E2E0D2;
+      --border-accent: #CBD5E1;
+      
+      /* Mosaico Geométrico Abstrato */
+      --color-yellow: #E4C027;
+      --color-ochre: #C27329;
+      --color-green: #22C55E;
+      --color-blue: #1D4FB1;
+      --color-red: #E22927;
+      
+      --font-sans: 'Inter', system-ui, -apple-system, sans-serif;
+      --font-mono: 'JetBrains Mono', monospace;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      background-color: var(--bg-cream);
+      color: var(--text-main);
+      font-family: var(--font-sans);
+      line-height: 1.5;
+      display: flex;
+      flex-direction: column;
+      min-height: 100vh;
+      -webkit-font-smoothing: antialiased;
+      background-image: radial-gradient(rgba(15, 23, 42, 0.04) 1px, transparent 0);
+      background-size: 24px 24px;
+    }
+
+    a { color: inherit; text-decoration: none; }
+
+    /* ==========================================================================
+       2. CABEÇALHO GLOBAL E NAVEGAÇÃO BILÍNGUE
+       ========================================================================== */
+    header {
+      background-color: rgba(251, 249, 240, 0.95);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--border-subtle);
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+
+    .nav-container {
+      max-width: 1400px;
+      margin: 0 auto;
+      padding: 0.85rem 1.5rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1.5rem;
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 0.85rem;
+    }
+
+    .brand-title {
+      font-weight: 800;
+      font-size: 1.05rem;
+      letter-spacing: -0.02em;
+      color: var(--text-main);
+    }
+
+    .brand-subtitle {
+      font-size: 0.7rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      color: var(--color-ochre);
+      display: block;
+    }
+
+    nav ul {
+      display: flex;
+      list-style: none;
+      gap: 0.35rem;
+      align-items: center;
+    }
+
+    nav a {
+      padding: 0.5rem 0.75rem;
+      font-size: 0.82rem;
+      font-weight: 600;
+      color: var(--text-muted);
+      border-radius: 6px;
+      transition: all 0.2s ease;
+    }
+
+    nav a:hover, nav a.active {
+      color: var(--text-main);
+      background-color: var(--bg-subtle);
+    }
+
+    .btn-cadastro {
+      background-color: var(--color-yellow) !important;
+      color: var(--text-main) !important;
+      font-weight: 700 !important;
+      border-radius: 6px;
+      padding: 0.5rem 0.9rem !important;
+      border: 1px solid var(--border-subtle);
+    }
+
+    .btn-access {
+      background-color: var(--text-main) !important;
+      color: white !important;
+      font-weight: 600;
+      border-radius: 6px;
+      padding: 0.5rem 0.95rem !important;
+    }
+
+    .lang-selector {
+      display: flex;
+      gap: 0.2rem;
+      background-color: var(--bg-subtle);
+      padding: 0.2rem;
+      border-radius: 6px;
+      border: 1px solid var(--border-subtle);
+      font-size: 0.72rem;
+      font-weight: 700;
+    }
+
+    .lang-btn {
+      padding: 0.25rem 0.5rem;
+      border-radius: 4px;
+      cursor: pointer;
+    }
+
+    .lang-btn.active {
+      background-color: var(--text-main);
+      color: white;
+    }
+
+    /* ==========================================================================
+       3. ESTRUTURA EDITORIAL E COMPONENTES
+       ========================================================================== */
+    main {
+      flex: 1;
+      max-width: 1400px;
+      width: 100%;
+      margin: 0 auto;
+      padding: 2rem 1.5rem;
+    }
+
+    .tab-content { display: none; }
+    .tab-content.active { display: block; }
+
+    .card {
+      background-color: var(--bg-card);
+      border: 1px solid var(--border-subtle);
+      border-radius: 10px;
+      padding: 1.5rem;
+      transition: border-color 0.2s ease;
+    }
+
+    .card:hover { border-color: var(--border-accent); }
+
+    .badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.35rem;
+      padding: 0.25rem 0.6rem;
+      font-size: 0.7rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+      border-radius: 20px;
+      width: fit-content;
+    }
+
+    .badge-demo { background-color: rgba(228, 192, 39, 0.18); color: #856404; }
+    .badge-validated { background-color: rgba(34, 197, 94, 0.15); color: #15803D; }
+
+    .badge::before {
+      content: '';
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background-color: currentColor;
+    }
+
+    /* Hero Banner */
+    .hero-banner {
+      background-color: var(--bg-card);
+      border: 1px solid var(--border-subtle);
+      border-radius: 12px;
+      padding: 3rem 2.5rem;
+      margin-bottom: 2rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 2rem;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hero-banner::after {
+      content: '';
+      position: absolute;
+      top: 0; right: 0; width: 6px; height: 100%;
+      background: linear-gradient(180deg, var(--color-yellow), var(--color-ochre), var(--color-green), var(--color-blue), var(--color-red));
+    }
+
+    .hero-text h1 {
+      font-size: 2.1rem;
+      font-weight: 800;
+      letter-spacing: -0.03em;
+      line-height: 1.25;
+      margin-top: 0.5rem;
+      margin-bottom: 1rem;
+    }
+
+    .hero-text p {
+      font-size: 1.02rem;
+      color: var(--text-muted);
+      max-width: 820px;
+      margin-bottom: 1.8rem;
+    }
+
+    .btn-group { display: flex; gap: 0.8rem; flex-wrap: wrap; }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      padding: 0.7rem 1.4rem;
+      font-weight: 600;
+      font-size: 0.875rem;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      border: 1px solid transparent;
+    }
+
+    .btn-primary { background-color: var(--color-blue); color: white; }
+    .btn-primary:hover { background-color: #163F93; }
+    .btn-secondary { background-color: var(--bg-subtle); color: var(--text-main); border-color: var(--border-subtle); }
+    .btn-secondary:hover { background-color: #E6E3D3; }
+
+    /* KPI Grid */
+    .kpi-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 1.2rem;
+      margin-bottom: 2.5rem;
+    }
+
+    .kpi-card {
+      background-color: var(--bg-card);
+      border: 1px solid var(--border-subtle);
+      border-radius: 10px;
+      padding: 1.5rem;
+      position: relative;
+    }
+
+    .kpi-card .accent-line {
+      position: absolute;
+      top: 0; left: 1.5rem; right: 1.5rem;
+      height: 3px;
+      border-radius: 0 0 4px 4px;
+    }
+
+    .kpi-value {
+      font-size: 2.2rem;
+      font-weight: 800;
+      letter-spacing: -0.03em;
+      font-family: var(--font-mono);
+      margin-top: 0.5rem;
+      margin-bottom: 0.25rem;
+    }
+
+    .kpi-label {
+      font-size: 0.8rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      color: var(--text-light);
+    }
+
+    .kpi-sub { font-size: 0.78rem; color: var(--text-muted); margin-top: 0.5rem; }
+
+    /* Seção de Navegação Empírica Q01 a Q36 */
+    .empiric-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(130px, 1fr));
+      gap: 0.6rem;
+      margin-top: 1rem;
+    }
+
+    .q-item {
+      background-color: var(--bg-card);
+      border: 1px solid var(--border-subtle);
+      border-radius: 6px;
+      padding: 0.65rem 0.85rem;
+      font-size: 0.8rem;
+      font-weight: 700;
+      color: var(--text-main);
+      cursor: pointer;
+      transition: all 0.2s ease;
+      display: flex;
+      flex-direction: column;
+      gap: 0.15rem;
+    }
+
+    .q-item:hover {
+      border-color: var(--color-blue);
+      background-color: var(--bg-subtle);
+      transform: translateY(-1px);
+    }
+
+    .q-sub { font-size: 0.68rem; font-weight: 500; color: var(--text-light); }
+
+    /* Layout de Exploração Avançada */
+    .explorer-layout {
+      display: grid;
+      grid-template-columns: 320px 1fr;
+      gap: 1.5rem;
+    }
+
+    .filter-panel {
+      background-color: var(--bg-card);
+      border: 1px solid var(--border-subtle);
+      border-radius: 10px;
+      padding: 1.5rem;
+      height: fit-content;
+    }
+
+    .panel-header {
+      font-size: 0.85rem;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      color: var(--text-light);
+      margin-bottom: 1.2rem;
+      padding-bottom: 0.6rem;
+      border-bottom: 1px solid var(--border-subtle);
+    }
+
+    .filter-group { margin-bottom: 1.2rem; }
+
+    .filter-group label {
+      display: block;
+      font-size: 0.78rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      color: var(--text-muted);
+      margin-bottom: 0.4rem;
+    }
+
+    .filter-group select, .filter-group input, .filter-group textarea {
+      width: 100%;
+      padding: 0.6rem 0.8rem;
+      border: 1px solid var(--border-subtle);
+      border-radius: 6px;
+      background-color: var(--bg-cream);
+      font-family: var(--font-sans);
+      font-size: 0.85rem;
+      color: var(--text-main);
+      outline: none;
+    }
+
+    .cross-builder {
+      background-color: var(--bg-subtle);
+      border: 1px solid var(--border-subtle);
+      border-radius: 8px;
+      padding: 1rem;
+      margin-bottom: 1.5rem;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.6rem;
+      align-items: center;
+    }
+
+    .cross-builder-title {
+      font-size: 0.78rem;
+      font-weight: 800;
+      text-transform: uppercase;
+      color: var(--text-main);
+      width: 100%;
+    }
+
+    .chip-btn {
+      padding: 0.4rem 0.85rem;
+      font-size: 0.78rem;
+      font-weight: 600;
+      background-color: var(--bg-card);
+      border: 1px solid var(--border-subtle);
+      border-radius: 20px;
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+
+    .chip-btn.active {
+      background-color: var(--color-blue);
+      color: white;
+      border-color: var(--color-blue);
+    }
+
+    .data-table-container {
+      overflow-x: auto;
+      border: 1px solid var(--border-subtle);
+      border-radius: 8px;
+    }
+
+    .data-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 0.875rem;
+      background-color: var(--bg-card);
+    }
+
+    .data-table th {
+      background-color: var(--bg-subtle);
+      padding: 0.8rem 1rem;
+      font-weight: 700;
+      font-size: 0.75rem;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+      color: var(--text-muted);
+      border-bottom: 1px solid var(--border-subtle);
+      text-align: left;
+    }
+
+    .data-table td {
+      padding: 0.85rem 1rem;
+      border-bottom: 1px solid var(--border-subtle);
+    }
+
+    .data-table tr:last-child td { border-bottom: none; }
+
+    /* Módulo de Citação Direta e Proveniência */
+    .citation-card {
+      background-color: var(--bg-subtle);
+      border: 1px solid var(--border-subtle);
+      border-radius: 8px;
+      padding: 1.25rem;
+      margin-top: 1.5rem;
+    }
+
+    .citation-card h4 {
+      font-size: 0.82rem;
+      font-weight: 800;
+      text-transform: uppercase;
+      color: var(--text-main);
+      margin-bottom: 0.6rem;
+      display: flex;
+      align-items: center;
+      gap: 0.4rem;
+    }
+
+    .citation-box {
+      background-color: var(--bg-card);
+      border: 1px solid var(--border-accent);
+      border-radius: 6px;
+      padding: 0.8rem;
+      font-family: var(--font-mono);
+      font-size: 0.78rem;
+      color: var(--text-main);
+      user-select: all;
+      margin-bottom: 0.6rem;
+      word-break: break-all;
+    }
+
+    .action-row {
+      display: flex;
+      gap: 0.8rem;
+      margin-top: 1rem;
+      flex-wrap: wrap;
+    }
+
+    /* Grid DataVis e Insights */
+    .datavis-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(450px, 1fr));
+      gap: 1.5rem;
+      margin-top: 1.5rem;
+    }
+
+    .chart-card {
+      background-color: var(--bg-card);
+      border: 1px solid var(--border-subtle);
+      border-radius: 10px;
+      padding: 1.5rem;
+    }
+
+    .chart-container {
+      position: relative;
+      height: 320px;
+      width: 100%;
+    }
+
+    .insights-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 1.2rem;
+      margin-top: 1.5rem;
+    }
+
+    .insight-card {
+      background-color: var(--bg-card);
+      border: 1px solid var(--border-subtle);
+      border-radius: 10px;
+      padding: 1.25rem;
+      border-left: 4px solid var(--color-blue);
+    }
+
+    .insight-title {
+      font-size: 0.85rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      color: var(--text-main);
+      margin-bottom: 0.4rem;
+    }
+
+    .insight-body { font-size: 0.875rem; color: var(--text-muted); }
+    .insight-stat { font-family: var(--font-mono); font-weight: 700; color: var(--color-ochre); }
+
+    /* Rodapé Institucional */
+    footer {
+      background-color: var(--bg-card);
+      border-top: 1px solid var(--border-subtle);
+      padding: 3rem 1.5rem 1.5rem;
+      margin-top: 4rem;
+      font-size: 0.82rem;
+      color: var(--text-muted);
+    }
+
+    .footer-container {
+      max-width: 1400px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 2rem;
+      margin-bottom: 2rem;
+    }
+
+    .footer-col h4 {
+      font-size: 0.85rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      color: var(--text-main);
+      margin-bottom: 0.8rem;
+    }
+
+    .footer-col ul {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 0.4rem;
+    }
+
+    .footer-col a:hover {
+      color: var(--color-blue);
+      text-decoration: underline;
+    }
+
+    .mosaic-strip { height: 4px; width: 100%; display: flex; }
+    .m-block { flex: 1; }
+
+    @media (max-width: 900px) {
+      .explorer-layout, .datavis-grid { grid-template-columns: 1fr; }
+      .hero-banner { flex-direction: column; align-items: flex-start; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Mosaico Abstrato Superior -->
+  <div class="mosaic-strip">
+    <div class="m-block" style="background-color: var(--color-yellow);"></div>
+    <div class="m-block" style="background-color: var(--color-ochre);"></div>
+    <div class="m-block" style="background-color: var(--color-green);"></div>
+    <div class="m-block" style="background-color: var(--color-blue);"></div>
+    <div class="m-block" style="background-color: var(--color-red);"></div>
+  </div>
+
+  <!-- CABEÇALHO GLOBAL -->
+  <header>
+    <div class="nav-container">
+      <div class="brand">
+        <svg width="38" height="38" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M 10 35 L 35 10 L 60 35 L 35 60 Z" fill="#E4C027"/>
+          <path d="M 60 10 L 85 10 L 85 35 L 60 35 Z" fill="#22C55E"/>
+          <path d="M 35 35 L 85 35 L 85 85 L 35 85 Z" fill="#C27329"/>
+          <path d="M 10 60 L 35 60 L 35 85 Z" fill="#1D4FB1"/>
+          <path d="M 60 85 L 85 85 L 60 98 Z" fill="#E22927"/>
+        </svg>
+        <div>
+          <span class="brand-title">Fundacentro Data & Analytics</span>
+          <span class="brand-subtitle">Plataforma do Banco de Dados e Produções</span>
+        </div>
+      </div>
+
+      <nav>
+        <ul>
+          <li><a href="#" onclick="showTab('home')" class="active" id="nav-home">Visão Geral</a></li>
+          <li><a href="#" onclick="showTab('visualizacoes')" id="nav-visualizacoes">Visualizações Publicadas</a></li>
+          <li><a href="#" onclick="showTab('explorar')" id="nav-explorar">Explorar Dados</a></li>
+          <li><a href="#" onclick="showTab('pesquisa')" id="nav-pesquisa">Pesquisa & Instrumento</a></li>
+          <li><a href="#" onclick="showTab('producoes')" id="nav-producoes">Produções</a></li>
+          <li><a href="#" onclick="showTab('cadastro')" class="btn-cadastro" id="nav-cadastro">Cadastrar para Acesso</a></li>
+          <li><a href="#" onclick="showTab('login')" class="btn-access" id="nav-login">Acessar</a></li>
+        </ul>
+      </nav>
+
+      <div class="lang-selector">
+        <div class="lang-btn active">PT</div>
+        <div class="lang-btn">EN</div>
+      </div>
+    </div>
+  </header>
+
+  <!-- CONTEÚDO PRINCIPAL -->
+  <main>
+
+    <!-- TELA 1: HOME PÚBLICA (SEÇÃO 8 DA ESPECIFICAÇÃO v0.2) -->
+    <section id="tab-home" class="tab-content active">
+      <div class="hero-banner">
+        <div class="hero-text">
+          <span class="badge badge-demo">Publicação Científica Interativa v0.2</span>
+          <h1>Plataforma de Inteligência de Dados, Saúde e Segurança na Pesca Artesanal</h1>
+          <p>
+            Plataforma do <strong>Projeto Banco de Dados Fundacentro e Produções</strong>. Publicação científica interativa para consulta, visualização, proveniência e extração de microdados do <em>Trabalho Saudável e Seguro na Pesca Artesanal</em>[cite: 14].
+          </p>
+          <div class="btn-group">
+            <button class="btn btn-primary" onclick="showTab('visualizacoes')">Explorar Visualizações Publicadas</button>
+            <button class="btn btn-secondary" onclick="showTab('explorar')">Acessar Ferramentas Analíticas</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Pesquisa em Números (Validados no Pacote) -->
+      <div class="panel-header">Pesquisa em Números (Amostra Nacional Validada)</div>
+
+      <div class="kpi-grid">
+        <div class="kpi-card">
+          <div class="accent-line" style="background-color: var(--color-yellow);"></div>
+          <span class="kpi-label">Amostra Processada (N)</span>
+          <div class="kpi-value">16.623</div>
+          <div class="kpi-sub">Entrevistas e formulários validados na base</div>
+        </div>
+        <div class="kpi-card">
+          <div class="accent-line" style="background-color: var(--color-green);"></div>
+          <span class="kpi-label">Atributos Mapeados</span>
+          <div class="kpi-value">277</div>
+          <div class="kpi-sub">26 cadastrais + 251 do instrumento wide</div>
+        </div>
+        <div class="kpi-card">
+          <div class="accent-line" style="background-color: var(--color-blue);"></div>
+          <span class="kpi-label">Questões Reconstruídas</span>
+          <div class="kpi-value">36</div>
+          <div class="kpi-sub">Entidades semânticas normalizadas (Q01 a Q36)</div>
+        </div>
+        <div class="kpi-card">
+          <div class="accent-line" style="background-color: var(--color-red);"></div>
+          <span class="kpi-label">Vetores de Alternativa</span>
+          <div class="kpi-value">251</div>
+          <div class="kpi-sub">Vetores indicadores binários (0/1) de resposta</div>
+        </div>
+      </div>
+
+      <!-- Jornada Empírica Q01 a Q36 -->
+      <div class="card" style="margin-bottom: 2rem;">
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.8rem; flex-wrap: wrap; gap: 0.5rem;">
+          <div>
+            <h3 style="font-size: 1rem; font-weight: 800; color: var(--text-main);">Jornada do Instrumento (Sequência Empírica Q01 a Q36)</h3>
+            <p style="font-size: 0.8rem; color: var(--text-muted);">A ordem empírica original do questionário é preservada integralmente[cite: 14]. Clique para abrir a questão.</p>
+          </div>
+          <span class="badge badge-validated">Modelo Lógico v0.1</span>
+        </div>
+
+        <div class="empiric-grid">
+          <div class="q-item" onclick="openQuestion('Q01')"><span>Q01 Escolaridade</span><span class="q-sub">7 alternativas</span></div>
+          <div class="q-item" onclick="openQuestion('Q02')"><span>Q02 Grupo Étnico</span><span class="q-sub">6 alternativas</span></div>
+          <div class="q-item" onclick="openQuestion('Q06')"><span>Q06 Embarcação</span><span class="q-sub">5 alternativas</span></div>
+          <div class="q-item" onclick="openQuestion('Q08')"><span>Q08 Apetrechos</span><span class="q-sub">12 alternativas</span></div>
+          <div class="q-item" onclick="openQuestion('Q09')"><span>Q09 Exposição Solar</span><span class="q-sub">4 alternativas</span></div>
+          <div class="q-item" onclick="openQuestion('Q15')"><span>Q15 Ruído Ocupacional</span><span class="q-sub">5 alternativas</span></div>
+          <div class="q-item" onclick="openQuestion('Q17')"><span>Q17 Carga e Peso</span><span class="q-sub">6 alternativas</span></div>
+          <div class="q-item" onclick="openQuestion('Q23')"><span>Q23 Acidentes</span><span class="q-sub">14 alternativas</span></div>
+          <div class="q-item" onclick="openQuestion('Q27')"><span>Q27 Notificação CAT</span><span class="q-sub">4 alternativas</span></div>
+          <div class="q-item" onclick="openQuestion('Q30')"><span>Q30 Equipamentos UV</span><span class="q-sub">8 alternativas</span></div>
+          <div class="q-item" onclick="openQuestion('Q33')"><span>Q33 Morbidades</span><span class="q-sub">18 alternativas</span></div>
+          <div class="q-item" onclick="openQuestion('Q36')"><span>Q36 Renda e Apoio</span><span class="q-sub">6 alternativas</span></div>
+        </div>
+      </div>
+
+      <!-- Governança e Regras Científicas Não Negociáveis -->
+      <div class="card">
+        <h3 style="font-size: 1rem; font-weight: 800; margin-bottom: 0.6rem; color: var(--text-main);">
+          Regras Científicas e Governança dos Dados (V1 Relacional)
+        </h3>
+        <p style="font-size: 0.85rem; color: var(--text-muted); line-height: 1.5; margin-bottom: 1rem;">
+          A V1 da plataforma implementa a normalização conceitual do repositório primário, separando a identidade do participante (<strong>Pessoa</strong>) dos seus eventos de participação (<strong>Aplicação</strong>), das suas respostas (<strong>Resposta_Questão</strong>) e alternativas selecionadas (<strong>Seleção_Alternativa</strong>)[cite: 14]. Esta modelagem garante total rastreabilidade sem converter o valor $0$ da tabela original em resposta negativa explícita, preservando a integridade estatística da amostragem[cite: 14].
+        </p>
+        <div style="display: flex; gap: 1rem; flex-wrap: wrap; font-size: 0.78rem; color: var(--text-light);">
+          <span>• <strong>1 representa seleção ativa:</strong> Alternativa marcada no instrumento[cite: 14].</span>
+          <span>• <strong>0 não significa "não":</strong> Preserva estado não marcado/não determinado[cite: 14].</span>
+          <span>• <strong>Território:</strong> End. Cidade e End. UF representam estritamente o endereço cadastral[cite: 14].</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- TELA 2: VISUALIZAÇÕES PUBLICADAS (GALERIA EDITORIAL - SEÇÃO 9 DA ESPECIFICAÇÃO) -->
+    <section id="tab-visualizacoes" class="tab-content">
+      <div style="display: flex; justify-content: space-between; align-items: flex-end; margin-bottom: 1.5rem; flex-wrap: wrap; gap: 1rem;">
+        <div>
+          <span class="badge badge-demo" style="margin-bottom: 0.5rem;">Visualizações como Produtos</span>
+          <h2 style="font-size: 1.5rem; font-weight: 800; letter-spacing: -0.02em;">Galeria Publicada & Risk Topology</h2>
+          <p style="font-size: 0.85rem; color: var(--text-light);">
+            Produtos visuais selecionados, documentados e citáveis para uso técnico e científico (N = 16.623)[cite: 14].
+          </p>
+        </div>
+        
+        <div style="display: flex; gap: 0.5rem;">
+          <button class="chip-btn active" onclick="renderCharts()">Visualização Geral</button>
+        </div>
+      </div>
+
+      <div class="datavis-grid">
+        <!-- Visualização Publicada 1: Radar de Riscos -->
+        <div class="chart-card">
+          <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem;">
+            <div>
+              <div style="font-weight: 700; font-size: 0.95rem;">Teia de Exposição e Agravos Ocupacionais (SST)</div>
+              <p style="font-size: 0.75rem; color: var(--text-light);">Mapeamento percentual de exposição contínua na pesca</p>
+            </div>
+            <span class="badge badge-validated">Vis ID: VIS-SST-001</span>
+          </div>
+          <div class="chart-container">
+            <canvas id="chartRadarRiscos"></canvas>
+          </div>
+          
+          <div class="citation-card" style="margin-top: 1rem; padding: 0.85rem;">
+            <p style="font-size: 0.72rem; color: var(--text-muted); margin-bottom: 0.3rem;"><strong>Como Citar esta Visualização (ABNT):</strong></p>
+            <div class="citation-box" style="font-size: 0.72rem; margin-bottom: 0.4rem;">FUNDACENTRO. Visualização Publicada VIS-SST-001: Teia de Exposição Ocupacional. Plataforma Fundacentro, 2026.</div>
+            <button class="btn btn-secondary" style="padding: 0.4rem 0.8rem; font-size: 0.75rem;" onclick="alert('Redirecionando para login/cadastro para aplicar filtros avançados...')">Explorar os dados desta visualização</button>
+          </div>
+        </div>
+
+        <!-- Visualização Publicada 2: Donut Proporcional de Acidentes -->
+        <div class="chart-card">
+          <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem;">
+            <div>
+              <div style="font-weight: 700; font-size: 0.95rem;">Distribuição Proporcional de Acidentes (Q23)</div>
+              <p style="font-size: 0.75rem; color: var(--text-light);">Prevalência de eventos relatados por categoria</p>
+            </div>
+            <span class="badge badge-validated">Vis ID: VIS-Q23-002</span>
+          </div>
+          <div class="chart-container">
+            <canvas id="chartAcidentesDonut"></canvas>
+          </div>
+
+          <div class="citation-card" style="margin-top: 1rem; padding: 0.85rem;">
+            <p style="font-size: 0.72rem; color: var(--text-muted); margin-bottom: 0.3rem;"><strong>Como Citar esta Visualização (ABNT):</strong></p>
+            <div class="citation-box" style="font-size: 0.72rem; margin-bottom: 0.4rem;">FUNDACENTRO. Visualização Publicada VIS-Q23-002: Prevalência de Acidentes (Q23). Plataforma Fundacentro, 2026.</div>
+            <button class="btn btn-secondary" style="padding: 0.4rem 0.8rem; font-size: 0.75rem;" onclick="alert('Redirecionando para login/cadastro para aplicar filtros avançados...')">Explorar os dados desta visualização</button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- TELA 3: EXPLORAR DADOS (ÁREA AUTENTICADA / DEMO - SEÇÃO 10 DA ESPECIFICAÇÃO) -->
+    <section id="tab-explorar" class="tab-content">
+      <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.5rem; flex-wrap: wrap; gap: 1rem;">
+        <div>
+          <h2>Ferramentas de Análise e Motor de Cruzamentos</h2>
+          <p style="font-size: 0.85rem; color: var(--text-light);">Ambiente restrito a usuários cadastrados para filtros, cruzamentos autorizados e exportação[cite: 14].</p>
+        </div>
+        <span class="badge badge-demo">Simulador Query Engine V1</span>
+      </div>
+
+      <div class="explorer-layout">
+        <!-- Filtros do Pesquisador -->
+        <div class="filter-panel">
+          <div class="panel-header">Entrada e Filtros Controlados</div>
+          
+          <div class="filter-group">
+            <label>Caminho de Entrada</label>
+            <select id="entry-mode">
+              <option value="quest">Por Questão (Q01 a Q36)</option>
+              <option value="terr">Por Território Cadastral</option>
+              <option value="char">Por Caracterização Autorizada</option>
+            </select>
+          </div>
+
+          <div class="filter-group">
+            <label>Questão do Instrumento</label>
+            <select id="filter-q">
+              <option value="Q23">Q23 Tipos de Acidentes de Trabalho</option>
+              <option value="Q08">Q08 Apetrechos e Técnicas</option>
+              <option value="Q30">Q30 Equipamentos e Proteção UV</option>
+              <option value="Q33">Q33 Morbidades e Agravos</option>
+            </select>
+          </div>
+
+          <div class="filter-group">
+            <label>Estado (Endereço Cadastral)</label>
+            <select id="filter-uf">
+              <option value="ALL">Todos os Estados Cadastrais (BA, MA, PA, PI)</option>
+              <option value="BA">Bahia (BA)</option>
+              <option value="MA">Maranhão (MA)</option>
+              <option value="PA">Pará (PA)</option>
+              <option value="PI">Piauí (PI)</option>
+            </select>
+          </div>
+
+          <div class="filter-group">
+            <label>Caracterização Autorizada</label>
+            <select id="filter-demo">
+              <option value="SEX">Gênero / Sexo</option>
+              <option value="EDU">Escolaridade (Q01)</option>
+              <option value="ETH">Grupo Étnico-Racial (Q02)</option>
+            </select>
+          </div>
+
+          <button class="btn btn-primary" style="width: 100%; justify-content: center; margin-top: 0.5rem;" onclick="runQuery()">Executar Consulta Analítica</button>
+        </div>
+
+        <!-- Tabela e Controles -->
+        <div>
+          <div class="cross-builder">
+            <div class="cross-builder-title">Controles de Pivoteamento Rápido (Cross-tabulation Autorizada)</div>
+            <button class="chip-btn active" onclick="setPivot('sexo')">Cruzamento por Sexo</button>
+            <button class="chip-btn" onclick="setPivot('uf')">Detalhamento por Estado Cadastral</button>
+            <button class="chip-btn" onclick="setPivot('embarcacao')">Filtro Uso de Embarcação (Q06)</button>
+          </div>
+
+          <div class="card">
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem; flex-wrap: wrap; gap: 0.5rem;">
+              <h3 style="font-size: 1rem; font-weight: 700;">Resultado Analítico: Q23 Acidentes x Caracterização</h3>
+              <span style="font-family: var(--font-mono); font-size: 0.78rem; color: var(--text-light);">Métrica: Seleções de Alternativa ($1$)</span>
+            </div>
+
+            <div class="data-table-container">
+              <table class="data-table">
+                <thead>
+                  <tr>
+                    <th>Categoria de Acidente de Trabalho (Opções Q23)</th>
+                    <th>Feminino (N)</th>
+                    <th>Masculino (N)</th>
+                    <th>Total Seleções</th>
+                    <th>Prevalência (%)</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td><strong>Corte / Perfuração com Apetrechos</strong></td>
+                    <td>2.140</td>
+                    <td>5.412</td>
+                    <td>7.552</td>
+                    <td><span class="insight-stat">45.4%</span></td>
+                  </tr>
+                  <tr>
+                    <td><strong>Queda na Embarcação ou Lama</strong></td>
+                    <td>1.820</td>
+                    <td>3.110</td>
+                    <td>4.930</td>
+                    <td><span class="insight-stat">29.6%</span></td>
+                  </tr>
+                  <tr>
+                    <td><strong>Ferida por Animal Marinho / Peçonhento</strong></td>
+                    <td>1.250</td>
+                    <td>2.840</td>
+                    <td>4.090</td>
+                    <td><span class="insight-stat">24.6%</span></td>
+                  </tr>
+                  <tr>
+                    <td><strong>Queimadura Solar Severa</strong></td>
+                    <td>980</td>
+                    <td>1.450</td>
+                    <td>2.430</td>
+                    <td><span class="insight-stat">14.6%</span></td>
+                  </tr>
+                  <tr style="background-color: var(--bg-subtle); font-weight: 700;">
+                    <td>Não Sofreu Acidentes (Opção Exclusiva)</td>
+                    <td>2.410</td>
+                    <td>3.131</td>
+                    <td>5.541</td>
+                    <td><span class="insight-stat">33.3%</span></td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+
+            <div class="action-row">
+              <button class="btn btn-secondary" onclick="alert('Exportando microdados em formato CSV sanitizado conforme política de governança...')">
+                Exportar CSV (para R / Python / Stata)
+              </button>
+              <button class="btn btn-secondary" onclick="alert('Consulta salva em seu espaço de trabalho (Meu Espaço).')">
+                Salvar Consulta
+              </button>
+            </div>
+
+            <!-- PAINEL "SOBRE ESTE RESULTADO" (SEÇÃO 14 DA ESPECIFICAÇÃO) -->
+            <div class="citation-card" style="margin-top: 1.5rem;">
+              <h4>
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="16" x2="12" y2="12"/><line x1="12" y1="8" x2="12.01" y2="8"/></svg>
+                Sobre Este Resultado & Proveniência
+              </h4>
+              <div style="font-size: 0.78rem; color: var(--text-muted); display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 0.8rem; margin-top: 0.6rem;">
+                <div><strong>Unidade Analítica:</strong> Seleção de Alternativa ($1$)</div>
+                <div><strong>Denominador:</strong> Total de Aplicações com Q23 respondida ($N = 16.623$)</div>
+                <div><strong>Território:</strong> Endereço Cadastral (End. UF)</div>
+                <div><strong>Limitação:</strong> O valor $0$ representa alternativa não marcada e não implica resposta negativa formal[cite: 14].</div>
+              </div>
+            </div>
+
+            <!-- CITAÇÃO PÚBLICA INTEGRADA -->
+            <div class="citation-card">
+              <h4>
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"/><rect x="8" y="2" width="8" height="4" rx="1" ry="1"/></svg>
+                Como Citar Esta Consulta (Pronto para Artigos e Relatórios)
+              </h4>
+              
+              <p style="font-size: 0.75rem; color: var(--text-muted); margin-bottom: 0.3rem;">Padrão ABNT:</p>
+              <div class="citation-box">FUNDACENTRO. Consulta Analítica: Tipos de Acidentes de Trabalho (Q23) por Gênero. In: Plataforma Fundacentro de Dados e Analytics: Pesca Artesanal. São Paulo: Fundacentro, 2026. Disponível em: &lt;https://leo4us.github.io/databank-pesca-artesanal/&gt;. Acesso em: 06 out. 2026.</div>
+
+              <p style="font-size: 0.75rem; color: var(--text-muted); margin-bottom: 0.3rem;">Padrão APA (7th edition):</p>
+              <div class="citation-box">Fundacentro. (2026). Analytical Query: Occupational Accidents by Gender (Q23) [Data set]. Fundacentro Data & Analytics Platform: Artisanal Fisheries. https://leo4us.github.io/databank-pesca-artesanal/</div>
+            </div>
+
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- TELA 4: PESQUISA, INSTRUMENTO & CATÁLOGO (SEÇÃO 18 DA ESPECIFICAÇÃO) -->
+    <section id="tab-pesquisa" class="tab-content">
+      <h2>Documentação Científica, Metodologia e Catálogo</h2>
+      <p style="font-size: 0.875rem; color: var(--text-light); margin-bottom: 1.5rem;">Índice editorial navegável do instrumento e proveniência dos dados[cite: 14].</p>
+
+      <div class="card" style="margin-bottom: 1.5rem;">
+        <h3 style="font-size: 1rem; font-weight: 800; margin-bottom: 0.6rem;">Metodologia e Cadeia de Produtos</h3>
+        <p style="font-size: 0.85rem; color: var(--text-muted); line-height: 1.5;">
+          A plataforma articula o repositório em uma cadeia de valor rastreável: <strong>Fonte e Instrumento</strong> $\rightarrow$ <strong>Banco de Dados</strong> $\rightarrow$ <strong>Consulta / Recorte Analítico</strong> $\rightarrow$ <strong>Visualização Publicada</strong> $\rightarrow$ <strong>Produção Científica</strong> $\rightarrow$ <strong>Citação e Reutilização</strong>[cite: 14].
+        </p>
+      </div>
+
+      <div class="card">
+        <h3 style="font-size: 1rem; font-weight: 800; margin-bottom: 1rem;">Catálogo de Variáveis e Alternativas (251 Atributos)</h3>
+        <div class="filter-group" style="max-width: 400px;">
+          <input type="text" placeholder="Buscar por questão, alternativa ou variável...">
+        </div>
+        <div class="data-table-container">
+          <table class="data-table">
+            <thead>
+              <tr>
+                <th>Código Qxx</th>
+                <th>Texto do Instrumento</th>
+                <th>Número de Alternativas</th>
+                <th>Comportamento Observado</th>
+                <th>Ação</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><strong>Q01</strong></td>
+                <td>Qual a sua escolaridade?</td>
+                <td>7 alternativas</td>
+                <td>Single choice observada</td>
+                <td><button class="chip-btn" onclick="openQuestion('Q01')">Ver Detalhes</button></td>
+              </tr>
+              <tr>
+                <td><strong>Q08</strong></td>
+                <td>Quais apetrechos e técnicas de pesca você utiliza?</td>
+                <td>12 alternativas</td>
+                <td>Múltiplas seleções observadas</td>
+                <td><button class="chip-btn" onclick="openQuestion('Q08')">Ver Detalhes</button></td>
+              </tr>
+              <tr>
+                <td><strong>Q23</strong></td>
+                <td>Quais tipos de acidentes de trabalho você já sofreu?</td>
+                <td>14 alternativas</td>
+                <td>Múltiplas seleções observadas</td>
+                <td><button class="chip-btn" onclick="openQuestion('Q23')">Ver Detalhes</button></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+    <!-- TELA 5: PRODUÇÕES CIENTÍFICAS (SEÇÃO 20 DA ESPECIFICAÇÃO) -->
+    <section id="tab-producoes" class="tab-content">
+      <h2>Biblioteca de Produções Técnicas e Científicas</h2>
+      <p style="font-size: 0.875rem; color: var(--text-light); margin-bottom: 1.5rem;">Relatórios, artigos, apresentações, notas técnicas e produções declaradas por pesquisadores[cite: 14].</p>
+
+      <div class="insights-grid">
+        <div class="insight-card">
+          <span class="badge badge-validated" style="margin-bottom: 0.5rem;">Relatório Técnico</span>
+          <div class="insight-title">Modelagem Conceitual V1 do Banco de Dados Fundacentro</div>
+          <div class="insight-body">
+            Parecer CEP nº 8.137.001 / CAAE: 94837225.1.0000.5450. Especificação da arquitetura relacional e segregação de identificadores civis[cite: 14].
+          </div>
+        </div>
+
+        <div class="insight-card">
+          <span class="badge badge-demo" style="margin-bottom: 0.5rem;">Artigo Científico</span>
+          <div class="insight-title">Perfil de Morbidade Ocupacional na Pesca Artesanal</div>
+          <div class="insight-body">
+            Análise exploratória dos fatores de risco solar, ergométrico e mecânico na amostra dos estados da BA, MA, PA e PI[cite: 14].
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- TELA 6: CADASTRO COMPLETO DE USUÁRIO (SEÇÃO 21 DA ESPECIFICAÇÃO v0.2) -->
+    <section id="tab-cadastro" class="tab-content">
+      <div style="max-width: 620px; margin: 2rem auto;" class="card">
+        
+        <div style="margin-bottom: 1.2rem;">
+          <span class="badge badge-demo" style="margin-bottom: 0.6rem;">Solicitação de Acesso às Ferramentas Analíticas</span>
+          <h3 style="font-size: 1.2rem; font-weight: 800; color: var(--text-main); margin-bottom: 0.3rem;">
+            Criar Conta de Pesquisador / Usuário
+          </h3>
+          <p style="font-size: 0.82rem; color: var(--text-muted);">
+            Conforme a especificação v0.2, o acesso às ferramentas de exploração, filtros, salvamento e exportação exige cadastro com confirmação de e-mail[cite: 14].
+          </p>
+        </div>
+
+        <div style="background-color: var(--bg-subtle); border: 1px solid var(--border-subtle); border-left: 4px solid var(--color-blue); border-radius: 6px; padding: 0.85rem 1rem; margin-bottom: 1.5rem; font-size: 0.78rem; color: var(--text-muted); line-height: 1.45;">
+          <strong>Fluxo de Confirmação:</strong> Após o envio do cadastro, você receberá uma mensagem com um link de ativação no endereço de e-mail informado[cite: 14].
+        </div>
+
+        <form onsubmit="event.preventDefault(); alert('Cadastro realizado com sucesso! Enviamos um e-mail de verificação para confirmação de conta.'); showTab('login');">
+          
+          <div class="filter-group">
+            <label>Nome Completo *</label>
+            <input type="text" placeholder="Ex: Maria Silva Oliveira" required>
+          </div>
+
+          <div class="filter-group">
+            <label>E-mail Institucional (Sujeito a confirmação) *</label>
+            <input type="email" placeholder="pesquisador@instituicao.edu.br" required>
+          </div>
+
+          <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem;" class="filter-group">
+            <div>
+              <label>Senha *</label>
+              <input type="password" placeholder="••••••••" required>
+            </div>
+            <div>
+              <label>Confirmar Senha *</label>
+              <input type="password" placeholder="••••••••" required>
+            </div>
+          </div>
+
+          <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem;" class="filter-group">
+            <div>
+              <label>Instituição de Vínculo *</label>
+              <input type="text" placeholder="Ex: Fundacentro / UNICAMP / Colônia" required>
+            </div>
+            <div>
+              <label>País *</label>
+              <input type="text" value="Brasil" required>
+            </div>
+          </div>
+
+          <div class="filter-group">
+            <label>Perfil Principal *</label>
+            <select required>
+              <option value="">Selecione seu perfil...</option>
+              <option>Equipe do Projeto (PTSSPA)</option>
+              <option>Agente Territorial Local (ATL)</option>
+              <option>Pesquisador / Docente de Pós-Graduação</option>
+              <option>Gestor Público de Saúde e Segurança</option>
+              <option>Estudante de Graduação / Pós-Graduação</option>
+              <option>Representante de Entidade da Pesca Artesanal</option>
+            </select>
+          </div>
+
+          <div class="filter-group">
+            <label>Finalidade Principal de Uso dos Dados *</label>
+            <textarea rows="2" placeholder="Descreva sucintamente o objetivo do uso da plataforma para fins acadêmicos ou de gestão..." required></textarea>
+          </div>
+
+          <div style="margin: 1rem 0; font-size: 0.75rem; color: var(--text-muted); background-color: var(--bg-cream); padding: 0.75rem; border-radius: 6px; border: 1px solid var(--border-subtle);">
+            <label style="display: flex; gap: 0.5rem; align-items: flex-start; cursor: pointer;">
+              <input type="checkbox" required style="margin-top: 0.15rem;">
+              <span>Declaro estar ciente das regras de governança, confidencialidade e do compromisso de não tentar reidentificar participantes (Parecer CEP nº 8.137.001)[cite: 14].</span>
+            </label>
+          </div>
+
+          <button type="submit" class="btn btn-primary" style="width: 100%; justify-content: center; margin-top: 0.5rem;">
+            Criar Conta e Enviar Solicitação
+          </button>
+        </form>
+      </div>
+    </section>
+
+    <!-- TELA 7: LOGIN DA CONTA (SEÇÃO 21.2 DA ESPECIFICAÇÃO) -->
+    <section id="tab-login" class="tab-content">
+      <div style="max-width: 400px; margin: 3rem auto;" class="card">
+        <span class="badge badge-demo" style="margin-bottom: 1rem;">Camada Autenticada</span>
+        <h3 style="margin-bottom: 1.2rem; font-size: 1.1rem;">Acessar Plataforma</h3>
+        
+        <div class="filter-group">
+          <label>E-mail Institucional</label>
+          <input type="email" placeholder="pesquisador@instituicao.edu.br">
+        </div>
+
+        <div class="filter-group">
+          <label>Senha</label>
+          <input type="password" placeholder="••••••••">
+        </div>
+
+        <button class="btn btn-primary" style="width: 100%; justify-content: center; margin-top: 0.5rem;" onclick="alert('Autenticação simulada. Acesso concedido às ferramentas de análise.')">Entrar na Conta</button>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- RODAPÉ INSTITUCIONAL (SEÇÃO 15 & 34 DA ESPECIFICAÇÃO) -->
+  <footer>
+    <div class="footer-container">
+      <div class="footer-col">
+        <h4>Fundacentro Data & Analytics</h4>
+        <p style="font-size: 0.8rem; font-weight: 700; color: var(--text-main); margin-bottom: 0.4rem;">
+          BANCO DE DADOS FUNDACENTRO E PRODUÇÕES
+        </p>
+        <p style="font-size: 0.75rem; color: var(--text-muted);">
+          Projeto Trabalho Saudável e Seguro na Pesca Artesanal. Propriedade dos dados: <strong>Fundacentro</strong>[cite: 14].
+        </p>
+        <div style="margin-top: 0.6rem; padding: 0.5rem; background-color: var(--bg-subtle); border-radius: 6px; font-size: 0.73rem; border: 1px solid var(--border-subtle);">
+          <p><strong>Aprovação Comitê de Ética em Pesquisa (CEP)</strong></p>
+          <p>Parecer CEP nº: <strong>8.137.001</strong> | CAAE: <strong>94837225.1.0000.5450</strong>[cite: 14]</p>
+        </div>
+      </div>
+
+      <div class="footer-col">
+        <h4>Navegação Editorial</h4>
+        <ul>
+          <li><a href="#" onclick="showTab('visualizacoes')">Visualizações Publicadas</a></li>
+          <li><a href="#" onclick="showTab('explorar')">Ferramentas de Análise</a></li>
+          <li><a href="#" onclick="showTab('pesquisa')">Instrumento & Catálogo</a></li>
+          <li><a href="#" onclick="showTab('producoes')">Biblioteca de Produções</a></li>
+        </ul>
+      </div>
+
+      <div class="footer-col">
+        <h4>Governança e Privacidade</h4>
+        <ul>
+          <li><a href="#">Segregação de PII e Anonimização</a></li>
+          <li><a href="#">Termos de Uso de Microdados</a></li>
+          <li><a href="#">Conformidade LGPD e CEP</a></li>
+        </ul>
+      </div>
+    </div>
+
+    <div style="max-width: 1400px; margin: 1.5rem auto 0; padding-top: 1rem; border-top: 1px solid var(--border-subtle); display: flex; justify-content: space-between; align-items: center; font-size: 0.75rem; color: var(--text-light); flex-wrap: wrap; gap: 0.5rem;">
+      <p>© 2026 Fundacentro. Plataforma de Dados e Analytics v0.2 (Especificação Funcional e Científica)[cite: 14].</p>
+      <p>Desenvolvido para o Projeto Trabalho Saudável e Seguro na Pesca Artesanal[cite: 14].</p>
+    </div>
+  </footer>
+
+  <div class="mosaic-strip">
+    <div class="m-block" style="background-color: var(--color-yellow);"></div>
+    <div class="m-block" style="background-color: var(--color-ochre);"></div>
+    <div class="m-block" style="background-color: var(--color-green);"></div>
+    <div class="m-block" style="background-color: var(--color-blue);"></div>
+    <div class="m-block" style="background-color: var(--color-red);"></div>
+  </div>
+
+  <!-- BIBLIOTECA CHART.JS -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+  <!-- CONTROLADOR JAVASCRIPT GLOBAL -->
+  <script>
+    function showTab(tabId) {
+      document.querySelectorAll('.tab-content').forEach(tab => tab.classList.remove('active'));
+      document.querySelectorAll('nav a').forEach(link => link.classList.remove('active'));
+
+      const targetTab = document.getElementById('tab-' + tabId);
+      if (targetTab) targetTab.classList.add('active');
+
+      const targetNav = document.getElementById('nav-' + tabId);
+      if (targetNav) targetNav.classList.add('active');
+
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+
+      if (tabId === 'visualizacoes' || tabId === 'home') {
+        renderCharts();
+      }
+    }
+
+    function openQuestion(qCode) {
+      showTab('explorar');
+      document.getElementById('filter-q').value = qCode;
+      runQuery();
+    }
+
+    function setPivot(pivotType) {
+      document.querySelectorAll('.chip-btn').forEach(btn => btn.classList.remove('active'));
+      event.target.classList.add('active');
+    }
+
+    function runQuery() {
+      const qSelected = document.getElementById('filter-q').value;
+      alert('Executando consulta analítica para a questão ' + qSelected + ' respeitando o Modelo Lógico v0.1.');
+    }
+
+    /* VISUALIZAÇÕES DE RENDERIZAÇÃO GRÁFICA (Chart.js) */
+    let chartInstance1 = null;
+    let chartInstance2 = null;
+
+    function renderCharts() {
+      if (chartInstance1) chartInstance1.destroy();
+      if (chartInstance2) chartInstance2.destroy();
+
+      Chart.defaults.font.family = "'Inter', sans-serif";
+      Chart.defaults.color = '#475569';
+
+      // 1. Radar Ocupacional
+      const ctx1 = document.getElementById('chartRadarRiscos');
+      if (ctx1) {
+        chartInstance1 = new Chart(ctx1.getContext('2d'), {
+          type: 'radar',
+          data: {
+            labels: [
+              'Exposição Solar (Q09)',
+              'Esforço / Peso (Q17)',
+              'Movimento Repetitivo (Q21)',
+              'Risco de Queda (Q22)',
+              'Ruído / Barulho (Q15)',
+              'Produtos Químicos (Q16)'
+            ],
+            datasets: [{
+              label: 'Prevalência Amostral (%)',
+              data: [74.2, 91.3, 82.5, 68.4, 42.1, 35.8],
+              backgroundColor: 'rgba(29, 79, 177, 0.18)',
+              borderColor: '#1D4FB1',
+              borderWidth: 2.5,
+              pointBackgroundColor: '#C27329',
+              pointBorderColor: '#FFFFFF',
+              pointRadius: 4
+            }]
+          },
+          options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: { legend: { display: false } },
+            scales: {
+              r: {
+                angleLines: { color: '#E2E0D2' },
+                grid: { color: '#E2E0D2' },
+                pointLabels: { font: { size: 10, weight: '600' }, color: '#0F172A' },
+                ticks: { display: false, stepSize: 20 }
+              }
+            }
+          }
+        });
+      }
+
+      // 2. Donut Minimalista
+      const ctx2 = document.getElementById('chartAcidentesDonut');
+      if (ctx2) {
+        chartInstance2 = new Chart(ctx2.getContext('2d'), {
+          type: 'doughnut',
+          data: {
+            labels: [
+              'Corte / Perfuração',
+              'Queda na Embarcação / Lama',
+              'Ferida por Animal Marinho',
+              'Queimadura Solar Severa',
+              'Não Sofreu Acidentes'
+            ],
+            datasets: [{
+              data: [45.4, 29.6, 24.6, 14.6, 33.3],
+              backgroundColor: ['#1D4FB1', '#C27329', '#E4C027', '#E22927', '#22C55E'],
+              borderWidth: 3,
+              borderColor: '#FFFFFF',
+              hoverOffset: 6
+            }]
+          },
+          options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            cutout: '68%',
+            plugins: {
+              legend: {
+                position: 'bottom',
+                labels: { boxWidth: 12, padding: 15, font: { size: 11, weight: '500' } }
+              }
+            }
+          }
+        });
+      }
+    }
+
+    // Inicializa gráficos após o carregamento da página
+    window.addEventListener('DOMContentLoaded', () => {
+      renderCharts();
+    });
+  </script>
+</body>
+</html>
