@@ -3,14 +3,14 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Fundacentro Data Studio & Scientific Atlas — Pesca Artesanal</title>
+  <title>Fundacentro Data Studio e Scientific Atlas — Pesca Artesanal</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;700&family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,600;1,6..72,400&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800efamily=JetBrains+Mono:wght@400;500;700efamily=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,600;1,6..72,400edisplay=swap" rel="stylesheet">
   
   <style>
     /* ==========================================================================
-       DESIGN TOKENS & SYSTEM VARIABLES (BEAUTIFUL INFORMATION)
+       DESIGN TOKENS e SYSTEM VARIABLES (BEAUTIFUL INFORMATION)
        ========================================================================== */
     :root {
       --bg-cream: #FBF9F0;
@@ -55,7 +55,7 @@
     a { color: inherit; text-decoration: none; }
 
     /* ==========================================================================
-       HEADER & NAVIGATION (NÍVEL SUPERIOR EDITORIAL)
+       HEADER e NAVIGATION (NÍVEL SUPERIOR EDITORIAL)
        ========================================================================== */
     header {
       background-color: rgba(251, 249, 240, 0.95);
@@ -288,7 +288,7 @@
       text-overflow: ellipsis;
     }
 
-    /* Números Conhecidos & Métricas */
+    /* Números Conhecidos e Métricas */
     .metrics-row {
       display: grid;
       grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
@@ -445,7 +445,7 @@
     }
 
     /* ==========================================================================
-       DRAWER LATERAL (SOBRE ESTE RESULTADO & METODOLOGIA)
+       DRAWER LATERAL (SOBRE ESTE RESULTADO e METODOLOGIA)
        ========================================================================== */
     .drawer-backdrop {
       position: fixed;
@@ -508,7 +508,7 @@
     }
 
     /* ==========================================================================
-       MODAL DE DOWNLOAD & EXPORTAÇÃO
+       MODAL DE DOWNLOAD e EXPORTAÇÃO
        ========================================================================== */
     .modal-backdrop {
       position: fixed;
@@ -675,7 +675,7 @@
         </div>
       </div>
 
-      <!-- Números Conhecidos & Métricas Confirmadas -->
+      <!-- Números Conhecidos e Métricas Confirmadas -->
       <div class="metrics-row">
         <div class="metric-item">
           <div class="m-value">36</div>
@@ -754,7 +754,7 @@
         </div>
 
         <div style="display: flex; justify-content: space-between; align-items: center; margin-top: 1.5rem; flex-wrap: wrap; gap: 1rem;">
-          <button class="btn btn-secondary" onclick="openDrawer('SOBRE')">Sobre Este Resultado & Proveniência</button>
+          <button class="btn btn-secondary" onclick="openDrawer('SOBRE')">Sobre Este Resultado e Proveniência</button>
           <button class="btn btn-secondary" onclick="openDrawer('CITAR')">Citar Este Resultado</button>
         </div>
       </div>
@@ -820,7 +820,7 @@
         </div>
 
         <div style="display: flex; gap: 1rem; flex-wrap: wrap;">
-          <button class="chip-btn active" onclick="showTab('comparador')">Duplicar & Comparar</button>
+          <button class="chip-btn active" onclick="showTab('comparador')">Duplicar e Comparar</button>
           <button class="chip-btn" onclick="alert('Análise salva em Meu Espaço.')">Salvar em Meu Espaço</button>
         </div>
       </div>
@@ -901,7 +901,7 @@
     <!-- TELA 6: TERRITÓRIOS (SEÇÃO 19 DA ESPECIFICAÇÃO) -->
     <section id="tab-territorios" class="tab-content">
       <div style="margin-bottom: 2rem;">
-        <span class="badge badge-demo" style="margin-bottom: 0.5rem;">Spatial & Cadastral Layer</span>
+        <span class="badge badge-demo" style="margin-bottom: 0.5rem;">Spatial e Cadastral Layer</span>
         <h2 style="font-size: 1.8rem; font-weight: 700;">Visão Geral Territorial (Endereço Cadastral)</h2>
         <p style="font-size: 0.875rem; color: var(--text-muted);">
           Aviso Importante: Os campos territoriais representam estritamente o endereço cadastral (End. UF / End. Cidade) do participante[cite: 14].
@@ -915,7 +915,7 @@
       </div>
     </section>
 
-    <!-- TELA 7: PRODUÇÕES & RELATÓRIO WEB (SEÇÕES 24 & 25 DA ESPECIFICAÇÃO) -->
+    <!-- TELA 7: PRODUÇÕES e RELATÓRIO WEB (SEÇÕES 24 e 25 DA ESPECIFICAÇÃO) -->
     <section id="tab-producoes" class="tab-content">
       <div style="margin-bottom: 2rem;">
         <span class="badge badge-demo" style="margin-bottom: 0.5rem;">Biblioteca Editorial</span>
@@ -948,7 +948,7 @@
     <section id="tab-comunidade" class="tab-content">
       <div style="margin-bottom: 2rem;">
         <span class="badge badge-demo" style="margin-bottom: 0.5rem;">Comunidade de Prática</span>
-        <h2 style="font-size: 1.8rem; font-weight: 700;">Pesquisadores, Projetos & Reutilização</h2>
+        <h2 style="font-size: 1.8rem; font-weight: 700;">Pesquisadores, Projetos e Reutilização</h2>
         <p style="font-size: 0.875rem; color: var(--text-muted);">Rede científica focada em salvamento, citação e trabalhos derivados[cite: 14].</p>
       </div>
 
@@ -1033,12 +1033,12 @@
 
   </main>
 
-  <!-- DRAWER LATERAL (METODOLOGIA, PROVENIÊNCIA & CITAÇÃO) -->
+  <!-- DRAWER LATERAL (METODOLOGIA, PROVENIÊNCIA e CITAÇÃO) -->
   <div class="drawer-backdrop" id="drawer-backdrop" onclick="closeDrawer()"></div>
   <div class="drawer-panel" id="drawer-panel">
     <div class="drawer-header">
-      <h3 style="font-size: 1.1rem; font-weight: 700;" id="drawer-title">Sobre Este Resultado & Proveniência</h3>
-      <button class="drawer-close" onclick="closeDrawer()">&times;</button>
+      <h3 style="font-size: 1.1rem; font-weight: 700;" id="drawer-title">Sobre Este Resultado e Proveniência</h3>
+      <button class="drawer-close" onclick="closeDrawer()">etimes;</button>
     </div>
 
     <div class="meta-list" id="drawer-body">
@@ -1046,12 +1046,12 @@
     </div>
   </div>
 
-  <!-- MODAL DE DOWNLOAD & EXPORTAÇÃO (SEÇÃO 37 DA ESPECIFICAÇÃO) -->
+  <!-- MODAL DE DOWNLOAD e EXPORTAÇÃO (SEÇÃO 37 DA ESPECIFICAÇÃO) -->
   <div class="modal-backdrop" id="modal-download">
     <div class="modal-box">
       <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.2rem;">
         <h3 style="font-size: 1.1rem; font-weight: 700;">Prepare sua Saída / Exportação</h3>
-        <button class="drawer-close" onclick="closeModalDownload()">&times;</button>
+        <button class="drawer-close" onclick="closeModalDownload()">etimes;</button>
       </div>
 
       <div style="margin-bottom: 1rem;">
@@ -1152,7 +1152,7 @@
         discTitle: "O que você quer descobrir?"
       },
       EN: {
-        subbrand: "Database & Scientific Publications",
+        subbrand: "Database e Scientific Publications",
         btnAnalys: "Analyze Data",
         badgeHero: "Interactive Scientific Publication",
         heroTitle: "Data to understand work, health, and territories in artisanal fisheries",
@@ -1241,13 +1241,13 @@
       window.scrollTo({ top: document.getElementById('analysis-result-box').offsetTop - 100, behavior: 'smooth' });
     }
 
-    // DRAWERS & MODAIS
+    // DRAWERS e MODAIS
     function openDrawer(type) {
       const drawerTitle = document.getElementById('drawer-title');
       const drawerBody = document.getElementById('drawer-body');
       
       if (type === 'SOBRE') {
-        drawerTitle.innerText = "Sobre Este Resultado & Proveniência";
+        drawerTitle.innerText = "Sobre Este Resultado e Proveniência";
         drawerBody.innerHTML = `
           <div class="meta-item"><label>Identificador da Análise</label><span>ANL-DEMO-000184</span></div>
           <div class="meta-item"><label>Unidade Analítica</label><span>Seleção de Alternativa (1)[cite: 14]</span></div>
