@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Fundacentro Data Studio e Scientific Atlas — Pesca Artesanal</title>
+  <title>Data studio sobre Pesca Artesanal</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800efamily=JetBrains+Mono:wght@400;500;700efamily=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,600;1,6..72,400edisplay=swap" rel="stylesheet">
@@ -603,7 +603,7 @@
           <path d="M 60 85 L 85 85 L 60 98 Z" fill="#E22927"/>
         </svg>
         <div>
-          <span class="brand-title">Fundacentro Research Studio</span>
+          <span class="brand-title">Research Studio</span>
           <span class="brand-subtitle" id="txt-subbrand">Banco de Dados e Produções Científicas</span>
         </div>
       </div>
@@ -638,9 +638,9 @@
     <section id="tab-home" class="tab-content active">
       <div class="hero-section">
         <span class="badge badge-demo" id="badge-hero">Publicação Científica Interativa</span>
-        <h1 class="hero-title" id="hero-title">Dados para compreender o trabalho, a saúde e os territórios da pesca artesanal</h1>
+        <h1 class="hero-title" id="hero-title">Dados para compreender o trabalho, a saúde e os territórios da Pesca Artesanal no Brasil</h1>
         <p class="hero-subtitle" id="hero-subtitle">
-          Explore e construa os cruzamentos partir de uma pesquisa científica pública.
+          Construa os cruzamentos partir de uma base de dados do projeto de pesquisa PSSPA.
         </p>
         <div class="btn-group">
           <button class="btn btn-primary" onclick="showTab('explorar')" id="btn-hero-1">Explorar Resultados</button>
@@ -653,15 +653,15 @@
       <div style="margin-bottom: 3rem;">
         <div style="display: flex; justify-content: space-between; align-items: flex-end; margin-bottom: 0.8rem;">
           <div>
-            <h3 style="font-size: 1rem; font-weight: 700;" id="txt-seq-title">Sequência Empírica do Instrumento (Q01 a Q36)</h3>
-            <p style="font-size: 0.82rem; color: var(--text-muted);" id="txt-seq-sub">A ordem empírica original do questionário é preservada sem reorganização artificial.</p>
+            <h3 style="font-size: 1rem; font-weight: 700;" id="txt-seq-title">Sequência empírica do instrumento (Q01 a Q36)</h3>
+            <p style="font-size: 0.82rem; color: var(--text-muted);" id="txt-seq-sub">A ordem empírica original do questionário é preservada.</p>
           </div>
-          <span class="badge badge-validated">Modelo Lógico v0.1</span>
+          <span class="badge badge-validated">Modelo lógico v0.1</span>
         </div>
 
         <div class="empiric-strip">
           <div class="q-node" onclick="openQuestion('Q01')"><div class="q-code">Q01</div><div class="q-label">Escolaridade</div></div>
-          <div class="q-node" onclick="openQuestion('Q02')"><div class="q-code">Q02</div><div class="q-label">Grupo Étnico</div></div>
+          <div class="q-node" onclick="openQuestion('Q02')"><div class="q-code">Q02</div><div class="q-label">Grupo étnico</div></div>
           <div class="q-node" onclick="openQuestion('Q06')"><div class="q-code">Q06</div><div class="q-label">Embarcação</div></div>
           <div class="q-node" onclick="openQuestion('Q08')"><div class="q-code">Q08</div><div class="q-label">Apetrechos</div></div>
           <div class="q-node" onclick="openQuestion('Q09')"><div class="q-code">Q09</div><div class="q-label">Exposição Solar</div></div>
@@ -671,7 +671,7 @@
           <div class="q-node" onclick="openQuestion('Q27')"><div class="q-code">Q27</div><div class="q-label">CAT / Notificação</div></div>
           <div class="q-node" onclick="openQuestion('Q30')"><div class="q-code">Q30</div><div class="q-label">Proteção UV</div></div>
           <div class="q-node" onclick="openQuestion('Q33')"><div class="q-code">Q33</div><div class="q-label">Morbidades</div></div>
-          <div class="q-node" onclick="openQuestion('Q36')"><div class="q-code">Q36</div><div class="q-label">Renda</div></div>
+          <div class="q-node" onclick="openQuestion('Q36')"><div class="q-code">Q36</div><div class="q-label">Renda (?)</div></div>
         </div>
       </div>
 
@@ -691,7 +691,7 @@
         </div>
         <div class="metric-item">
           <div class="m-value">16.623</div>
-          <div class="m-label" id="lbl-m4">Aplicações Validadas</div>
+          <div class="m-label" id="lbl-m4">Aplicações validadas</div>
         </div>
       </div>
 
@@ -704,7 +704,7 @@
         <div class="discovery-item">
           <h3>QUESTÕES</h3>
           <p>Explore o instrumento empírico Q01 a Q36 e suas distribuições de resposta.</p>
-          <a href="#" onclick="showTab('explorar')" style="font-size: 0.82rem; font-weight: 700; color: var(--color-primary);">Explorar Questões →</a>
+          <a href="#" onclick="showTab('explorar')" style="font-size: 0.82rem; font-weight: 700; color: var(--color-primary);">Explorar questões →</a>
         </div>
         <div class="discovery-item">
           <h3>TERRITÓRIOS</h3>
@@ -719,7 +719,7 @@
         <div class="discovery-item">
           <h3>PRODUÇÕES</h3>
           <p>Veja como pesquisadores e gestores reutilizaram os dados em evidências.</p>
-          <a href="#" onclick="showTab('producoes')" style="font-size: 0.82rem; font-weight: 700; color: var(--color-primary);">Biblioteca de Produções →</a>
+          <a href="#" onclick="showTab('producoes')" style="font-size: 0.82rem; font-weight: 700; color: var(--color-primary);">Biblioteca de produções →</a>
         </div>
       </div>
     </section>
@@ -728,17 +728,17 @@
     <section id="tab-explorar" class="tab-content">
       <div style="margin-bottom: 2rem;">
         <span style="font-family: var(--font-mono); font-size: 0.75rem; color: var(--text-light);">Pesquisa / Instrumento / Q23</span>
-        <h2 style="font-size: 1.8rem; font-weight: 700; margin-top: 0.3rem;">Descoberta Progressiva de Resultados</h2>
+        <h2 style="font-size: 1.8rem; font-weight: 700; margin-top: 0.3rem;">Descoberta progressiva de achados</h2>
       </div>
 
       <!-- Filtros Bloqueados na Camada Pública (Seção 13 da Especificação) -->
       <div style="background-color: var(--bg-card); border: 1px solid var(--border-subtle); border-radius: 8px; padding: 1.5rem; margin-bottom: 2rem;">
         <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem; flex-wrap: wrap; gap: 1rem;">
           <div>
-            <h4 style="font-size: 0.95rem; font-weight: 700;">Resultado Geral Publicado: Q23 Acidentes de Trabalho</h4>
+            <h4 style="font-size: 0.95rem; font-weight: 700;">Achado geral publicado: Q23 Acidentes de Trabalho</h4>
             <p style="font-size: 0.82rem; color: var(--text-muted);">Visualização pública sem autenticação. Para aplicar filtros avançados, crie sua conta.</p>
           </div>
-          <button class="btn btn-primary" onclick="showTab('cadastro')" style="font-size: 0.82rem;">Criar Conta para Filtrar</button>
+          <button class="btn btn-primary" onclick="showTab('cadastro')" style="font-size: 0.82rem;">Criar conta para filtrar</button>
         </div>
 
         <div style="display: flex; gap: 1rem; flex-wrap: wrap; margin-bottom: 1.5rem;">
@@ -754,8 +754,8 @@
         </div>
 
         <div style="display: flex; justify-content: space-between; align-items: center; margin-top: 1.5rem; flex-wrap: wrap; gap: 1rem;">
-          <button class="btn btn-secondary" onclick="openDrawer('SOBRE')">Sobre Este Resultado e Proveniência</button>
-          <button class="btn btn-secondary" onclick="openDrawer('CITAR')">Citar Este Resultado</button>
+          <button class="btn btn-secondary" onclick="openDrawer('SOBRE')">Sobre este resultado e proveniência</button>
+          <button class="btn btn-secondary" onclick="openDrawer('CITAR')">Citar este resultado</button>
         </div>
       </div>
     </section>
@@ -763,8 +763,8 @@
     <!-- TELA 3: LABORATÓRIO DE ANÁLISE / CONSTRUTOR VISUAL (SEÇÃO 15 DA ESPECIFICAÇÃO) -->
     <section id="tab-laboratorio" class="tab-content">
       <div style="margin-bottom: 2rem;">
-        <span class="badge badge-demo" style="margin-bottom: 0.5rem;">Workspace de Pesquisa</span>
-        <h2 style="font-size: 1.8rem; font-weight: 700;">Construtor Visual de Perguntas aos Dados</h2>
+        <span class="badge badge-demo" style="margin-bottom: 0.5rem;">Workspace de pesquisa</span>
+        <h2 style="font-size: 1.8rem; font-weight: 700;">Construtor de Perguntas para base de dados</h2>
         <p style="font-size: 0.875rem; color: var(--text-muted);">Monte sua análise combinando variáveis, universos e estratificações.</p>
       </div>
 
@@ -779,20 +779,20 @@
           </select>
           PARA O UNIVERSO DE 
           <select id="b-univ">
-            <option value="ALL">Todas as Aplicações Validadas (N=16.623)</option>
-            <option value="EMB">Apenas Pescadores com Embarcação (Q06)</option>
-            <option value="SOL">Apenas Expostos ao Sol Densamente (Q09)</option>
+            <option value="ALL">Todas as aplicações validadas (N=16.623)</option>
+            <option value="EMB">Apenas pescadores com embarcação (Q06)</option>
+            <option value="SOL">Apenas expostos ao sol densamente (Q09)</option>
           </select>
           ESTRATIFICADO POR 
           <select id="b-strat">
             <option value="SEX">Sexo / Gênero (Cadastro)</option>
-            <option value="UF">Estado do Endereço Cadastral (End. UF)</option>
+            <option value="UF">Estado do endereço cadastral (End. UF)</option>
             <option value="EDU">Escolaridade (Q01)</option>
           </select>
         </div>
 
         <div class="human-phrase-box" id="human-phrase">
-          "Você está perguntando como se distribui <strong>Q23 Tipos de Acidentes</strong> entre <strong>Todas as Aplicações Validadas</strong>, estratificado por <strong>Sexo / Gênero</strong>."
+          "Você está perguntando como se distribui <strong>Q23 Tipos de Acidentes</strong> entre <strong>Todas as aplicações validadas</strong>, estratificado por <strong>Sexo / Gênero</strong>."
         </div>
 
         <div class="execute-bar">
@@ -820,8 +820,8 @@
         </div>
 
         <div style="display: flex; gap: 1rem; flex-wrap: wrap;">
-          <button class="chip-btn active" onclick="showTab('comparador')">Duplicar e Comparar</button>
-          <button class="chip-btn" onclick="alert('Análise salva em Meu Espaço.')">Salvar em Meu Espaço</button>
+          <button class="chip-btn active" onclick="showTab('comparador')">Duplicar e comparar</button>
+          <button class="chip-btn" onclick="alert('Análise salva em Meu Espaço.')">Salvar em meu espaço</button>
         </div>
       </div>
     </section>
@@ -829,8 +829,8 @@
     <!-- TELA 4: COMPARADOR MULTIGRUPO (SEÇÃO 20 DA ESPECIFICAÇÃO) -->
     <section id="tab-comparador" class="tab-content">
       <div style="margin-bottom: 2rem;">
-        <span class="badge badge-demo" style="margin-bottom: 0.5rem;">Análise Comparativa</span>
-        <h2 style="font-size: 1.8rem; font-weight: 700;">Comparador de Grupos Populacionais</h2>
+        <span class="badge badge-demo" style="margin-bottom: 0.5rem;">Análise comparativa</span>
+        <h2 style="font-size: 1.8rem; font-weight: 700;">Comparador de grupos populacionais</h2>
         <p style="font-size: 0.875rem; color: var(--text-muted);">Compare recortes dentro da mesma questão e métrica.</p>
       </div>
 
@@ -845,8 +845,8 @@
             <select><option>Feminino</option></select>
           </div>
           <div class="filter-group">
-            <label>Endereço Cadastral (End. UF)</label>
-            <select><option>Todos os Estados (BA, MA, PA, PI)</option></select>
+            <label>Endereço cadastral (End. UF)</label>
+            <select><option>Todos os estados participantes da pesquisa (BA, MA, PA, PI)</option></select>
           </div>
         </div>
 
@@ -860,8 +860,8 @@
             <select><option>Masculino</option></select>
           </div>
           <div class="filter-group">
-            <label>Endereço Cadastral (End. UF)</label>
-            <select><option>Todos os Estados (BA, MA, PA, PI)</option></select>
+            <label>Endereço cadastral (End. UF)</label>
+            <select><option>Todos os estados da pesquisa (BA, MA, PA, PI)</option></select>
           </div>
         </div>
       </div>
