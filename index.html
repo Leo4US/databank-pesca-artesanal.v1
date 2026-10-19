@@ -579,6 +579,18 @@
       .hero-title { font-size: 2.2rem; }
     }
   </style>
+<style>
+.funda-form-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:1rem}
+.funda-form-grid label{display:block;font-size:.8rem;font-weight:700;margin-bottom:.4rem}
+.funda-form-grid select{width:100%;padding:.75rem;border:1px solid var(--border-accent);border-radius:7px;background:white;color:var(--text-main)}
+.funda-grid-alternativas{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:.65rem}
+.funda-option{padding:.7rem;border:1px solid var(--border-subtle);background:var(--bg-subtle);border-radius:6px;font-size:.83rem}
+.funda-note{margin:1rem 0;color:var(--text-muted);font-size:.82rem;line-height:1.6}
+.funda-result-table{border-collapse:collapse;width:100%;font-size:.85rem;margin-top:1rem}
+.funda-result-table th,.funda-result-table td{padding:.65rem;border-bottom:1px solid var(--border-subtle);text-align:left}
+.funda-result-table th{background:var(--bg-subtle)}
+.funda-state{padding:1rem;border-left:3px solid var(--color-secondary);background:var(--bg-subtle);border-radius:4px;font-size:.88rem}
+</style>
 </head>
 <body>
 
@@ -724,107 +736,44 @@
       </div>
     </section>
 
-    <!-- TELA 2: EXPLORAR PROGRESSIVO (SEÇÃO 14 DA ESPECIFICAÇÃO) -->
-    <section id="tab-explorar" class="tab-content">
-      <div style="margin-bottom: 2rem;">
-        <span style="font-family: var(--font-mono); font-size: 0.75rem; color: var(--text-light);">Pesquisa / Instrumento / Q23</span>
-        <h2 style="font-size: 1.8rem; font-weight: 700; margin-top: 0.3rem;">Descoberta progressiva de achados</h2>
-      </div>
+    <!-- TELA 2: EXPLORAR | CATALOGO REAL 26F.01 -->
+<section id="tab-explorar" class="tab-content">
+  <div style="margin-bottom:2rem"><span class="badge badge-validated">Catálogo real do CORE · 26E.01</span>
+    <h2 style="font-size:1.8rem;margin-top:.5rem">Explorar as 36 questões da pesquisa</h2>
+    <p style="color:var(--text-muted)">Instrumento e alternativas reais. Resultados numéricos aparecem somente quando aprovados para publicação.</p></div>
+  <div class="builder-container">
+    <label for="exp-questao" style="display:block;font-weight:700;margin-bottom:.5rem">Questão</label>
+    <select id="exp-questao" style="width:100%;padding:.8rem;border:1px solid var(--border-accent);border-radius:7px;background:white"></select>
+    <div id="exp-enunciado" style="margin:1rem 0;font-family:var(--font-serif);font-size:1.3rem"></div>
+    <div id="exp-alternativas" class="funda-grid-alternativas"></div>
+    <div class="execute-bar"><span class="infra-tag" id="exp-status" role="status">Carregando catálogo...</span>
+      <button class="btn btn-primary" id="exp-abrir">Consultar distribuição publicada</button></div>
+  </div>
+  <div id="exp-resultado" class="builder-container" hidden aria-live="polite"></div>
+  <p class="funda-note">Código 0 significa alternativa não marcada; não equivale automaticamente a uma resposta negativa. As ausências de marcação não são tratadas como não respostas sem validação específica.</p>
+</section>
 
-      <!-- Filtros Bloqueados na Camada Pública (Seção 13 da Especificação) -->
-      <div style="background-color: var(--bg-card); border: 1px solid var(--border-subtle); border-radius: 8px; padding: 1.5rem; margin-bottom: 2rem;">
-        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem; flex-wrap: wrap; gap: 1rem;">
-          <div>
-            <h4 style="font-size: 0.95rem; font-weight: 700;">Achado geral publicado: Q23 Acidentes de Trabalho</h4>
-            <p style="font-size: 0.82rem; color: var(--text-muted);">Visualização pública sem autenticação. Para aplicar filtros avançados, crie sua conta.</p>
-          </div>
-          <button class="btn btn-primary" onclick="showTab('cadastro')" style="font-size: 0.82rem;">Criar conta para filtrar</button>
-        </div>
 
-        <div style="display: flex; gap: 1rem; flex-wrap: wrap; margin-bottom: 1.5rem;">
-          <span class="lock-badge">🔒 Filtrar por Município (Restrito)</span>
-          <span class="lock-badge">🔒 Filtrar por Sexo (Restrito)</span>
-          <span class="lock-badge">🔒 Comparar Grupos (Restrito)</span>
-          <span class="lock-badge">🔒 Criar Novo Recorte (Restrito)</span>
-        </div>
 
-        <!-- Visualização Principal -->
-        <div style="height: 350px; position: relative;">
-          <canvas id="chartExplorarGeral"></canvas>
-        </div>
+    <!-- TELA 3: LABORATORIO | CRUZAMENTOS 26F.01 -->
+<section id="tab-laboratorio" class="tab-content">
+  <div style="margin-bottom:2rem"><span class="badge badge-validated">Motor 26E · Catálogo integral</span>
+    <h2 style="font-size:1.8rem;margin-top:.5rem">Laboratório de cruzamentos</h2>
+    <p style="color:var(--text-muted)">Escolha quaisquer questões do instrumento. O sistema recupera consultas autorizadas já publicadas, sem recalcular. Novas consultas podem ser registradas para processamento no ambiente privado.</p></div>
+  <div class="builder-container">
+    <div class="funda-form-grid">
+      <div><label for="lab-tipo">Tipo de análise</label><select id="lab-tipo"><option value="frequencia">Distribuição de uma questão</option><option value="cruzamento">Cruzamento de duas questões</option></select></div>
+      <div><label for="lab-q1">Questão principal</label><select id="lab-q1"></select></div>
+      <div id="lab-q2-wrap" hidden><label for="lab-q2">Questão de comparação</label><select id="lab-q2"></select></div>
+    </div>
+    <div class="human-phrase-box" id="lab-frase">Carregando instrumento...</div>
+    <div class="execute-bar"><span class="infra-tag">Resultados já publicados são recuperados diretamente por JSON.</span><button id="lab-executar" class="btn btn-primary">CONSULTAR RESULTADO</button></div>
+  </div>
+  <div id="lab-resultado" class="builder-container" hidden aria-live="polite"></div>
+  <p class="funda-note">Unidade de contagem: respondentes distintos com alternativa marcada. Em perguntas de múltipla escolha, a mesma pessoa pode contribuir para várias combinações. A disponibilidade de um resultado não significa representatividade estatística ou validação dos denominadores.</p>
+</section>
 
-        <div style="display: flex; justify-content: space-between; align-items: center; margin-top: 1.5rem; flex-wrap: wrap; gap: 1rem;">
-          <button class="btn btn-secondary" onclick="openDrawer('SOBRE')">Sobre este resultado e proveniência</button>
-          <button class="btn btn-secondary" onclick="openDrawer('CITAR')">Citar este resultado</button>
-        </div>
-      </div>
-    </section>
 
-    <!-- TELA 3: LABORATÓRIO DE ANÁLISE / CONSTRUTOR VISUAL (SEÇÃO 15 DA ESPECIFICAÇÃO) -->
-    <section id="tab-laboratorio" class="tab-content">
-      <div style="margin-bottom: 2rem;">
-        <span class="badge badge-demo" style="margin-bottom: 0.5rem;">Workspace de pesquisa</span>
-        <h2 style="font-size: 1.8rem; font-weight: 700;">Construtor de Perguntas para base de dados</h2>
-        <p style="font-size: 0.875rem; color: var(--text-muted);">Monte sua análise combinando variáveis, universos e estratificações.</p>
-      </div>
-
-      <div class="builder-container">
-        <div class="builder-sentence">
-          QUERO ANALISAR 
-          <select id="b-var">
-            <option value="Q23">Q23 Tipos de Acidentes de Trabalho</option>
-            <option value="Q08">Q08 Apetrechos e Técnicas de Pesca</option>
-            <option value="Q30">Q30 Equipamentos e Proteção UV</option>
-            <option value="Q33">Q33 Morbidades Ocupacionais</option>
-          </select>
-          PARA O UNIVERSO DE 
-          <select id="b-univ">
-            <option value="ALL">Todas as aplicações validadas (N=16.623)</option>
-            <option value="EMB">Apenas pescadores com embarcação (Q06)</option>
-            <option value="SOL">Apenas expostos ao sol densamente (Q09)</option>
-          </select>
-          ESTRATIFICADO POR 
-          <select id="b-strat">
-            <option value="SEX">Sexo / Gênero (Cadastro)</option>
-            <option value="UF">Estado do endereço cadastral (End. UF)</option>
-            <option value="EDU">Escolaridade (Q01)</option>
-          </select>
-        </div>
-
-        <div class="human-phrase-box" id="human-phrase">
-          "Você está perguntando como se distribui <strong>Q23 Tipos de Acidentes</strong> entre <strong>Todas as aplicações validadas</strong>, estratificado por <strong>Sexo / Gênero</strong>."
-        </div>
-
-        <div class="execute-bar">
-          <span class="infra-tag">PROTEÇÃO DE INFRAESTRUTURA: Nenhuma consulta é executada sem confirmação.</span>
-          <button class="btn btn-primary" onclick="executeAnalysis()">EXECUTAR ANÁLISE</button>
-        </div>
-      </div>
-
-      <!-- Área de Resultado Gerado -->
-      <div id="analysis-result-box" style="display: none; background-color: var(--bg-card); border: 1px solid var(--border-subtle); border-radius: 12px; padding: 2rem;">
-        <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 1rem; flex-wrap: wrap; gap: 1rem;">
-          <div>
-            <span class="badge badge-simulated" style="margin-bottom: 0.4rem;">ANL-DEMO-000184</span>
-            <h3 style="font-size: 1.2rem; font-weight: 700;">Distribuição de Q23 por Gênero</h3>
-            <p style="font-size: 0.82rem; color: var(--text-muted);">Consulta executada localmente no protótipo.</p>
-          </div>
-          <div style="display: flex; gap: 0.5rem;">
-            <button class="btn btn-secondary" onclick="openModalDownload()">Exportar / Download</button>
-            <button class="btn btn-secondary" onclick="openDrawer('SOBRE')">Proveniência</button>
-          </div>
-        </div>
-
-        <div style="height: 320px; position: relative; margin-bottom: 1.5rem;">
-          <canvas id="chartLabResult"></canvas>
-        </div>
-
-        <div style="display: flex; gap: 1rem; flex-wrap: wrap;">
-          <button class="chip-btn active" onclick="showTab('comparador')">Duplicar e comparar</button>
-          <button class="chip-btn" onclick="alert('Análise salva em Meu Espaço.')">Salvar em meu espaço</button>
-        </div>
-      </div>
-    </section>
 
     <!-- TELA 4: COMPARADOR MULTIGRUPO (SEÇÃO 20 DA ESPECIFICAÇÃO) -->
     <section id="tab-comparador" class="tab-content">
@@ -1357,5 +1306,74 @@
       renderChartExplorar();
     });
   </script>
+<script>
+/* 26F.01: Integracao das abas Explorar e Laboratorio.
+   Catalogo e JSONs explicitamente aprovados. Nenhum token privado no cliente. */
+(() => {
+  'use strict';
+  const CATALOG_URL = './data/questoes_alternativas.json';
+  const INDEX_URL = './data/consultas_publicadas.json';
+  const DATA_VERSION = '26D04B_39308065350_1';
+  const MOTOR_VERSION = '1.0';
+  let catalog = null;
+  let index = null;
+  const byId = id => document.getElementById(id);
+  const qmap = () => new Map((catalog?.questoes || []).map(q=>[q.codigo,q]));
+  const escape = s => String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+  function note(element, text) {element.hidden=false;element.replaceChildren();const p=document.createElement('p');p.className='funda-state';p.textContent=text;element.appendChild(p);}
+  function setOptions(element, questions){element.replaceChildren();for(const q of questions){const option=document.createElement('option');option.value=q.codigo;option.textContent=q.codigo+' · '+q.text;element.appendChild(option);}}
+  function updateExplore(){const q=qmap().get(byId('exp-questao').value);if(!q)return;byId('exp-enunciado').textContent=q.codigo+' · '+q.text;const target=byId('exp-alternativas');target.replaceChildren();for(const a of q.alternativas){const div=document.createElement('div');div.className='funda-option';div.textContent=a.codigo+' · '+a.texto;target.appendChild(div);}byId('exp-status').textContent=`${q.alternativas.length} alternativas catalogadas · instrumento real` ;byId('exp-resultado').hidden=true;}
+  function updatePhrase(){const q1=qmap().get(byId('lab-q1').value);const crossed=byId('lab-tipo').value==='cruzamento';byId('lab-q2-wrap').hidden=!crossed;const q2=qmap().get(byId('lab-q2').value);byId('lab-frase').textContent=crossed ? `Quero cruzar ${q1?.codigo}: ${q1?.texto} com ${q2?.codigo}: ${q2?.texto}.` : `Quero consultar a distribuição de ${q1?.codigo}: ${q1?.texto}.`;byId('lab-resultado').hidden=true;}
+  function sameParams(a,b){return a.tipo===b.tipo&&a.questao_1===b.questao_1&&(a.questao_2||null)===(b.questao_2||null)&&a.versao_dados===b.versao_dados&&a.versao_motor===b.versao_motor;}
+  function fileFor(p){return (index?.consultas||[]).find(entry=>entry&&entry.divulgacao_publica_autorizada===true&&sameParams(entry.parametros||{},p));}
+  async function getPublished(params,target){
+    if(!catalog){note(target,'O catálogo ainda não está disponível.');return;}
+    const item=fileFor(params);
+    if(!item){note(target,'Esta combinação está disponível para especificação, mas ainda não possui resultado aprovado para publicação. Nenhum número foi inventado ou recalculado.');return;}
+    // Restricao de caminho. O indice publico so pode apontar para data/publicados/.
+    if(typeof item.arquivo!=='string'||!/^data\/publicados\/[0-9a-f]{64}\.json$/.test(item.arquivo)){note(target,'O índice de publicação não passou na validação de caminho.');return;}
+    try{
+      const response=await fetch('./'+item.arquivo,{cache:'no-store'});
+      if(!response.ok)throw Error('resultado indisponível');
+      const result=await response.json();
+      if(result.divulgacao_publica_autorizada!==true||!sameParams(result.parametros||{},params)||result.id_consulta!==item.id_consulta)throw Error('metadados divergentes');
+      renderResult(target,result);
+    }catch(e){note(target,'Não foi possível validar ou carregar o resultado publicado.');}
+  }
+  function renderResult(target,result){
+    target.hidden=false;target.replaceChildren();
+    const heading=document.createElement('h3');heading.textContent='Resultado agregado publicado';target.appendChild(heading);
+    const p=document.createElement('p');p.className='funda-note';p.textContent='Respondentes distintos com alternativas marcadas · '+(result.status_metodologico||'Metodologia em revisão');target.appendChild(p);
+    const table=document.createElement('table');table.className='funda-result-table';
+    const thead=document.createElement('thead');const tr=document.createElement('tr');
+    for(const val of ['Alternativa 1','Alternativa 2','Participantes']){const th=document.createElement('th');th.textContent=val;tr.appendChild(th);}thead.appendChild(tr);table.appendChild(thead);
+    const tbody=document.createElement('tbody');const qm=qmap();const q1=qm.get(result.parametros.questao_1);const q2=qm.get(result.parametros.questao_2);
+    const labels1=new Map((q1?.alternativas||[]).map(a=>[a.codigo,a.texto]));const labels2=new Map((q2?.alternativas||[]).map(a=>[a.codigo,a.texto]));
+    for(const line of result.linhas||[]){const row=document.createElement('tr');const values=[labels1.get(line.alternativa_1)||line.alternativa_1, line.alternativa_2?(labels2.get(line.alternativa_2)||line.alternativa_2):'—', Number.isInteger(line.quantidade)?line.quantidade.toLocaleString('pt-BR'):'Suprimida'];for(const value of values){const td=document.createElement('td');td.textContent=value;row.appendChild(td);}tbody.appendChild(row);}table.appendChild(tbody);target.appendChild(table);
+    const source=document.createElement('p');source.className='funda-note';source.textContent='ID: '+result.id_consulta+' · Versão dos dados: '+result.versao_dados+'. Contagens não equivalem automaticamente a prevalências.';target.appendChild(source);
+  }
+  async function init(){
+    try{
+      const [c,i]=await Promise.all([fetch(CATALOG_URL,{cache:'no-store'}),fetch(INDEX_URL,{cache:'no-store'})]);
+      if(!c.ok||!i.ok)throw Error('arquivo ausente');
+      catalog=await c.json();index=await i.json();
+      if(catalog.total_questoes!==36||catalog.total_alternativas!==251||catalog.questoes.length!==36||catalog.questoes.reduce((s,q)=>s+q.alternativas.length,0)!==251)throw Error('catálogo divergente');
+      if(!Array.isArray(index.consultas))throw Error('índice inválido');
+      for(const id of ['exp-questao','lab-q1','lab-q2'])setOptions(byId(id),catalog.questoes);
+      byId('exp-questao').value='Q23';byId('lab-q1').value='Q23';byId('lab-q2').value='Q05';
+      byId('exp-questao').addEventListener('change',updateExplore);
+      for(const id of ['lab-tipo','lab-q1','lab-q2'])byId(id).addEventListener('change',updatePhrase);
+      byId('exp-abrir').addEventListener('click',()=>getPublished({tipo:'frequencia',questao_1:byId('exp-questao').value,versao_dados:DATA_VERSION,versao_motor:MOTOR_VERSION},byId('exp-resultado')));
+      byId('lab-executar').addEventListener('click',()=>{const crossed=byId('lab-tipo').value==='cruzamento';const p={tipo:crossed?'cruzamento':'frequencia',questao_1:byId('lab-q1').value,versao_dados:DATA_VERSION,versao_motor:MOTOR_VERSION};if(crossed)p.questao_2=byId('lab-q2').value;getPublished(p,byId('lab-resultado'));});
+      updateExplore();updatePhrase();
+    }catch(e){byId('exp-status').textContent='Catálogo indisponível: verificar arquivos data/';note(byId('lab-resultado'),'Não foi possível carregar o catálogo real. Verifique data/questoes_alternativas.json e data/consultas_publicadas.json.');}
+  }
+  // Neutraliza apenas a visualizacao simulada que a antiga pagina chama na aba 2.
+  window.renderChartExplorar=()=>{};
+  // Navegacao da faixa da Home para o catalogo real da aba 2.
+  window.openQuestion=code=>{showTab('explorar');if(catalog&&qmap().has(code)){byId('exp-questao').value=code;updateExplore();}};
+  document.addEventListener('DOMContentLoaded',init);
+})();
+</script>
 </body>
 </html>

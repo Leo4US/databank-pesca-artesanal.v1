@@ -1,0 +1,1552 @@
+{
+  "etapa": "26E.01",
+  "observacao": "Modalidades registradas no CORE sujeitas ao historico de alteracoes.",
+  "questoes": [
+    {
+      "alternativas": [
+        {
+          "codigo": "Q01_A001",
+          "ordem": 1,
+          "texto": "não sei ler e escrever"
+        },
+        {
+          "codigo": "Q01_A002",
+          "ordem": 2,
+          "texto": "sei ler e escrever"
+        },
+        {
+          "codigo": "Q01_A003",
+          "ordem": 3,
+          "texto": "ensino fundamental incompleto"
+        },
+        {
+          "codigo": "Q01_A004",
+          "ordem": 4,
+          "texto": "ensino fundamental completo"
+        },
+        {
+          "codigo": "Q01_A005",
+          "ordem": 5,
+          "texto": "ensino médio incompleto"
+        },
+        {
+          "codigo": "Q01_A006",
+          "ordem": 6,
+          "texto": "ensino médio completo"
+        },
+        {
+          "codigo": "Q01_A007",
+          "ordem": 7,
+          "texto": "ensino técnico completo"
+        },
+        {
+          "codigo": "Q01_A008",
+          "ordem": 8,
+          "texto": "ensino superior incompleto"
+        },
+        {
+          "codigo": "Q01_A009",
+          "ordem": 9,
+          "texto": "ensino superior completo"
+        },
+        {
+          "codigo": "Q01_A010",
+          "ordem": 10,
+          "texto": "pós-graduação (especialização, mestrado ou doutorado)"
+        }
+      ],
+      "codigo": "Q01",
+      "ordem": 1,
+      "texto": "Qual é a sua escolaridade?",
+      "tipo_resposta_registrado": null
+    },
+    {
+      "alternativas": [
+        {
+          "codigo": "Q02_A001",
+          "ordem": 1,
+          "texto": "branca"
+        },
+        {
+          "codigo": "Q02_A002",
+          "ordem": 2,
+          "texto": "preta"
+        },
+        {
+          "codigo": "Q02_A003",
+          "ordem": 3,
+          "texto": "parda"
+        },
+        {
+          "codigo": "Q02_A004",
+          "ordem": 4,
+          "texto": "indígena"
+        },
+        {
+          "codigo": "Q02_A005",
+          "ordem": 5,
+          "texto": "amarela"
+        },
+        {
+          "codigo": "Q02_A006",
+          "ordem": 6,
+          "texto": "quilombola"
+        },
+        {
+          "codigo": "Q02_A007",
+          "ordem": 7,
+          "texto": "outro grupo étnico-racial"
+        },
+        {
+          "codigo": "Q02_A008",
+          "ordem": 8,
+          "texto": "prefiro não responder"
+        }
+      ],
+      "codigo": "Q02",
+      "ordem": 2,
+      "texto": "Com qual grupo étnico-racial você se identifica?",
+      "tipo_resposta_registrado": null
+    },
+    {
+      "alternativas": [
+        {
+          "codigo": "Q03_A001",
+          "ordem": 1,
+          "texto": "sim"
+        },
+        {
+          "codigo": "Q03_A002",
+          "ordem": 2,
+          "texto": "não"
+        },
+        {
+          "codigo": "Q03_A003",
+          "ordem": 3,
+          "texto": "prefiro não responder"
+        }
+      ],
+      "codigo": "Q03",
+      "ordem": 3,
+      "texto": "Você participa de alguma entidade ligada à pesca artesanal, como colônia, associação ou sindicato?",
+      "tipo_resposta_registrado": null
+    },
+    {
+      "alternativas": [
+        {
+          "codigo": "Q04_A001",
+          "ordem": 1,
+          "texto": "menos de 5 anos"
+        },
+        {
+          "codigo": "Q04_A002",
+          "ordem": 2,
+          "texto": "de 5 a 10 anos"
+        },
+        {
+          "codigo": "Q04_A003",
+          "ordem": 3,
+          "texto": "de 11 a 20 anos"
+        },
+        {
+          "codigo": "Q04_A004",
+          "ordem": 4,
+          "texto": "mais de 20 anos"
+        }
+      ],
+      "codigo": "Q04",
+      "ordem": 4,
+      "texto": "Há quanto tempo você trabalha na pesca?",
+      "tipo_resposta_registrado": null
+    },
+    {
+      "alternativas": [
+        {
+          "codigo": "Q05_A001",
+          "ordem": 1,
+          "texto": "mar aberto"
+        },
+        {
+          "codigo": "Q05_A002",
+          "ordem": 2,
+          "texto": "barra"
+        },
+        {
+          "codigo": "Q05_A003",
+          "ordem": 3,
+          "texto": "rio"
+        },
+        {
+          "codigo": "Q05_A004",
+          "ordem": 4,
+          "texto": "praia"
+        },
+        {
+          "codigo": "Q05_A005",
+          "ordem": 5,
+          "texto": "mangue"
+        },
+        {
+          "codigo": "Q05_A006",
+          "ordem": 6,
+          "texto": "represa"
+        },
+        {
+          "codigo": "Q05_A007",
+          "ordem": 7,
+          "texto": "lago"
+        },
+        {
+          "codigo": "Q05_A008",
+          "ordem": 8,
+          "texto": "outros ambientes de pesca"
+        }
+      ],
+      "codigo": "Q05",
+      "ordem": 5,
+      "texto": "Onde costuma pescar a maior parte do tempo?",
+      "tipo_resposta_registrado": null
+    },
+    {
+      "alternativas": [
+        {
+          "codigo": "Q06_A001",
+          "ordem": 1,
+          "texto": "não"
+        },
+        {
+          "codigo": "Q06_A002",
+          "ordem": 2,
+          "texto": "sim: a embarcação tem menos de 5 metros (bote ou canoa pequena)"
+        },
+        {
+          "codigo": "Q06_A003",
+          "ordem": 3,
+          "texto": "sim: a embarcação tem entre 5 e 8 metros, é aberta (sem cabine) e o motor tem até 50 HP"
+        },
+        {
+          "codigo": "Q06_A004",
+          "ordem": 4,
+          "texto": "sim: a embarcação tem mais de 8 metros ou possui cabine fechada (lugar para dormir ou cozinhar)"
+        }
+      ],
+      "codigo": "Q06",
+      "ordem": 6,
+      "texto": "Usa embarcação na atividade de pesca?",
+      "tipo_resposta_registrado": null
+    },
+    {
+      "alternativas": [
+        {
+          "codigo": "Q07_A001",
+          "ordem": 1,
+          "texto": "1 dia"
+        },
+        {
+          "codigo": "Q07_A002",
+          "ordem": 2,
+          "texto": "até 3 dias"
+        },
+        {
+          "codigo": "Q07_A003",
+          "ordem": 3,
+          "texto": "até 5 dias"
+        },
+        {
+          "codigo": "Q07_A004",
+          "ordem": 4,
+          "texto": "até 10 dias"
+        },
+        {
+          "codigo": "Q07_A005",
+          "ordem": 5,
+          "texto": "mais de 10 dias"
+        },
+        {
+          "codigo": "Q07_A006",
+          "ordem": 6,
+          "texto": "não fico embarcado"
+        }
+      ],
+      "codigo": "Q07",
+      "ordem": 7,
+      "texto": "Quanto tempo costuma ficar na embarcação durante a pesca?",
+      "tipo_resposta_registrado": null
+    },
+    {
+      "alternativas": [
+        {
+          "codigo": "Q08_A001",
+          "ordem": 1,
+          "texto": "arrasto"
+        },
+        {
+          "codigo": "Q08_A002",
+          "ordem": 2,
+          "texto": "cerco"
+        },
+        {
+          "codigo": "Q08_A003",
+          "ordem": 3,
+          "texto": "covos"
+        },
+        {
+          "codigo": "Q08_A004",
+          "ordem": 4,
+          "texto": "emalhe"
+        },
+        {
+          "codigo": "Q08_A005",
+          "ordem": 5,
+          "texto": "espinhel"
+        },
+        {
+          "codigo": "Q08_A006",
+          "ordem": 6,
+          "texto": "linha de mão / linha e anzol"
+        },
+        {
+          "codigo": "Q08_A007",
+          "ordem": 7,
+          "texto": "mariscagem"
+        },
+        {
+          "codigo": "Q08_A008",
+          "ordem": 8,
+          "texto": "matapi"
+        },
+        {
+          "codigo": "Q08_A009",
+          "ordem": 9,
+          "texto": "pesca subaquática"
+        },
+        {
+          "codigo": "Q08_A010",
+          "ordem": 10,
+          "texto": "tarrafa"
+        },
+        {
+          "codigo": "Q08_A011",
+          "ordem": 11,
+          "texto": "vara"
+        }
+      ],
+      "codigo": "Q08",
+      "ordem": 8,
+      "texto": "Quais técnicas e apetrechos de pesca usa?",
+      "tipo_resposta_registrado": null
+    },
+    {
+      "alternativas": [
+        {
+          "codigo": "Q09_A001",
+          "ordem": 1,
+          "texto": "nunca fico exposto(a) ao sol"
+        },
+        {
+          "codigo": "Q09_A002",
+          "ordem": 2,
+          "texto": "fico pouco tempo exposto(a) ao sol"
+        },
+        {
+          "codigo": "Q09_A003",
+          "ordem": 3,
+          "texto": "fico muito tempo exposto(a) ao sol"
+        },
+        {
+          "codigo": "Q09_A004",
+          "ordem": 4,
+          "texto": "fico exposto(a) ao sol o tempo todo"
+        }
+      ],
+      "codigo": "Q09",
+      "ordem": 9,
+      "texto": "Durante a atividade de pesca, com que frequência você trabalha exposto(a) ao sol?",
+      "tipo_resposta_registrado": null
+    },
+    {
+      "alternativas": [
+        {
+          "codigo": "Q10_A001",
+          "ordem": 1,
+          "texto": "das 04h às 08h"
+        },
+        {
+          "codigo": "Q10_A002",
+          "ordem": 2,
+          "texto": "das 08h ao 12h"
+        },
+        {
+          "codigo": "Q10_A003",
+          "ordem": 3,
+          "texto": "das 12h às 16h"
+        },
+        {
+          "codigo": "Q10_A004",
+          "ordem": 4,
+          "texto": "após 16h"
+        }
+      ],
+      "codigo": "Q10",
+      "ordem": 10,
+      "texto": "Qual horário você fica mais exposto(a) ao sol durante a pesca?",
+      "tipo_resposta_registrado": null
+    },
+    {
+      "alternativas": [
+        {
+          "codigo": "Q11_A001",
+          "ordem": 1,
+          "texto": "não incomoda"
+        },
+        {
+          "codigo": "Q11_A002",
+          "ordem": 2,
+          "texto": "incomoda pouco"
+        },
+        {
+          "codigo": "Q11_A003",
+          "ordem": 3,
+          "texto": "incomoda com frequência"
+        },
+        {
+          "codigo": "Q11_A004",
+          "ordem": 4,
+          "texto": "incomoda o tempo todo"
+        }
+      ],
+      "codigo": "Q11",
+      "ordem": 11,
+      "texto": "A radiação solar ou o reflexo da luz na água incomoda ou dificulta sua visão durante a pesca?",
+      "tipo_resposta_registrado": null
+    },
+    {
+      "alternativas": [
+        {
+          "codigo": "Q12_A001",
+          "ordem": 1,
+          "texto": "vela"
+        },
+        {
+          "codigo": "Q12_A002",
+          "ordem": 2,
+          "texto": "lanterna"
+        },
+        {
+          "codigo": "Q12_A003",
+          "ordem": 3,
+          "texto": "lampião/lamparina"
+        },
+        {
+          "codigo": "Q12_A004",
+          "ordem": 4,
+          "texto": "não trabalho à noite"
+        }
+      ],
+      "codigo": "Q12",
+      "ordem": 12,
+      "texto": "Caso realize atividades de pesca no período da noite, quais instrumentos utiliza para iluminação?",
+      "tipo_resposta_registrado": null
+    },
+    {
+      "alternativas": [
+        {
+          "codigo": "Q13_A001",
+          "ordem": 1,
+          "texto": "frio"
+        },
+        {
+          "codigo": "Q13_A002",
+          "ordem": 2,
+          "texto": "onda forte"
+        },
+        {
+          "codigo": "Q13_A003",
+          "ordem": 3,
+          "texto": "correntezas"
+        },
+        {
+          "codigo": "Q13_A004",
+          "ordem": 4,
+          "texto": "ventos fortes"
+        }
+      ],
+      "codigo": "Q13",
+      "ordem": 13,
+      "texto": "Durante o trabalho na pesca, a quais condições ambientais você fica exposto(a)?",
+      "tipo_resposta_registrado": null
+    },
+    {
+      "alternativas": [
+        {
+          "codigo": "Q14_A001",
+          "ordem": 1,
+          "texto": "mãos e braços"
+        },
+        {
+          "codigo": "Q14_A002",
+          "ordem": 2,
+          "texto": "pés"
+        },
+        {
+          "codigo": "Q14_A003",
+          "ordem": 3,
+          "texto": "até a cintura"
+        },
+        {
+          "codigo": "Q14_A004",
+          "ordem": 4,
+          "texto": "até o pescoço"
+        },
+        {
+          "codigo": "Q14_A005",
+          "ordem": 5,
+          "texto": "corpo inteiro"
+        },
+        {
+          "codigo": "Q14_A006",
+          "ordem": 6,
+          "texto": "não fico dentro d’água"
+        }
+      ],
+      "codigo": "Q14",
+      "ordem": 14,
+      "texto": "Durante a atividade de pesca, qual parte do corpo costuma ficar dentro da água?",
+      "tipo_resposta_registrado": null
+    },
+    {
+      "alternativas": [
+        {
+          "codigo": "Q15_A001",
+          "ordem": 1,
+          "texto": "nunca"
+        },
+        {
+          "codigo": "Q15_A002",
+          "ordem": 2,
+          "texto": "raramente"
+        },
+        {
+          "codigo": "Q15_A003",
+          "ordem": 3,
+          "texto": "frequentemente"
+        },
+        {
+          "codigo": "Q15_A004",
+          "ordem": 4,
+          "texto": "o tempo todo"
+        }
+      ],
+      "codigo": "Q15",
+      "ordem": 15,
+      "texto": "Você convive com barulhos ou ruídos no ambiente de trabalho da pesca?",
+      "tipo_resposta_registrado": null
+    },
+    {
+      "alternativas": [
+        {
+          "codigo": "Q16_A001",
+          "ordem": 1,
+          "texto": "não tenho contato"
+        },
+        {
+          "codigo": "Q16_A002",
+          "ordem": 2,
+          "texto": "tenho pouco contato"
+        },
+        {
+          "codigo": "Q16_A003",
+          "ordem": 3,
+          "texto": "tenho muito contato"
+        }
+      ],
+      "codigo": "Q16",
+      "ordem": 16,
+      "texto": "Você tem contato com combustíveis, óleos ou produtos químicos usados na manutenção de barcos e motores?",
+      "tipo_resposta_registrado": null
+    },
+    {
+      "alternativas": [
+        {
+          "codigo": "Q17_A001",
+          "ordem": 1,
+          "texto": "até 4 horas"
+        },
+        {
+          "codigo": "Q17_A002",
+          "ordem": 2,
+          "texto": "entre 4 e 6 horas"
+        },
+        {
+          "codigo": "Q17_A003",
+          "ordem": 3,
+          "texto": "entre 6 e 8 horas"
+        },
+        {
+          "codigo": "Q17_A004",
+          "ordem": 4,
+          "texto": "entre 8 e 10 horas"
+        },
+        {
+          "codigo": "Q17_A005",
+          "ordem": 5,
+          "texto": "mais de 10 horas"
+        },
+        {
+          "codigo": "Q17_A006",
+          "ordem": 6,
+          "texto": "não carrego peso"
+        }
+      ],
+      "codigo": "Q17",
+      "ordem": 17,
+      "texto": "Você carrega peso durante o trabalho? Se sim, por quanto tempo?",
+      "tipo_resposta_registrado": null
+    },
+    {
+      "alternativas": [
+        {
+          "codigo": "Q18_A001",
+          "ordem": 1,
+          "texto": "até 5 kg"
+        },
+        {
+          "codigo": "Q18_A002",
+          "ordem": 2,
+          "texto": "entre 6 e 10 kg"
+        },
+        {
+          "codigo": "Q18_A003",
+          "ordem": 3,
+          "texto": "entre 11 e 20 kg"
+        },
+        {
+          "codigo": "Q18_A004",
+          "ordem": 4,
+          "texto": "entre 21 e 30 kg"
+        },
+        {
+          "codigo": "Q18_A005",
+          "ordem": 5,
+          "texto": "mais de 30 kg"
+        },
+        {
+          "codigo": "Q18_A006",
+          "ordem": 6,
+          "texto": "não carrego peso"
+        }
+      ],
+      "codigo": "Q18",
+      "ordem": 18,
+      "texto": "Quanto peso você costuma carregar durante o trabalho da pesca?",
+      "tipo_resposta_registrado": null
+    },
+    {
+      "alternativas": [
+        {
+          "codigo": "Q19_A001",
+          "ordem": 1,
+          "texto": "sozinho(a)"
+        },
+        {
+          "codigo": "Q19_A002",
+          "ordem": 2,
+          "texto": "com ajuda de outras pessoas"
+        },
+        {
+          "codigo": "Q19_A003",
+          "ordem": 3,
+          "texto": "com carrinho"
+        },
+        {
+          "codigo": "Q19_A004",
+          "ordem": 4,
+          "texto": "não carrego peso"
+        }
+      ],
+      "codigo": "Q19",
+      "ordem": 19,
+      "texto": "Como você costuma carregar esse peso, durante o trabalho?",
+      "tipo_resposta_registrado": null
+    },
+    {
+      "alternativas": [
+        {
+          "codigo": "Q20_A001",
+          "ordem": 1,
+          "texto": "de pé parado(a)"
+        },
+        {
+          "codigo": "Q20_A002",
+          "ordem": 2,
+          "texto": "de pé em movimento"
+        },
+        {
+          "codigo": "Q20_A003",
+          "ordem": 3,
+          "texto": "sentado(a)"
+        },
+        {
+          "codigo": "Q20_A004",
+          "ordem": 4,
+          "texto": "agachado(a)"
+        },
+        {
+          "codigo": "Q20_A005",
+          "ordem": 5,
+          "texto": "ajoelhado (a)"
+        },
+        {
+          "codigo": "Q20_A006",
+          "ordem": 6,
+          "texto": "curvado (a)"
+        }
+      ],
+      "codigo": "Q20",
+      "ordem": 20,
+      "texto": "Durante o trabalho na pesca, em qual posição você permanece por mais tempo?",
+      "tipo_resposta_registrado": null
+    },
+    {
+      "alternativas": [
+        {
+          "codigo": "Q21_A001",
+          "ordem": 1,
+          "texto": "não faço movimentos repetitivos"
+        },
+        {
+          "codigo": "Q21_A002",
+          "ordem": 2,
+          "texto": "raramente faço movimentos repetitivos"
+        },
+        {
+          "codigo": "Q21_A003",
+          "ordem": 3,
+          "texto": "frequentemente faço movimentos repetitivos"
+        },
+        {
+          "codigo": "Q21_A004",
+          "ordem": 4,
+          "texto": "faço movimento repetitivo o tempo todo"
+        }
+      ],
+      "codigo": "Q21",
+      "ordem": 21,
+      "texto": "Durante a pesca, com que frequência você faz movimentos repetitivos que desgastam braços, mãos ou ombros?",
+      "tipo_resposta_registrado": null
+    },
+    {
+      "alternativas": [
+        {
+          "codigo": "Q22_A001",
+          "ordem": 1,
+          "texto": "nunca"
+        },
+        {
+          "codigo": "Q22_A002",
+          "ordem": 2,
+          "texto": "raramente"
+        },
+        {
+          "codigo": "Q22_A003",
+          "ordem": 3,
+          "texto": "frequentemente"
+        },
+        {
+          "codigo": "Q22_A004",
+          "ordem": 4,
+          "texto": "o tempo todo"
+        }
+      ],
+      "codigo": "Q22",
+      "ordem": 22,
+      "texto": "Com que frequência você fica em risco de queda, durante a sua atividade de pesca (mar, rio, embarcação, lama)?",
+      "tipo_resposta_registrado": null
+    },
+    {
+      "alternativas": [
+        {
+          "codigo": "Q23_A001",
+          "ordem": 1,
+          "texto": "corte com faca ou anzol nas mãos, pés ou outra parte do corpo"
+        },
+        {
+          "codigo": "Q23_A002",
+          "ordem": 2,
+          "texto": "queda no barco ou na maré"
+        },
+        {
+          "codigo": "Q23_A003",
+          "ordem": 3,
+          "texto": "afogamento ou quase afogamento"
+        },
+        {
+          "codigo": "Q23_A004",
+          "ordem": 4,
+          "texto": "torções"
+        },
+        {
+          "codigo": "Q23_A005",
+          "ordem": 5,
+          "texto": "fratura de ossos do corpo"
+        },
+        {
+          "codigo": "Q23_A006",
+          "ordem": 6,
+          "texto": "picada, mordida ou ferroada de peixe ou crustáceo"
+        },
+        {
+          "codigo": "Q23_A007",
+          "ordem": 7,
+          "texto": "amputação de alguma parte do corpo"
+        },
+        {
+          "codigo": "Q23_A008",
+          "ordem": 8,
+          "texto": "esmagamento de alguma parte do corpo"
+        },
+        {
+          "codigo": "Q23_A009",
+          "ordem": 9,
+          "texto": "perfuração em alguma parte do corpo"
+        },
+        {
+          "codigo": "Q23_A010",
+          "ordem": 10,
+          "texto": "queimadura de pele ou olhos pelo sol, produtos inflamáveis ou químicos"
+        },
+        {
+          "codigo": "Q23_A011",
+          "ordem": 11,
+          "texto": "perda de audição por causa de ruído do motor das embarcações; contaminação por detritos industriais"
+        },
+        {
+          "codigo": "Q23_A012",
+          "ordem": 12,
+          "texto": "escalpelamento"
+        },
+        {
+          "codigo": "Q23_A013",
+          "ordem": 13,
+          "texto": "acidente de mergulho"
+        },
+        {
+          "codigo": "Q23_A014",
+          "ordem": 14,
+          "texto": "não sofri acidente"
+        }
+      ],
+      "codigo": "Q23",
+      "ordem": 23,
+      "texto": "Qual(is) tipo(s) de acidente você já sofreu?",
+      "tipo_resposta_registrado": null
+    },
+    {
+      "alternativas": [
+        {
+          "codigo": "Q24_A001",
+          "ordem": 1,
+          "texto": "nenhuma vez"
+        },
+        {
+          "codigo": "Q24_A002",
+          "ordem": 2,
+          "texto": "de 1 a 4 vezes"
+        },
+        {
+          "codigo": "Q24_A003",
+          "ordem": 3,
+          "texto": "de 5 a 10 vezes"
+        },
+        {
+          "codigo": "Q24_A004",
+          "ordem": 4,
+          "texto": "de 11 a 20 vezes"
+        },
+        {
+          "codigo": "Q24_A005",
+          "ordem": 5,
+          "texto": "mais de 20 vezes"
+        }
+      ],
+      "codigo": "Q24",
+      "ordem": 24,
+      "texto": "Nos últimos 2 anos, quantos acidentes você sofreu durante  a atividade de pesca artesanal?",
+      "tipo_resposta_registrado": null
+    },
+    {
+      "alternativas": [
+        {
+          "codigo": "Q25_A001",
+          "ordem": 1,
+          "texto": "nunca (não sofri acidente)"
+        },
+        {
+          "codigo": "Q25_A002",
+          "ordem": 2,
+          "texto": "raramente"
+        },
+        {
+          "codigo": "Q25_A003",
+          "ordem": 3,
+          "texto": "frequentemente"
+        },
+        {
+          "codigo": "Q25_A004",
+          "ordem": 4,
+          "texto": "sempre"
+        }
+      ],
+      "codigo": "Q25",
+      "ordem": 25,
+      "texto": "Em caso de acidente, você costuma interromper o trabalho?",
+      "tipo_resposta_registrado": null
+    },
+    {
+      "alternativas": [
+        {
+          "codigo": "Q26_A001",
+          "ordem": 1,
+          "texto": "nunca deixei de trabalhar (não sofri acidente)"
+        },
+        {
+          "codigo": "Q26_A002",
+          "ordem": 2,
+          "texto": "de 1 a 7 dias"
+        },
+        {
+          "codigo": "Q26_A003",
+          "ordem": 3,
+          "texto": "de 8 a 15 dias"
+        },
+        {
+          "codigo": "Q26_A004",
+          "ordem": 4,
+          "texto": "de 16 a 30 dias"
+        },
+        {
+          "codigo": "Q26_A005",
+          "ordem": 5,
+          "texto": "mais de 30 dias"
+        }
+      ],
+      "codigo": "Q26",
+      "ordem": 26,
+      "texto": "Qual foi o maior tempo que você ficou sem trabalhar após um acidente na pesca?",
+      "tipo_resposta_registrado": null
+    },
+    {
+      "alternativas": [
+        {
+          "codigo": "Q27_A001",
+          "ordem": 1,
+          "texto": "sim, foi emitida CAT"
+        },
+        {
+          "codigo": "Q27_A002",
+          "ordem": 2,
+          "texto": "não, não foi emitida CAT"
+        },
+        {
+          "codigo": "Q27_A003",
+          "ordem": 3,
+          "texto": "não sei"
+        },
+        {
+          "codigo": "Q27_A004",
+          "ordem": 4,
+          "texto": "não sofri acidente"
+        }
+      ],
+      "codigo": "Q27",
+      "ordem": 27,
+      "texto": "Em algum desses acidentes, foi emitida a Comunicação de Acidente de Trabalho (CAT)?",
+      "tipo_resposta_registrado": null
+    },
+    {
+      "alternativas": [
+        {
+          "codigo": "Q28_A001",
+          "ordem": 1,
+          "texto": "não sofri acidente"
+        },
+        {
+          "codigo": "Q28_A002",
+          "ordem": 2,
+          "texto": "sim, mas sem redução ou perda da capacidade de trabalho"
+        },
+        {
+          "codigo": "Q28_A003",
+          "ordem": 3,
+          "texto": "sim, com redução da capacidade de trabalho, não conseguindo trabalhar mais como antes, mas se mantendo na mesma atividade"
+        },
+        {
+          "codigo": "Q28_A004",
+          "ordem": 4,
+          "texto": "sim, com perda da capacidade de trabalho, não conseguindo trabalhar na atividade que exercia antes do acidente"
+        }
+      ],
+      "codigo": "Q28",
+      "ordem": 28,
+      "texto": "Esse acidente deixou sequelas em você?",
+      "tipo_resposta_registrado": null
+    },
+    {
+      "alternativas": [
+        {
+          "codigo": "Q29_A001",
+          "ordem": 1,
+          "texto": "diminuição do pescado"
+        },
+        {
+          "codigo": "Q29_A002",
+          "ordem": 2,
+          "texto": "filhos e filhas não continuarem mais trabalhando como pescadores(as)"
+        },
+        {
+          "codigo": "Q29_A003",
+          "ordem": 3,
+          "texto": "dificuldade financeira"
+        },
+        {
+          "codigo": "Q29_A004",
+          "ordem": 4,
+          "texto": "falta de apoio ou orientação para os(as) pescadores(as)"
+        },
+        {
+          "codigo": "Q29_A005",
+          "ordem": 5,
+          "texto": "enchentes ou secas"
+        },
+        {
+          "codigo": "Q29_A006",
+          "ordem": 6,
+          "texto": "poluição dos mares, rios e mangues"
+        },
+        {
+          "codigo": "Q29_A007",
+          "ordem": 7,
+          "texto": "atravessadores"
+        },
+        {
+          "codigo": "Q29_A008",
+          "ordem": 8,
+          "texto": "dificuldades no acesso ao local de pesca"
+        },
+        {
+          "codigo": "Q29_A009",
+          "ordem": 9,
+          "texto": "não sinto nenhuma dessas situações"
+        }
+      ],
+      "codigo": "Q29",
+      "ordem": 29,
+      "texto": "Você sente estresse, ansiedade, preocupação intensa ou medo por causa de alguma situação relacionada ao trabalho na pesca?",
+      "tipo_resposta_registrado": null
+    },
+    {
+      "alternativas": [
+        {
+          "codigo": "Q30_A001",
+          "ordem": 1,
+          "texto": "não utilizo"
+        },
+        {
+          "codigo": "Q30_A002",
+          "ordem": 2,
+          "texto": "camisa com manga comprida (com ou sem proteção UV)"
+        },
+        {
+          "codigo": "Q30_A003",
+          "ordem": 3,
+          "texto": "calças compridas"
+        },
+        {
+          "codigo": "Q30_A004",
+          "ordem": 4,
+          "texto": "sapatos fechados"
+        },
+        {
+          "codigo": "Q30_A005",
+          "ordem": 5,
+          "texto": "repelente"
+        },
+        {
+          "codigo": "Q30_A006",
+          "ordem": 6,
+          "texto": "repelente caseiro"
+        },
+        {
+          "codigo": "Q30_A007",
+          "ordem": 7,
+          "texto": "óleo vegetal ou outros tipos de óleo não derivados do petróleo"
+        },
+        {
+          "codigo": "Q30_A008",
+          "ordem": 8,
+          "texto": "óleo diesel/querosene"
+        },
+        {
+          "codigo": "Q30_A009",
+          "ordem": 9,
+          "texto": "luvas"
+        },
+        {
+          "codigo": "Q30_A010",
+          "ordem": 10,
+          "texto": "chapéu ou boné"
+        },
+        {
+          "codigo": "Q30_A011",
+          "ordem": 11,
+          "texto": "óculos escuros"
+        },
+        {
+          "codigo": "Q30_A012",
+          "ordem": 12,
+          "texto": "pano amarrado na cabeça"
+        },
+        {
+          "codigo": "Q30_A013",
+          "ordem": 13,
+          "texto": "filtro solar"
+        },
+        {
+          "codigo": "Q30_A014",
+          "ordem": 14,
+          "texto": "hidratante/creme"
+        },
+        {
+          "codigo": "Q30_A015",
+          "ordem": 15,
+          "texto": "óleo bronzeador"
+        },
+        {
+          "codigo": "Q30_A016",
+          "ordem": 16,
+          "texto": "protetor de ouvido (concha ou auricular)"
+        },
+        {
+          "codigo": "Q30_A017",
+          "ordem": 17,
+          "texto": "lona"
+        },
+        {
+          "codigo": "Q30_A018",
+          "ordem": 18,
+          "texto": "guarda-chuva/sombrinha"
+        },
+        {
+          "codigo": "Q30_A019",
+          "ordem": 19,
+          "texto": "capa de chuva"
+        }
+      ],
+      "codigo": "Q30",
+      "ordem": 30,
+      "texto": "Você utiliza algumas das seguintes proteções durante a atividade de pesca?",
+      "tipo_resposta_registrado": null
+    },
+    {
+      "alternativas": [
+        {
+          "codigo": "Q31_A001",
+          "ordem": 1,
+          "texto": "não utilizo proteção"
+        },
+        {
+          "codigo": "Q31_A002",
+          "ordem": 2,
+          "texto": "eu mesmo compro ou fabrico"
+        },
+        {
+          "codigo": "Q31_A003",
+          "ordem": 3,
+          "texto": "associação, sindicato, colônia ou entidades ligadas à pesca"
+        },
+        {
+          "codigo": "Q31_A004",
+          "ordem": 4,
+          "texto": "projetos sociais ou ONGs"
+        },
+        {
+          "codigo": "Q31_A005",
+          "ordem": 5,
+          "texto": "órgãos públicos (prefeitura, governo estadual ou federal)"
+        }
+      ],
+      "codigo": "Q31",
+      "ordem": 31,
+      "texto": "Quem fornece as proteções que você utiliza durante a atividade de pesca?",
+      "tipo_resposta_registrado": null
+    },
+    {
+      "alternativas": [
+        {
+          "codigo": "Q32_A001",
+          "ordem": 1,
+          "texto": "motor protegido"
+        },
+        {
+          "codigo": "Q32_A002",
+          "ordem": 2,
+          "texto": "materiais de primeiros socorros"
+        },
+        {
+          "codigo": "Q32_A003",
+          "ordem": 3,
+          "texto": "coletes salva-vidas para todos que estão a bordo"
+        },
+        {
+          "codigo": "Q32_A004",
+          "ordem": 4,
+          "texto": "boia circular com corda (aquela que se joga na água)"
+        },
+        {
+          "codigo": "Q32_A005",
+          "ordem": 5,
+          "texto": "extintor de incêndio"
+        },
+        {
+          "codigo": "Q32_A006",
+          "ordem": 6,
+          "texto": "luzes de navegação (se pesca ou navega à noite)"
+        },
+        {
+          "codigo": "Q32_A007",
+          "ordem": 7,
+          "texto": "rádio comunicador"
+        },
+        {
+          "codigo": "Q32_A008",
+          "ordem": 8,
+          "texto": "celular com sinal para emergências"
+        },
+        {
+          "codigo": "Q32_A009",
+          "ordem": 9,
+          "texto": "nenhum dos itens acima"
+        }
+      ],
+      "codigo": "Q32",
+      "ordem": 32,
+      "texto": "Quais destes itens você possui, em situações de emergência durante a pesca?",
+      "tipo_resposta_registrado": null
+    },
+    {
+      "alternativas": [
+        {
+          "codigo": "Q33_A001",
+          "ordem": 1,
+          "texto": "pressão alta, doença do coração ou outro problema cardiovascular"
+        },
+        {
+          "codigo": "Q33_A002",
+          "ordem": 2,
+          "texto": "diabetes"
+        },
+        {
+          "codigo": "Q33_A003",
+          "ordem": 3,
+          "texto": "doenças respiratórios, como asma, bronquite, rinite, alergias respiratórias, tosse ou falta de ar frequente"
+        },
+        {
+          "codigo": "Q33_A004",
+          "ordem": 4,
+          "texto": "câncer de pele"
+        },
+        {
+          "codigo": "Q33_A005",
+          "ordem": 5,
+          "texto": "outros tipos de câncer"
+        },
+        {
+          "codigo": "Q33_A006",
+          "ordem": 6,
+          "texto": "insolação, desidratação e desmaio decorrentes do calor ou sol forte"
+        },
+        {
+          "codigo": "Q33_A007",
+          "ordem": 7,
+          "texto": "doenças de pele (dermatite, micose, alergia, coceira, manchas, queimaduras, feridas ou foliculite)"
+        },
+        {
+          "codigo": "Q33_A008",
+          "ordem": 8,
+          "texto": "varizes ou problemas de circulação nas pernas"
+        },
+        {
+          "codigo": "Q33_A009",
+          "ordem": 9,
+          "texto": "doenças infecciosas respiratórias (tuberculose e outros)"
+        },
+        {
+          "codigo": "Q33_A010",
+          "ordem": 10,
+          "texto": "doenças relacionadas à água contaminada ou ao ambiente (leptospirose, hepatite ou tétano)"
+        },
+        {
+          "codigo": "Q33_A011",
+          "ordem": 11,
+          "texto": "doenças transmitidas por mosquitos (dengue, zika, chikungunya, malária)"
+        },
+        {
+          "codigo": "Q33_A012",
+          "ordem": 12,
+          "texto": "verminoses ou outras doenças causadas por parasitas"
+        },
+        {
+          "codigo": "Q33_A013",
+          "ordem": 13,
+          "texto": "infecções urinárias"
+        },
+        {
+          "codigo": "Q33_A014",
+          "ordem": 14,
+          "texto": "problemas de estômago (gastrite, úlcera, azia ou dor frequente)"
+        },
+        {
+          "codigo": "Q33_A015",
+          "ordem": 15,
+          "texto": "dores ou lesões por esforço repetitivo (tendinite, bursite, dor nos braços, ombros, coluna, punhos ou mãos)"
+        },
+        {
+          "codigo": "Q33_A016",
+          "ordem": 16,
+          "texto": "problemas nos dentes ou na boca"
+        },
+        {
+          "codigo": "Q33_A017",
+          "ordem": 17,
+          "texto": "problemas nos olhos (catarata, conjuntivite, irritação, ardência, dificuldade para enxergar)"
+        },
+        {
+          "codigo": "Q33_A018",
+          "ordem": 18,
+          "texto": "doenças no ouvido (zumbido, perda auditiva ou dificuldade para ouvir)"
+        },
+        {
+          "codigo": "Q33_A019",
+          "ordem": 19,
+          "texto": "doenças ginecológicas"
+        },
+        {
+          "codigo": "Q33_A020",
+          "ordem": 20,
+          "texto": "doença descompressiva ou “mal dos mergulhadores”"
+        },
+        {
+          "codigo": "Q33_A021",
+          "ordem": 21,
+          "texto": "labirintite, tontura ou vertigem"
+        },
+        {
+          "codigo": "Q33_A022",
+          "ordem": 22,
+          "texto": "estresse, ansiedade, depressão, insônia ou sofrimento emocional"
+        },
+        {
+          "codigo": "Q33_A023",
+          "ordem": 23,
+          "texto": "problemas relacionados ao uso de álcool"
+        },
+        {
+          "codigo": "Q33_A024",
+          "ordem": 24,
+          "texto": "não tenho nenhum desses problemas de saúde"
+        }
+      ],
+      "codigo": "Q33",
+      "ordem": 33,
+      "texto": "Você tem alguma dessas doenças ?",
+      "tipo_resposta_registrado": null
+    },
+    {
+      "alternativas": [
+        {
+          "codigo": "Q34_A001",
+          "ordem": 1,
+          "texto": "UBS fluvial"
+        },
+        {
+          "codigo": "Q34_A002",
+          "ordem": 2,
+          "texto": "UBS terrestre ou posto de saúde"
+        },
+        {
+          "codigo": "Q34_A003",
+          "ordem": 3,
+          "texto": "UPA"
+        },
+        {
+          "codigo": "Q34_A004",
+          "ordem": 4,
+          "texto": "hospital"
+        },
+        {
+          "codigo": "Q34_A005",
+          "ordem": 5,
+          "texto": "farmácia"
+        },
+        {
+          "codigo": "Q34_A006",
+          "ordem": 6,
+          "texto": "agente comunitário de saúde"
+        },
+        {
+          "codigo": "Q34_A007",
+          "ordem": 7,
+          "texto": "benzedeira, parteira, raizeiro(a), pajé ou medicina tradicional"
+        },
+        {
+          "codigo": "Q34_A008",
+          "ordem": 8,
+          "texto": "atendimento particular"
+        },
+        {
+          "codigo": "Q34_A009",
+          "ordem": 9,
+          "texto": "procuro atendimento de saúde, mas geralmente não tem médico disponível"
+        },
+        {
+          "codigo": "Q34_A010",
+          "ordem": 10,
+          "texto": "não procuro atendimento de saúde"
+        }
+      ],
+      "codigo": "Q34",
+      "ordem": 34,
+      "texto": "Quando você precisa de atendimento de saúde, qual local costuma procurar primeiro?",
+      "tipo_resposta_registrado": null
+    },
+    {
+      "alternativas": [
+        {
+          "codigo": "Q35_A001",
+          "ordem": 1,
+          "texto": "poluição da água por lixo, óleo, esgoto, resíduos da pesca, da aquicultura ou outros contaminantes"
+        },
+        {
+          "codigo": "Q35_A002",
+          "ordem": 2,
+          "texto": "desmatamento das margens dos rios, igarapés, lagos ou manguezais"
+        },
+        {
+          "codigo": "Q35_A003",
+          "ordem": 3,
+          "texto": "local de pesca ficando mais raso por acúmulo de areia, barro ou terra"
+        },
+        {
+          "codigo": "Q35_A004",
+          "ordem": 4,
+          "texto": "degradação ou destruição do mangue"
+        },
+        {
+          "codigo": "Q35_A005",
+          "ordem": 5,
+          "texto": "dificuldade de acesso aos locais de pesca por construções, cercas, turismo, urbanização ou grilagem"
+        },
+        {
+          "codigo": "Q35_A006",
+          "ordem": 6,
+          "texto": "impactos da pesca industrial ou da pesca esportiva"
+        },
+        {
+          "codigo": "Q35_A007",
+          "ordem": 7,
+          "texto": "mudanças no tempo, como seca, chuva forte, calor intenso, ventos fortes, correnteza, ondas ou marés fora do normal"
+        },
+        {
+          "codigo": "Q35_A008",
+          "ordem": 8,
+          "texto": "mudanças na água, como alteração da temperatura, salinidade, nível ou vazão"
+        },
+        {
+          "codigo": "Q35_A009",
+          "ordem": 9,
+          "texto": "diminuição da quantidade de peixes"
+        },
+        {
+          "codigo": "Q35_A010",
+          "ordem": 10,
+          "texto": "mudança no tamanho dos peixes capturados"
+        },
+        {
+          "codigo": "Q35_A011",
+          "ordem": 11,
+          "texto": "mudança nas espécies de peixes encontradas"
+        },
+        {
+          "codigo": "Q35_A012",
+          "ordem": 12,
+          "texto": "mudanças nos períodos de pesca, reprodução, migração ou defeso"
+        },
+        {
+          "codigo": "Q35_A013",
+          "ordem": 13,
+          "texto": "nenhum desses impactos prejudica minha atividade de pesca"
+        }
+      ],
+      "codigo": "Q35",
+      "ordem": 35,
+      "texto": "Quais desses impactos ambientais mais prejudicam sua atividade de pesca?",
+      "tipo_resposta_registrado": null
+    },
+    {
+      "alternativas": [
+        {
+          "codigo": "Q36_A001",
+          "ordem": 1,
+          "texto": "não tem"
+        },
+        {
+          "codigo": "Q36_A002",
+          "ordem": 2,
+          "texto": "não sabe"
+        },
+        {
+          "codigo": "Q36_A003",
+          "ordem": 3,
+          "texto": "teatro"
+        },
+        {
+          "codigo": "Q36_A004",
+          "ordem": 4,
+          "texto": "percussão"
+        },
+        {
+          "codigo": "Q36_A005",
+          "ordem": 5,
+          "texto": "pintura"
+        },
+        {
+          "codigo": "Q36_A006",
+          "ordem": 6,
+          "texto": "marcenaria"
+        },
+        {
+          "codigo": "Q36_A007",
+          "ordem": 7,
+          "texto": "dança"
+        },
+        {
+          "codigo": "Q36_A008",
+          "ordem": 8,
+          "texto": "música"
+        },
+        {
+          "codigo": "Q36_A009",
+          "ordem": 9,
+          "texto": "artesanato"
+        }
+      ],
+      "codigo": "Q36",
+      "ordem": 36,
+      "texto": "Na sua comunidade há grupos artísticos e culturais? Se sim, quais?",
+      "tipo_resposta_registrado": null
+    }
+  ],
+  "total_alternativas": 251,
+  "total_questoes": 36,
+  "versao_dados": "26D04B_39308065350_1"
+}
