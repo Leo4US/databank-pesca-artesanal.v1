@@ -1321,8 +1321,29 @@
   const qmap = () => new Map((catalog?.questoes || []).map(q=>[q.codigo,q]));
   const escape = s => String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
   function note(element, text) {element.hidden=false;element.replaceChildren();const p=document.createElement('p');p.className='funda-state';p.textContent=text;element.appendChild(p);}
-  function setOptions(element, questions){element.replaceChildren();for(const q of questions){const option=document.createElement('option');option.value=q.codigo;option.textContent=q.codigo+' · '+q.text;element.appendChild(option);}}
-  function updateExplore(){const q=qmap().get(byId('exp-questao').value);if(!q)return;byId('exp-enunciado').textContent=q.codigo+' · '+q.text;const target=byId('exp-alternativas');target.replaceChildren();for(const a of q.alternativas){const div=document.createElement('div');div.className='funda-option';div.textContent=a.codigo+' · '+a.texto;target.appendChild(div);}byId('exp-status').textContent=`${q.alternativas.length} alternativas catalogadas · instrumento real` ;byId('exp-resultado').hidden=true;}
+function updateExplore() {
+  const q = qmap().get(byId('exp-questao').value);
+  if (!q) return;
+
+  byId('exp-enunciado').textContent =
+    q.codigo + ' · ' + q.texto;
+
+  const target = byId('exp-alternativas');
+  target.replaceChildren();
+
+  for (const a of q.alternativas) {
+    const div = document.createElement('div');
+    div.className = 'funda-option';
+    div.textContent = a.codigo + ' · ' + a.texto;
+    target.appendChild(div);
+  }
+
+  byId('exp-status').textContent =
+    `${q.alternativas.length} alternativas catalogadas · instrumento real`;
+
+  byId('exp-resultado').hidden = true;
+}
+  function updateExplore(){const q=qmap().get(byId('exp-questao').value);if(!q)return;byId('exp-enunciado').textContent=q.codigo+' · '+q.texto;const target=byId('exp-alternativas');target.replaceChildren();for(const a of q.alternativas){const div=document.createElement('div');div.className='funda-option';div.textContent=a.codigo+' · '+a.texto;target.appendChild(div);}byId('exp-status').textContent=`${q.alternativas.length} alternativas catalogadas · instrumento real` ;byId('exp-resultado').hidden=true;}
   function updatePhrase(){const q1=qmap().get(byId('lab-q1').value);const crossed=byId('lab-tipo').value==='cruzamento';byId('lab-q2-wrap').hidden=!crossed;const q2=qmap().get(byId('lab-q2').value);byId('lab-frase').textContent=crossed ? `Quero cruzar ${q1?.codigo}: ${q1?.texto} com ${q2?.codigo}: ${q2?.texto}.` : `Quero consultar a distribuição de ${q1?.codigo}: ${q1?.texto}.`;byId('lab-resultado').hidden=true;}
   function sameParams(a,b){return a.tipo===b.tipo&&a.questao_1===b.questao_1&&(a.questao_2||null)===(b.questao_2||null)&&a.versao_dados===b.versao_dados&&a.versao_motor===b.versao_motor;}
   function fileFor(p){return (index?.consultas||[]).find(entry=>entry&&entry.divulgacao_publica_autorizada===true&&sameParams(entry.parametros||{},p));}
