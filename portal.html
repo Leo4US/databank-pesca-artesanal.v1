@@ -661,15 +661,25 @@
   }
 
   function tela(id) {
-    for (const item of telas) {
-      $(item).hidden = item !== id;
-    }
-    limparMensagem();
+  for (const item of telas) {
+    $(item).hidden = item !== id;
   }
 
-  function ocupado(id, valor) {
-    $(id).disabled = valor;
+  const voltar = $("portal-voltar");
+
+  if (voltar) {
+    voltar.hidden = ![
+      "view-register",
+      "view-reset"
+    ].includes(id);
   }
+
+  limparMensagem();
+}
+
+$("portal-voltar").addEventListener("click", () => {
+  tela("view-login");
+});
 
   function erroLegivel(erro) {
     const mensagens = {
