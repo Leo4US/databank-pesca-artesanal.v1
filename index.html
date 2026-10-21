@@ -2,7 +2,126 @@
 <html lang="pt-BR">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+<!-- =====================================================
+     26F.09J | PORTA DE ENTRADA DO RESEARCH STUDIO
+
+     Oculta a interface ate confirmar:
+     1. Sessao Firebase ativa
+     2. Email verificado
+     3. Autorizacao no backend
+
+     Usuarios nao autorizados seguem para portal.html.
+
+     IMPORTANTE:
+     A seguranca dos dados depende tambem da API.
+     Este bloco controla a visibilidade e a navegacao.
+     ===================================================== -->
+
+<style id="research-studio-access-gate">
+  html {
+    visibility: hidden !important;
+  }
+</style>
+
+<script type="module">
+  import {
+    initializeApp,
+    getApps,
+    getApp
+  } from "https://www.gstatic.com/firebasejs/11.10.0/firebase-app.js";
+
+  import {
+    getAuth
+  } from "https://www.gstatic.com/firebasejs/11.10.0/firebase-auth.js";
+
+  const FIREBASE_CONFIG = {
+    apiKey: "AIzaSyC77JxCZFJrrgA8twSNYke3VDXaqwiwrSE",
+    authDomain: "databank-pesca-2026.firebaseapp.com",
+    projectId: "databank-pesca-2026",
+    appId: "1:311761842391:web:ae666a2a20f5a7cc04c092"
+  };
+
+  const API_BASE =
+    "https://pesca-analytics-api-v1-" +
+    "311761842391.southamerica-east1.run.app";
+
+  function voltarAoPortal() {
+    window.location.replace("./portal.html");
+  }
+
+  function liberarPlataforma() {
+    const protecao = document.getElementById(
+      "research-studio-access-gate"
+    );
+
+    if (protecao) {
+      protecao.remove();
+    }
+  }
+
+  async function verificarEntrada() {
+    try {
+      const aplicativo = getApps().length
+        ? getApp()
+        : initializeApp(FIREBASE_CONFIG);
+
+      const autenticacao = getAuth(aplicativo);
+
+      // Aguarda recuperar a sessao Firebase existente.
+      await autenticacao.authStateReady();
+
+      const usuario = autenticacao.currentUser;
+
+      if (!usuario) {
+        voltarAoPortal();
+        return;
+      }
+
+      // Atualiza a situacao da conta.
+      await usuario.reload();
+
+      if (!usuario.emailVerified) {
+        voltarAoPortal();
+        return;
+      }
+
+      const token = await usuario.getIdToken(true);
+
+      // A autorizacao e confirmada pelo servidor.
+      const resposta = await fetch(
+        API_BASE + "/catalogo/cadastro",
+        {
+          method: "GET",
+          cache: "no-store",
+          headers: {
+            "Accept": "application/json",
+            "Authorization": "Bearer " + token
+          }
+        }
+      );
+
+      if (!resposta.ok) {
+        voltarAoPortal();
+        return;
+      }
+
+      // Somente agora o HTML pode ficar visivel.
+      liberarPlataforma();
+
+    } catch (erro) {
+      console.error(
+        "Falha na verificacao de acesso:",
+        erro
+      );
+
+      voltarAoPortal();
+    }
+  }
+
+  verificarEntrada();
+</script>
+<!-- FIM | 26F.09J -->
   <title>Data studio sobre Pesca Artesanal</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
