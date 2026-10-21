@@ -686,6 +686,30 @@
   const auth = getAuth(app);
   const $ = id => document.getElementById(id);
 
+/* ==========================================================
+   26F.10M | CONTROLE DE BOTOES DURANTE OPERACOES
+
+   Corrige:
+   ReferenceError: ocupado is not defined
+
+   Utilizado no cadastro, login, recuperacao de senha
+   e verificacao de acesso.
+   ========================================================== */
+
+function ocupado(id, valor) {
+  const elemento = document.getElementById(id);
+
+  if (!elemento) {
+    console.warn(
+      "Controle nao encontrado:",
+      id
+    );
+    return;
+  }
+
+  elemento.disabled = Boolean(valor);
+}
+
   let usuarioAtual = null;
   let verificacao = 0;
   let autorizacaoConfirmada = false;
