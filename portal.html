@@ -1,60 +1,56 @@
 
 <!DOCTYPE html>
 <html lang="pt-BR">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="theme-color" content="#0d1728">
 
-  <title>Research Studio | Portal de Pesquisa</title>
+  <title>Research Studio | Acesso</title>
 
   <meta
     name="description"
-    content="Portal científico do Research Studio. Pesquisa, metodologia, documentação e ambiente de análise de dados."
+    content="Acesso ao Research Studio, ambiente de pesquisa e análise científica de dados."
   >
+
+  <meta name="theme-color" content="#f8fafb">
 
   <style>
     :root {
       color-scheme: light;
 
-      --navy: #0d1728;
-      --navy-2: #15243b;
-      --ink: #192438;
-      --muted: #64748b;
-      --line: #dfe6ee;
-      --paper: #ffffff;
-      --soft: #f4f7fa;
-      --accent: #2666bc;
-      --accent-soft: #eaf2fd;
-      --radius: 16px;
-      --max: 1180px;
+      --bg: #f8fafb;
+      --white: #ffffff;
+      --ink: #18263b;
+      --ink-soft: #475569;
+      --muted: #7c8998;
+      --line: #e1e7ed;
+      --navy: #15243b;
+      --navy-hover: #263d5c;
+      --pale: #eef2f5;
+      --danger: #a33c3c;
+      --success: #286c56;
+
+      --radius: 12px;
+      --font: Inter, -apple-system, BlinkMacSystemFont,
+        "Segoe UI", Arial, sans-serif;
     }
 
     * {
       box-sizing: border-box;
     }
 
-    html {
-      scroll-behavior: smooth;
+    html,
+    body {
+      min-height: 100%;
     }
 
     body {
       margin: 0;
-      background: var(--paper);
+      background: var(--bg);
       color: var(--ink);
-      font-family:
-        Inter,
-        -apple-system,
-        BlinkMacSystemFont,
-        "Segoe UI",
-        Arial,
-        sans-serif;
-      line-height: 1.65;
-    }
-
-    button,
-    a {
-      -webkit-tap-highlight-color: transparent;
+      font-family: var(--font);
+      -webkit-font-smoothing: antialiased;
     }
 
     button,
@@ -62,652 +58,368 @@
       font: inherit;
     }
 
-    a {
-      color: inherit;
-      text-decoration: none;
-    }
-
-    a:focus-visible,
-    button:focus-visible {
-      outline: 3px solid #579af2;
-      outline-offset: 4px;
-    }
-
-    .container {
-      width: min(
-        calc(100% - 48px),
-        var(--max)
-      );
-      margin-inline: auto;
-    }
-
-    .skip {
-      position: absolute;
-      top: -100px;
-      left: 16px;
-      z-index: 200;
-      padding: 12px 18px;
-      background: white;
-      color: var(--navy);
-    }
-
-    .skip:focus {
-      top: 12px;
-    }
-
-    /* ==========================================
-       CABECALHO
-       ========================================== */
-
-    .header {
-      position: sticky;
-      top: 0;
-      z-index: 100;
-      background: rgba(255, 255, 255, .97);
-      border-bottom: 1px solid var(--line);
-      backdrop-filter: blur(12px);
-    }
-
-    .header-inner {
-      min-height: 78px;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 24px;
-    }
-
-    .brand {
-      display: flex;
-      align-items: center;
-      gap: 13px;
-      min-width: 0;
-    }
-
-    .brand-icon {
-      width: 42px;
-      height: 42px;
-      display: grid;
-      place-items: center;
-      background: var(--navy);
-      color: white;
-      border-radius: 12px;
-      font-size: 20px;
-      font-weight: 800;
-      letter-spacing: -3px;
-      flex-shrink: 0;
-    }
-
-    .brand-name {
-      font-size: 17px;
-      font-weight: 750;
-      line-height: 1.2;
-      letter-spacing: -.5px;
-    }
-
-    .brand-sub {
-      display: block;
-      margin-top: 4px;
-      color: var(--muted);
-      font-size: 10px;
-      font-weight: 600;
-      letter-spacing: 1.7px;
-      text-transform: uppercase;
-    }
-
-    .nav {
-      display: flex;
-      align-items: center;
-      gap: 26px;
-    }
-
-    .nav-link {
-      font-size: 13px;
-      font-weight: 600;
-      color: #475569;
-      transition: color .2s;
-    }
-
-    .nav-link:hover {
-      color: var(--accent);
-    }
-
-    .nav-access {
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      min-height: 40px;
-      padding: 0 17px;
-      border-radius: 8px;
-      color: white;
-      background: var(--navy);
-      font-size: 12px;
-      font-weight: 700;
-      white-space: nowrap;
-    }
-
-    .nav-access:hover {
-      background: #25436b;
-    }
-
-    .menu-toggle {
-      display: none;
-      border: 1px solid var(--line);
-      background: white;
-      color: var(--ink);
-      border-radius: 8px;
-      padding: 8px 12px;
+    button {
       cursor: pointer;
     }
 
-    /* ==========================================
-       HERO
-       ========================================== */
-
-    .hero {
-      position: relative;
-      overflow: hidden;
-      background:
-        radial-gradient(
-          ellipse at 85% 22%,
-          rgba(55, 113, 191, .22),
-          transparent 35%
-        ),
-        linear-gradient(
-          125deg,
-          #0d1728 0%,
-          #15253c 60%,
-          #101b2c 100%
-        );
-      color: white;
+    button:disabled {
+      cursor: not-allowed;
+      opacity: .55;
     }
 
-    .hero::after {
-      content: "";
-      position: absolute;
-      inset: 0;
-      opacity: .12;
-      pointer-events: none;
-      background-image:
-        linear-gradient(
-          #91aacc 1px,
-          transparent 1px
-        ),
-        linear-gradient(
-          90deg,
-          #91aacc 1px,
-          transparent 1px
-        );
-      background-size: 64px 64px;
-      mask-image:
-        linear-gradient(
-          90deg,
-          transparent 25%,
-          black 100%
-        );
+    a {
+      color: inherit;
     }
 
-    .hero-inner {
-      position: relative;
-      z-index: 1;
-      display: grid;
-      grid-template-columns: 1.15fr 1fr;
+    [hidden] {
+      display: none !important;
+    }
+
+    :focus-visible {
+      outline: 3px solid #86a6d4;
+      outline-offset: 3px;
+    }
+
+    .page {
+      min-height: 100dvh;
+      display: flex;
+      flex-direction: column;
+    }
+
+    /* IDENTIDADE */
+
+    .header {
+      width: 100%;
+      padding: 25px 38px;
+    }
+
+    .brand {
+      display: inline-flex;
       align-items: center;
-      gap: 65px;
-      min-height: 550px;
-      padding-block: 82px;
+      gap: 11px;
+      text-decoration: none;
+    }
+
+    .brand-mark {
+      width: 34px;
+      height: 34px;
+      display: grid;
+      place-items: center;
+      background: var(--navy);
+      color: var(--white);
+      border-radius: 9px;
+      font-size: 17px;
+      font-weight: 750;
+      letter-spacing: -2px;
+      padding-right: 2px;
+    }
+
+    .brand-name {
+      color: var(--navy);
+      font-size: 14px;
+      font-weight: 750;
+      letter-spacing: -.35px;
+    }
+
+    /* AREA CENTRAL */
+
+    .main {
+      width: 100%;
+      flex: 1;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 28px 20px 70px;
+    }
+
+    .content {
+      width: 100%;
+      max-width: 445px;
+      margin-inline: auto;
+    }
+
+    .intro {
+      text-align: center;
+      margin-bottom: 34px;
     }
 
     .eyebrow {
-      margin: 0 0 22px;
-      font-size: 11px;
-      font-weight: 750;
-      letter-spacing: 2px;
+      margin: 0 0 13px;
+      color: var(--muted);
+      font-size: 10px;
+      letter-spacing: 2.1px;
+      font-weight: 800;
       text-transform: uppercase;
-      color: #a9c7f2;
     }
 
     h1 {
       margin: 0;
-      max-width: 710px;
-      font-size: clamp(
-        36px,
-        4.6vw,
-        64px
-      );
-      line-height: 1.08;
-      letter-spacing: -2.2px;
+      color: var(--navy);
+      font-size: clamp(35px, 5vw, 47px);
       font-weight: 760;
+      line-height: 1.1;
+      letter-spacing: -2.2px;
     }
 
-    .hero-description {
-      max-width: 580px;
-      margin: 26px 0 32px;
-      color: #c4d0df;
-      font-size: 15px;
-      line-height: 1.9;
+    .subtitle {
+      max-width: 385px;
+      margin: 15px auto 0;
+      color: var(--ink-soft);
+      font-size: 13px;
+      line-height: 1.8;
     }
 
-    .hero-actions {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 12px;
+    /* PAINEL */
+
+    .panel {
+      background: var(--white);
+      border: 1px solid var(--line);
+      border-radius: 15px;
+      padding: 29px;
+      box-shadow: 0 12px 40px rgba(22, 37, 59, .035);
     }
+
+    .panel-heading {
+      margin-bottom: 22px;
+      text-align: center;
+    }
+
+    .panel-heading h2 {
+      margin: 0;
+      color: var(--navy);
+      font-size: 16px;
+      font-weight: 730;
+      letter-spacing: -.35px;
+    }
+
+    .panel-heading p {
+      margin: 7px 0 0;
+      color: var(--muted);
+      font-size: 12px;
+      line-height: 1.6;
+    }
+
+    /* BOTOES E FORMULARIOS */
 
     .button {
+      width: 100%;
+      min-height: 46px;
       display: inline-flex;
       align-items: center;
       justify-content: center;
-      min-height: 46px;
       gap: 10px;
-      padding: 0 20px;
-      border-radius: 9px;
-      font-size: 13px;
-      font-weight: 750;
+      border-radius: 8px;
+      padding: 10px 16px;
+      font-size: 12px;
+      font-weight: 710;
       transition:
-        transform .2s,
-        background .2s;
-    }
-
-    .button:hover {
-      transform: translateY(-2px);
+        background .18s,
+        border-color .18s;
     }
 
     .button-primary {
-      background: white;
-      color: var(--navy);
-    }
-
-    .button-secondary {
-      border: 1px solid #61718a;
+      background: var(--navy);
       color: white;
+      border: 1px solid var(--navy);
     }
 
-    /* ==========================================
-       REPRESENTACAO DO FLUXO
-       ========================================== */
-
-    .research-visual {
-      border: 1px solid rgba(167, 193, 224, .22);
-      border-radius: 18px;
-      background: rgba(11, 23, 40, .65);
-      padding: 25px;
-      box-shadow: 0 30px 80px rgba(0,0,0,.2);
+    .button-primary:hover:not(:disabled) {
+      background: var(--navy-hover);
     }
 
-    .visual-header {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 12px;
-      padding-bottom: 20px;
-      border-bottom: 1px solid rgba(255,255,255,.12);
+    .button-google {
+      background: white;
+      border: 1px solid #d5dce4;
+      color: var(--ink);
     }
 
-    .visual-title {
-      font-size: 12px;
-      color: #d4e2f2;
-      font-weight: 700;
+    .button-google:hover:not(:disabled) {
+      background: #f7f9fb;
     }
 
-    .visual-label {
-      font-size: 10px;
-      letter-spacing: 1px;
-      color: #91a8c7;
+    .button-outline {
+      background: white;
+      border: 1px solid var(--line);
+      color: var(--ink);
     }
 
-    .pipeline {
-      padding-top: 23px;
+    .button-outline:hover:not(:disabled) {
+      background: var(--pale);
     }
 
-    .pipeline-step {
+    .google-symbol {
+      font-size: 17px;
+      font-weight: 800;
+      font-family: Arial, sans-serif;
+      letter-spacing: -.5px;
+    }
+
+    .divider {
       display: flex;
       align-items: center;
       gap: 14px;
-    }
-
-    .pipeline-number {
-      display: grid;
-      place-items: center;
-      width: 35px;
-      height: 35px;
-      border: 1px solid #416182;
-      border-radius: 9px;
-      background: #203750;
-      color: #a6d1ff;
-      font-size: 12px;
-      font-weight: 800;
-      flex-shrink: 0;
-    }
-
-    .pipeline-content {
-      flex: 1;
-      min-width: 0;
-    }
-
-    .pipeline-name {
-      font-size: 12px;
-      font-weight: 700;
-      color: white;
-    }
-
-    .pipeline-description {
-      margin-top: 2px;
-      color: #9aadc3;
-      font-size: 10px;
-    }
-
-    .pipeline-connector {
-      width: 1px;
-      height: 22px;
-      margin: 5px 0 5px 17px;
-      background: #426181;
-    }
-
-    .visual-footer {
-      display: flex;
-      gap: 7px;
-      margin-top: 25px;
-    }
-
-    .visual-footer span {
-      height: 4px;
-      flex: 1;
-      border-radius: 3px;
-      background: #2c496a;
-    }
-
-    .visual-footer span:first-child {
-      background: #75b7fa;
-    }
-
-    /* ==========================================
-       SECOES
-       ========================================== */
-
-    section {
-      scroll-margin-top: 100px;
-    }
-
-    .section {
-      padding: 90px 0;
-    }
-
-    .section-soft {
-      background: var(--soft);
-    }
-
-    .section-tag {
-      margin: 0 0 13px;
-      color: var(--accent);
+      margin: 21px 0;
+      color: var(--muted);
       font-size: 11px;
-      font-weight: 800;
-      letter-spacing: 1.8px;
-      text-transform: uppercase;
     }
 
-    .section-title {
-      max-width: 710px;
-      margin: 0 0 18px;
-      font-size: clamp(27px,3vw,39px);
-      line-height: 1.22;
-      letter-spacing: -1.2px;
-      color: var(--navy);
+    .divider::before,
+    .divider::after {
+      content: "";
+      height: 1px;
+      flex: 1;
+      background: var(--line);
     }
 
-    .section-description {
-      max-width: 760px;
-      margin: 0 0 34px;
-      color: var(--muted);
-      font-size: 15px;
-    }
-
-    .cards {
+    .fields {
       display: grid;
-      grid-template-columns: repeat(3,1fr);
-      gap: 18px;
+      gap: 15px;
     }
 
-    .card {
-      min-height: 215px;
-      padding: 28px;
-      background: var(--paper);
-      border: 1px solid var(--line);
-      border-radius: var(--radius);
-    }
-
-    .card-number {
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      width: 35px;
-      height: 35px;
-      border-radius: 9px;
-      background: var(--accent-soft);
-      color: var(--accent);
-      font-size: 12px;
-      font-weight: 800;
-    }
-
-    .card h3 {
-      margin: 23px 0 10px;
-      color: var(--navy);
-      font-size: 16px;
-      line-height: 1.3;
-    }
-
-    .card p {
-      margin: 0;
-      color: var(--muted);
-      font-size: 13px;
-    }
-
-    /* ==========================================
-       PERCURSO
-       ========================================== */
-
-    .method-grid {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 38px;
-      align-items: start;
-    }
-
-    .method-steps {
-      border: 1px solid var(--line);
-      border-radius: var(--radius);
-      overflow: hidden;
-    }
-
-    .method-item {
-      display: flex;
-      gap: 16px;
-      padding: 21px;
-      border-bottom: 1px solid var(--line);
-    }
-
-    .method-item:last-child {
-      border-bottom: 0;
-    }
-
-    .method-index {
-      font-size: 12px;
-      font-weight: 800;
-      color: var(--accent);
-    }
-
-    .method-item strong {
+    .field label {
       display: block;
-      color: var(--navy);
-      font-size: 13px;
+      margin-bottom: 7px;
+      color: var(--ink);
+      font-size: 11px;
+      font-weight: 730;
     }
 
-    .method-item small {
-      display: block;
-      margin-top: 5px;
-      color: var(--muted);
-      font-size: 12px;
-    }
-
-    /* ==========================================
-       ENTRADA NO AMBIENTE
-       ========================================== */
-
-    .access-section {
-      padding: 80px 0;
-      background: var(--navy);
-      color: white;
-    }
-
-    .access-grid {
-      display: grid;
-      grid-template-columns: 1.2fr .8fr;
-      gap: 45px;
-      align-items: center;
-    }
-
-    .access-section .section-title {
-      color: white;
-    }
-
-    .access-section .section-description {
-      margin-bottom: 0;
-      color: #b6c5d8;
-    }
-
-    .access-panel {
-      padding: 28px;
-      border: 1px solid #38506c;
-      border-radius: var(--radius);
-      background: var(--navy-2);
-    }
-
-    .access-panel strong {
-      display: block;
-      font-size: 15px;
-      margin-bottom: 10px;
-    }
-
-    .access-panel p {
-      margin: 0 0 22px;
-      color: #b6c5d8;
-      font-size: 13px;
-    }
-
-    .access-panel .button {
+    .field input {
       width: 100%;
+      min-height: 44px;
+      padding: 10px 12px;
+      border: 1px solid #d6dfe8;
+      border-radius: 8px;
+      background: white;
+      color: var(--ink);
+      outline: none;
+      font-size: 13px;
     }
 
-    /* ==========================================
-       RODAPE
-       ========================================== */
+    .field input:focus {
+      border-color: #607f9e;
+      box-shadow: 0 0 0 3px rgba(96,127,158,.12);
+    }
+
+    .field input::placeholder {
+      color: #9ca8b5;
+    }
+
+    .form-actions {
+      margin-top: 21px;
+    }
+
+    .switch {
+      margin-top: 19px;
+      color: var(--muted);
+      font-size: 12px;
+      text-align: center;
+    }
+
+    .link-button {
+      border: none;
+      background: none;
+      color: var(--navy);
+      font-size: inherit;
+      font-weight: 750;
+      text-decoration: underline;
+      text-underline-offset: 3px;
+      padding: 5px;
+    }
+
+    .link-button:hover {
+      color: #38608d;
+    }
+
+    .small-note {
+      margin: 17px 0 0;
+      font-size: 11px;
+      line-height: 1.7;
+      color: var(--muted);
+      text-align: center;
+    }
+
+    /* USUARIO CONECTADO */
+
+    .identity {
+      padding: 17px;
+      border: 1px solid var(--line);
+      border-radius: 10px;
+      background: #f7f9fb;
+      margin-bottom: 18px;
+      text-align: center;
+    }
+
+    .identity strong {
+      display: block;
+      margin-bottom: 4px;
+      font-size: 13px;
+      color: var(--navy);
+      overflow-wrap: anywhere;
+    }
+
+    .identity span {
+      font-size: 11px;
+      color: var(--ink-soft);
+      overflow-wrap: anywhere;
+    }
+
+    .stack {
+      display: grid;
+      gap: 10px;
+    }
+
+    .status {
+      margin-top: 17px;
+      border-radius: 8px;
+      padding: 12px 13px;
+      background: var(--pale);
+      color: var(--ink-soft);
+      font-size: 12px;
+      line-height: 1.7;
+      overflow-wrap: anywhere;
+    }
+
+    .status[data-type="error"] {
+      background: #fbf0f0;
+      color: var(--danger);
+    }
+
+    .status[data-type="success"] {
+      background: #edf7f2;
+      color: var(--success);
+    }
+
+    /* RODAPE */
 
     .footer {
-      border-top: 1px solid var(--line);
-      padding: 34px 0;
-    }
-
-    .footer-inner {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      gap: 20px;
+      padding: 20px 24px 27px;
+      text-align: center;
+      font-size: 10px;
+      letter-spacing: .2px;
       color: var(--muted);
-      font-size: 12px;
     }
 
-    /* ==========================================
-       RESPONSIVIDADE
-       ========================================== */
-
-    @media (max-width: 960px) {
-      .hero-inner {
-        grid-template-columns: 1fr;
-        gap: 35px;
-        min-height: auto;
+    @media (max-width: 560px) {
+      .header {
+        padding: 19px 20px;
       }
 
-      .research-visual {
-        max-width: 600px;
+      .main {
+        align-items: flex-start;
+        padding-top: 55px;
       }
 
-      .cards {
-        grid-template-columns: repeat(2,1fr);
+      .intro {
+        margin-bottom: 28px;
       }
 
-      .access-grid {
-        grid-template-columns: 1fr;
-      }
-    }
-
-    @media (max-width: 760px) {
-      .container {
-        width: min(calc(100% - 32px),var(--max));
-      }
-
-      .header-inner {
-        min-height: 68px;
-      }
-
-      .menu-toggle {
-        display: inline-flex;
-      }
-
-      .nav {
-        display: none;
-        position: absolute;
-        top: 68px;
-        left: 0;
-        right: 0;
-        padding: 22px 16px;
-        background: white;
-        border-bottom: 1px solid var(--line);
-        flex-direction: column;
-        align-items: stretch;
-        gap: 17px;
-        box-shadow: 0 14px 25px rgba(0,0,0,.08);
-      }
-
-      .nav.open {
-        display: flex;
-      }
-
-      .nav-access {
-        width: 100%;
-      }
-
-      .hero-inner {
-        padding-block: 70px;
+      .panel {
+        padding: 23px 20px;
       }
 
       h1 {
-        letter-spacing: -1.3px;
-      }
-
-      .section {
-        padding: 65px 0;
-      }
-
-      .cards,
-      .method-grid {
-        grid-template-columns: 1fr;
-      }
-
-      .footer-inner {
-        flex-direction: column;
-        align-items: flex-start;
-      }
-    }
-
-    @media (prefers-reduced-motion: reduce) {
-      html {
-        scroll-behavior: auto;
-      }
-
-      *,
-      *::before,
-      *::after {
-        transition: none !important;
-        animation: none !important;
+        letter-spacing: -1.7px;
       }
     }
   </style>
@@ -715,527 +427,852 @@
 
 <body>
 
-  <a class="skip" href="#conteudo">
-    Ir para o conteúdo
-  </a>
+<div class="page">
 
-  <!-- ========================================
-       01 | NAVEGACAO PUBLICA
-       ======================================== -->
+  <!-- IDENTIDADE DISCRETA -->
 
   <header class="header">
-    <div class="container header-inner">
-
-      <a class="brand" href="#inicio"
-         aria-label="Research Studio, início">
-        <span class="brand-icon" aria-hidden="true">
-          R·
-        </span>
-        <span>
-          <span class="brand-name">Research Studio</span>
-          <span class="brand-sub">
-            Plataforma de pesquisa
-          </span>
-        </span>
-      </a>
-
-      <button
-        class="menu-toggle"
-        id="menu-toggle"
-        type="button"
-        aria-expanded="false"
-        aria-controls="main-nav"
-      >
-        Menu
-      </button>
-
-      <nav
-        class="nav"
-        id="main-nav"
-        aria-label="Navegação principal"
-      >
-        <a class="nav-link" href="#projeto">
-          Projeto
-        </a>
-
-        <a class="nav-link" href="#metodologia">
-          Metodologia
-        </a>
-
-        <a class="nav-link" href="#recursos">
-          Pesquisa e dados
-        </a>
-
-        <a class="nav-link" href="#acesso">
-          Acesso
-        </a>
-
-        <a class="nav-access" href="./index.html">
-          Entrar no ambiente
-        </a>
-      </nav>
-
-    </div>
+    <a class="brand" href="./portal.html">
+      <span class="brand-mark" aria-hidden="true">R·</span>
+      <span class="brand-name">Research Studio</span>
+    </a>
   </header>
 
-  <main id="conteudo">
+  <!-- ENTRADA PRINCIPAL -->
 
-    <!-- ======================================
-         02 | HERO INSTITUCIONAL
-         ====================================== -->
+  <main class="main">
+    <div class="content">
 
-    <section class="hero" id="inicio">
-      <div class="container hero-inner">
-
-        <div>
-          <p class="eyebrow">
-            Pesquisa · Dados · Conhecimento
-          </p>
-
-          <h1>
-            Research Studio
-          </h1>
-
-          <p class="hero-description">
-            Um ambiente para organizar, documentar,
-            analisar e reutilizar dados científicos
-            relacionados ao trabalho e à saúde
-            na pesca artesanal.
-          </p>
-
-          <div class="hero-actions">
-            <a
-              href="#projeto"
-              class="button button-primary"
-            >
-              Conhecer o projeto
-              <span aria-hidden="true">↗</span>
-            </a>
-
-            <a
-              href="#acesso"
-              class="button button-secondary"
-            >
-              Ambiente de pesquisa
-            </a>
-          </div>
-        </div>
-
-        <div class="research-visual"
-             aria-label="Etapas do processamento científico">
-          <div class="visual-header">
-            <span class="visual-title">
-              Fluxo de trabalho científico
-            </span>
-            <span class="visual-label">
-              DATA PIPELINE
-            </span>
-          </div>
-
-          <div class="pipeline">
-
-            <div class="pipeline-step">
-              <span class="pipeline-number">01</span>
-              <div class="pipeline-content">
-                <div class="pipeline-name">
-                  Fontes de pesquisa
-                </div>
-                <div class="pipeline-description">
-                  Instrumentos e registros
-                </div>
-              </div>
-            </div>
-
-            <div class="pipeline-connector"></div>
-
-            <div class="pipeline-step">
-              <span class="pipeline-number">02</span>
-              <div class="pipeline-content">
-                <div class="pipeline-name">
-                  Engenharia de dados
-                </div>
-                <div class="pipeline-description">
-                  Ingestão, modelagem e integridade
-                </div>
-              </div>
-            </div>
-
-            <div class="pipeline-connector"></div>
-
-            <div class="pipeline-step">
-              <span class="pipeline-number">03</span>
-              <div class="pipeline-content">
-                <div class="pipeline-name">
-                  Governança e validação
-                </div>
-                <div class="pipeline-description">
-                  Qualidade, rastreabilidade e acesso
-                </div>
-              </div>
-            </div>
-
-            <div class="pipeline-connector"></div>
-
-            <div class="pipeline-step">
-              <span class="pipeline-number">04</span>
-              <div class="pipeline-content">
-                <div class="pipeline-name">
-                  Análises e cruzamentos
-                </div>
-                <div class="pipeline-description">
-                  Recortes, consultas e comparações
-                </div>
-              </div>
-            </div>
-
-            <div class="pipeline-connector"></div>
-
-            <div class="pipeline-step">
-              <span class="pipeline-number">05</span>
-              <div class="pipeline-content">
-                <div class="pipeline-name">
-                  Produção científica
-                </div>
-                <div class="pipeline-description">
-                  Resultados e reutilização documentada
-                </div>
-              </div>
-            </div>
-
-          </div>
-
-          <div class="visual-footer" aria-hidden="true">
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
-          </div>
-        </div>
-
-      </div>
-    </section>
-
-    <!-- ======================================
-         03 | VISAO DO PROJETO
-         ====================================== -->
-
-    <section class="section section-soft" id="projeto">
-      <div class="container">
-
-        <p class="section-tag">
-          Sobre o projeto
-        </p>
-
-        <h2 class="section-title">
-          Uma infraestrutura para pesquisa,
-          documentação e análise.
-        </h2>
-
-        <p class="section-description">
-          Estrutura inicial de apresentação institucional.
-          Os conteúdos científicos definitivos
-          serão incorporados posteriormente.
-        </p>
-
-        <div class="cards">
-
-          <article class="card">
-            <span class="card-number">01</span>
-            <h3>Banco de dados</h3>
-            <p>
-              Organização e estruturação das
-              informações provenientes da pesquisa.
-            </p>
-          </article>
-
-          <article class="card">
-            <span class="card-number">02</span>
-            <h3>Percurso metodológico</h3>
-            <p>
-              Documentação das etapas, escolhas,
-              procedimentos e verificações.
-            </p>
-          </article>
-
-          <article class="card">
-            <span class="card-number">03</span>
-            <h3>Produção científica</h3>
-            <p>
-              Apoio a análises, publicações,
-              visualizações e novas investigações.
-            </p>
-          </article>
-
-        </div>
-      </div>
-    </section>
-
-    <!-- ======================================
-         04 | METODOLOGIA
-         ====================================== -->
-
-    <section class="section" id="metodologia">
-      <div class="container method-grid">
-
-        <div>
-          <p class="section-tag">
-            Percurso metodológico
-          </p>
-
-          <h2 class="section-title">
-            Da pesquisa à reutilização dos dados.
-          </h2>
-
-          <p class="section-description">
-            Espaço reservado à apresentação
-            dos procedimentos científicos e
-            técnicos do projeto.
-          </p>
-        </div>
-
-        <div class="method-steps">
-
-          <div class="method-item">
-            <span class="method-index">01</span>
-            <div>
-              <strong>Pesquisa e instrumentos</strong>
-              <small>
-                Referências e desenho da coleta.
-              </small>
-            </div>
-          </div>
-
-          <div class="method-item">
-            <span class="method-index">02</span>
-            <div>
-              <strong>Tratamento e organização</strong>
-              <small>
-                Estruturação e modelagem dos registros.
-              </small>
-            </div>
-          </div>
-
-          <div class="method-item">
-            <span class="method-index">03</span>
-            <div>
-              <strong>Qualidade e governança</strong>
-              <small>
-                Verificações e regras de utilização.
-              </small>
-            </div>
-          </div>
-
-          <div class="method-item">
-            <span class="method-index">04</span>
-            <div>
-              <strong>Análise e interpretação</strong>
-              <small>
-                Recortes e cruzamentos de informações.
-              </small>
-            </div>
-          </div>
-
-          <div class="method-item">
-            <span class="method-index">05</span>
-            <div>
-              <strong>Documentação e produção</strong>
-              <small>
-                Comunicação e reutilização científica.
-              </small>
-            </div>
-          </div>
-
-        </div>
-
-      </div>
-    </section>
-
-    <!-- ======================================
-         05 | RECURSOS
-         ====================================== -->
-
-    <section class="section section-soft" id="recursos">
-      <div class="container">
-
-        <p class="section-tag">
-          Ambiente científico
-        </p>
-
-        <h2 class="section-title">
-          Recursos para pesquisadores.
-        </h2>
-
-        <p class="section-description">
-          Funcionalidades previstas para a área
-          autenticada, sujeitas às permissões
-          de acesso correspondentes.
-        </p>
-
-        <div class="cards">
-
-          <article class="card">
-            <span class="card-number">A</span>
-            <h3>Perfil populacional</h3>
-            <p>
-              Composição dos participantes e
-              recortes cadastrais progressivos.
-            </p>
-          </article>
-
-          <article class="card">
-            <span class="card-number">B</span>
-            <h3>Laboratório analítico</h3>
-            <p>
-              Frequências, cruzamentos e
-              construção de grupos comparativos.
-            </p>
-          </article>
-
-          <article class="card">
-            <span class="card-number">C</span>
-            <h3>Resultados e visualizações</h3>
-            <p>
-              Exploração e comunicação de resultados,
-              com documentação dos parâmetros.
-            </p>
-          </article>
-
-        </div>
-
-      </div>
-    </section>
-
-    <!-- ======================================
-         06 | ACESSO
-         ====================================== -->
-
-    <section class="access-section" id="acesso">
-      <div class="container access-grid">
-
-        <div>
-          <p class="section-tag" style="color:#9dc5ff">
-            Acesso ao ambiente
-          </p>
-
-          <h2 class="section-title">
-            Entre no ambiente de pesquisa.
-          </h2>
-
-          <p class="section-description">
-            O Research Studio contará com
-            autenticação de pesquisadores,
-            perfis acadêmicos e permissões
-            específicas para utilização dos dados.
-          </p>
-        </div>
-
-        <div class="access-panel">
-          <strong>
-            Área de pesquisadores
-          </strong>
-
-          <p>
-            Entrada temporária para o ambiente
-            existente durante a implantação
-            do controle de acesso.
-          </p>
-
-          <a
-            href="./index.html"
-            class="button button-primary"
-            id="research-entry"
-          >
-            Abrir Research Studio
-            <span aria-hidden="true">↗</span>
-          </a>
-        </div>
-
-      </div>
-    </section>
-
-  </main>
-
-  <!-- ========================================
-       07 | RODAPE
-       ======================================== -->
-
-  <footer class="footer">
-    <div class="container footer-inner">
-
-      <div>
-        <strong>Research Studio</strong>
-        <div>
+      <div class="intro">
+        <p class="eyebrow">
           Banco de dados e produções científicas
-        </div>
+        </p>
+
+        <h1>Research Studio</h1>
+
+        <p class="subtitle">
+          Ambiente de pesquisa, análise e
+          reutilização científica de dados.
+        </p>
       </div>
 
-      <div>
-        Portal institucional | Versão de desenvolvimento
-      </div>
+      <section class="panel" aria-label="Acesso ao Research Studio">
+
+        <!-- CARREGAMENTO -->
+
+        <div id="view-loading">
+          <div class="panel-heading">
+            <h2>Verificando acesso</h2>
+            <p>Identificando a sessão de pesquisa.</p>
+          </div>
+        </div>
+
+        <!-- ENTRAR -->
+
+        <div id="view-login" hidden>
+
+          <div class="panel-heading">
+            <h2>Acesso do pesquisador</h2>
+            <p>
+              Entre com sua conta ou realize seu cadastro.
+            </p>
+          </div>
+
+          <button
+            id="btn-google"
+            type="button"
+            class="button button-google"
+          >
+            <span class="google-symbol" aria-hidden="true">G</span>
+            Continuar com Google
+          </button>
+
+          <div class="divider">ou com e-mail</div>
+
+          <form id="form-login" novalidate>
+
+            <div class="fields">
+              <div class="field">
+                <label for="login-email">E-mail</label>
+                <input
+                  id="login-email"
+                  type="email"
+                  autocomplete="email"
+                  placeholder="seu.email@dominio.com"
+                  required
+                >
+              </div>
+
+              <div class="field">
+                <label for="login-password">Senha</label>
+                <input
+                  id="login-password"
+                  type="password"
+                  autocomplete="current-password"
+                  placeholder="Sua senha"
+                  required
+                >
+              </div>
+            </div>
+
+            <div class="form-actions">
+              <button
+                id="btn-login"
+                type="submit"
+                class="button button-primary"
+              >
+                Entrar
+              </button>
+            </div>
+
+          </form>
+
+          <div class="switch">
+            Ainda não tem conta?
+            <button
+              type="button"
+              class="link-button"
+              id="open-register"
+            >
+              Cadastrar-se
+            </button>
+          </div>
+
+        </div>
+
+        <!-- CADASTRO -->
+
+        <div id="view-register" hidden>
+
+          <div class="panel-heading">
+            <h2>Cadastro de pesquisador</h2>
+            <p>
+              Utilize um e-mail pessoal ou institucional.
+            </p>
+          </div>
+
+          <form id="form-register" novalidate>
+
+            <div class="fields">
+
+              <div class="field">
+                <label for="register-name">
+                  Nome completo
+                </label>
+                <input
+                  id="register-name"
+                  type="text"
+                  autocomplete="name"
+                  placeholder="Seu nome completo"
+                  maxlength="250"
+                  required
+                >
+              </div>
+
+              <div class="field">
+                <label for="register-email">
+                  E-mail
+                </label>
+                <input
+                  id="register-email"
+                  type="email"
+                  autocomplete="email"
+                  placeholder="seu.email@dominio.com"
+                  required
+                >
+              </div>
+
+              <div class="field">
+                <label for="register-password">
+                  Criar senha
+                </label>
+                <input
+                  id="register-password"
+                  type="password"
+                  autocomplete="new-password"
+                  minlength="6"
+                  placeholder="Mínimo de 6 caracteres"
+                  required
+                >
+              </div>
+
+            </div>
+
+            <div class="form-actions">
+              <button
+                id="btn-register"
+                type="submit"
+                class="button button-primary"
+              >
+                Criar minha conta
+              </button>
+            </div>
+
+          </form>
+
+          <p class="small-note">
+            ORCID, Currículo Lattes e Google Acadêmico
+            serão opcionais no perfil acadêmico.
+            A criação da conta não libera automaticamente
+            o acesso aos dados restritos.
+          </p>
+
+          <div class="switch">
+            Já possui cadastro?
+            <button
+              type="button"
+              class="link-button"
+              id="back-login"
+            >
+              Entrar
+            </button>
+          </div>
+
+        </div>
+
+        <!-- CONTA CONECTADA -->
+
+        <div id="view-account" hidden>
+
+          <div class="panel-heading">
+            <h2>Minha conta</h2>
+            <p id="account-description">
+              Verificando permissões de acesso.
+            </p>
+          </div>
+
+          <div class="identity">
+            <strong id="account-name"></strong>
+            <span id="account-email"></span>
+          </div>
+
+          <div class="stack">
+
+            <button
+              type="button"
+              id="btn-enter"
+              class="button button-primary"
+              hidden
+            >
+              Entrar no Research Studio
+            </button>
+
+            <button
+              type="button"
+              id="btn-check"
+              class="button button-outline"
+            >
+              Verificar meu acesso
+            </button>
+
+            <button
+              type="button"
+              id="btn-verify-email"
+              class="button button-outline"
+              hidden
+            >
+              Enviar verificação de e-mail
+            </button>
+
+            <button
+              type="button"
+              id="btn-logout"
+              class="button button-outline"
+            >
+              Sair da conta
+            </button>
+
+          </div>
+
+        </div>
+
+        <!-- MENSAGENS -->
+
+        <div
+          class="status"
+          id="auth-status"
+          role="status"
+          aria-live="polite"
+          hidden
+        ></div>
+
+      </section>
 
     </div>
+  </main>
+
+  <footer class="footer">
+    Research Studio · Ambiente de pesquisa
   </footer>
 
-  <!-- ========================================
-       08 | INTERACAO MOBILE
-       ======================================== -->
+</div>
 
-  <script>
-    (() => {
-      "use strict";
+<!-- ====================================================
+     FIREBASE AUTHENTICATION
+     26F.09B | PORTAL MINIMALISTA
+     ==================================================== -->
 
-      const botao = document.getElementById(
-        "menu-toggle"
-      );
+<script type="module">
 
-      const nav = document.getElementById(
-        "main-nav"
-      );
+  import {
+    initializeApp,
+    getApps,
+    getApp
+  } from "https://www.gstatic.com/firebasejs/11.10.0/firebase-app.js";
 
-      if (!botao || !nav) return;
+  import {
+    getAuth,
+    GoogleAuthProvider,
+    signInWithPopup,
+    signInWithEmailAndPassword,
+    createUserWithEmailAndPassword,
+    sendEmailVerification,
+    updateProfile,
+    onAuthStateChanged,
+    signOut
+  } from "https://www.gstatic.com/firebasejs/11.10.0/firebase-auth.js";
 
-      function fecharMenu() {
-        nav.classList.remove("open");
-        botao.setAttribute(
-          "aria-expanded",
-          "false"
+
+  /* 01 | CONFIGURACAO */
+
+  const CONFIG = {
+    firebase: {
+      apiKey: "AIzaSyC77JxCZFJrrgA8twSNYke3VDXaqwiwrSE",
+      authDomain: "databank-pesca-2026.firebaseapp.com",
+      projectId: "databank-pesca-2026",
+      appId: "1:311761842391:web:ae666a2a20f5a7cc04c092"
+    },
+
+    api: (
+      "https://pesca-analytics-api-v1-" +
+      "311761842391.southamerica-east1.run.app"
+    ),
+
+    destino: "./index.html"
+  };
+
+  const firebaseApp = getApps().length
+    ? getApp()
+    : initializeApp(CONFIG.firebase);
+
+  const auth = getAuth(firebaseApp);
+
+  const $ = id => document.getElementById(id);
+
+  let usuarioAtual = null;
+  let verificacaoAtual = 0;
+
+
+  /* 02 | CONTROLE DE TELAS */
+
+  const telas = [
+    "view-loading",
+    "view-login",
+    "view-register",
+    "view-account"
+  ];
+
+  function mostrarTela(nome) {
+    for (const id of telas) {
+      $(id).hidden = id !== nome;
+    }
+
+    limparMensagem();
+  }
+
+  function informar(texto, tipo = "") {
+    const alvo = $("auth-status");
+
+    alvo.textContent = texto;
+    alvo.dataset.type = tipo;
+    alvo.hidden = false;
+  }
+
+  function limparMensagem() {
+    const alvo = $("auth-status");
+
+    alvo.textContent = "";
+    alvo.dataset.type = "";
+    alvo.hidden = true;
+  }
+
+  function traduzirErro(erro) {
+    const mensagens = {
+      "auth/email-already-in-use":
+        "Este e-mail já possui uma conta. Utilize a opção Entrar.",
+
+      "auth/invalid-email":
+        "Verifique o endereço de e-mail informado.",
+
+      "auth/weak-password":
+        "A senha não atende aos requisitos de segurança.",
+
+      "auth/invalid-credential":
+        "Não foi possível autenticar. Confira e-mail e senha.",
+
+      "auth/wrong-password":
+        "E-mail ou senha incorretos.",
+
+      "auth/too-many-requests":
+        "Muitas tentativas. Tente novamente mais tarde.",
+
+      "auth/popup-closed-by-user":
+        "A janela de autenticação foi fechada.",
+
+      "auth/popup-blocked":
+        "O navegador bloqueou a janela de autenticação.",
+
+      "auth/unauthorized-domain":
+        "Este domínio não está autorizado no Firebase."
+    };
+
+    return mensagens[erro?.code] ||
+      "Não foi possível concluir a operação. " +
+      "Verifique os dados e tente novamente.";
+  }
+
+  function definirOcupado(botao, ocupado) {
+    if (!botao) return;
+
+    botao.disabled = ocupado;
+  }
+
+
+  /* 03 | CONTROLE DE ACESSO PELO BACKEND */
+
+  async function verificarAutorizacao() {
+    const usuario = auth.currentUser;
+
+    const sequencia = ++verificacaoAtual;
+
+    $("btn-enter").hidden = true;
+
+    if (!usuario) {
+      mostrarTela("view-login");
+      return;
+    }
+
+    $("account-description").textContent =
+      "Verificando autorização no servidor.";
+
+    $("btn-check").disabled = true;
+
+    try {
+      await usuario.reload();
+
+      if (sequencia !== verificacaoAtual) return;
+
+      if (!usuario.emailVerified) {
+        $("account-description").textContent =
+          "Verifique seu e-mail para continuar.";
+
+        $("btn-verify-email").hidden = false;
+
+        informar(
+          "Sua conta foi criada ou reconhecida, " +
+          "mas o e-mail ainda não foi verificado. " +
+          "A verificação é necessária para solicitar " +
+          "acesso às consultas protegidas."
         );
+
+        return;
       }
 
-      botao.addEventListener(
-        "click",
-        () => {
-          const aberto = nav.classList.toggle(
-            "open"
-          );
+      $("btn-verify-email").hidden = true;
 
-          botao.setAttribute(
-            "aria-expanded",
-            String(aberto)
-          );
-        }
-      );
+      const token = await usuario.getIdToken(true);
 
-      nav.querySelectorAll("a").forEach(
-        link => {
-          link.addEventListener(
-            "click",
-            fecharMenu
-          );
-        }
-      );
-
-      document.addEventListener(
-        "keydown",
-        evento => {
-          if (evento.key === "Escape") {
-            fecharMenu();
+      /*
+       * A rota já existente é protegida pela API.
+       * Ela é usada aqui somente para verificar se
+       * a conta tem autorização de pesquisador.
+       *
+       * O frontend não decide as permissões.
+       */
+      const resposta = await fetch(
+        CONFIG.api + "/catalogo/cadastro",
+        {
+          method: "GET",
+          cache: "no-store",
+          headers: {
+            "Accept": "application/json",
+            "Authorization": `Bearer ${token}`
           }
         }
       );
-    })();
-  </script>
+
+      if (sequencia !== verificacaoAtual) return;
+
+      if (resposta.ok) {
+        $("account-description").textContent =
+          "Conta autorizada para o ambiente de pesquisa.";
+
+        $("btn-enter").hidden = false;
+
+        informar(
+          "Autenticação e autorização confirmadas.",
+          "success"
+        );
+
+        return;
+      }
+
+      if (
+        resposta.status === 401 ||
+        resposta.status === 403
+      ) {
+        $("account-description").textContent =
+          "Cadastro autenticado.";
+
+        informar(
+          "Sua conta está ativa, mas ainda não possui " +
+          "autorização para acessar as funcionalidades " +
+          "restritas. O cadastro não concede essa " +
+          "permissão automaticamente."
+        );
+
+        return;
+      }
+
+      throw new Error(
+        "Resposta HTTP " + resposta.status
+      );
+
+    } catch (erro) {
+      if (sequencia !== verificacaoAtual) return;
+
+      $("account-description").textContent =
+        "Não foi possível verificar as permissões.";
+
+      informar(
+        "A verificação de acesso está indisponível. " +
+        "Sua sessão foi preservada, mas a entrada " +
+        "não será liberada até confirmar a autorização.",
+        "error"
+      );
+
+      console.error("Verificação de acesso:", erro);
+
+    } finally {
+      if (sequencia === verificacaoAtual) {
+        $("btn-check").disabled = false;
+      }
+    }
+  }
+
+
+  /* 04 | LOGIN GOOGLE */
+
+  $("btn-google").addEventListener(
+    "click",
+    async () => {
+      const botao = $("btn-google");
+
+      definirOcupado(botao, true);
+
+      try {
+        const provedor = new GoogleAuthProvider();
+
+        await signInWithPopup(
+          auth,
+          provedor
+        );
+
+      } catch (erro) {
+        informar(
+          traduzirErro(erro),
+          "error"
+        );
+
+      } finally {
+        definirOcupado(botao, false);
+      }
+    }
+  );
+
+
+  /* 05 | LOGIN EMAIL E SENHA */
+
+  $("form-login").addEventListener(
+    "submit",
+    async evento => {
+      evento.preventDefault();
+
+      const email = $("login-email").value.trim();
+      const senha = $("login-password").value;
+
+      if (!email || !senha) {
+        informar(
+          "Informe seu e-mail e sua senha.",
+          "error"
+        );
+        return;
+      }
+
+      const botao = $("btn-login");
+
+      definirOcupado(botao, true);
+
+      try {
+        await signInWithEmailAndPassword(
+          auth,
+          email,
+          senha
+        );
+
+        $("login-password").value = "";
+
+      } catch (erro) {
+        informar(
+          traduzirErro(erro),
+          "error"
+        );
+
+      } finally {
+        definirOcupado(botao, false);
+      }
+    }
+  );
+
+
+  /* 06 | CADASTRO EMAIL E SENHA */
+
+  $("form-register").addEventListener(
+    "submit",
+    async evento => {
+      evento.preventDefault();
+
+      const nome = $("register-name").value.trim();
+      const email = $("register-email").value.trim();
+      const senha = $("register-password").value;
+
+      if (nome.length < 2) {
+        informar(
+          "Informe seu nome completo.",
+          "error"
+        );
+        return;
+      }
+
+      if (nome.split(/\s+/).length < 2) {
+        informar(
+          "Informe nome e sobrenome para concluir " +
+          "o cadastro.",
+          "error"
+        );
+        return;
+      }
+
+      if (
+        !$("register-email").checkValidity()
+      ) {
+        informar(
+          "Informe um endereço de e-mail válido.",
+          "error"
+        );
+        return;
+      }
+
+      if (senha.length < 6) {
+        informar(
+          "A senha precisa ter pelo menos " +
+          "6 caracteres.",
+          "error"
+        );
+        return;
+      }
+
+      const botao = $("btn-register");
+
+      definirOcupado(botao, true);
+
+      try {
+        const credencial =
+          await createUserWithEmailAndPassword(
+            auth,
+            email,
+            senha
+          );
+
+        /*
+         * O nome é armazenado no perfil Firebase.
+         * O perfil acadêmico completo será persistido
+         * posteriormente no banco da plataforma.
+         */
+        await updateProfile(
+          credencial.user,
+          {
+            displayName: nome
+          }
+        );
+
+        $("register-password").value = "";
+
+        try {
+          await sendEmailVerification(
+            credencial.user
+          );
+        } catch (erroEnvio) {
+          console.warn(
+            "Envio de verificação:",
+            erroEnvio
+          );
+        }
+
+        /*
+         * O estado da sessão é tratado pelo
+         * onAuthStateChanged abaixo.
+         */
+
+      } catch (erro) {
+        informar(
+          traduzirErro(erro),
+          "error"
+        );
+
+      } finally {
+        definirOcupado(botao, false);
+      }
+    }
+  );
+
+
+  /* 07 | ALTERNANCIA ENTRE LOGIN E CADASTRO */
+
+  $("open-register").addEventListener(
+    "click",
+    () => {
+      mostrarTela("view-register");
+    }
+  );
+
+  $("back-login").addEventListener(
+    "click",
+    () => {
+      mostrarTela("view-login");
+    }
+  );
+
+
+  /* 08 | CONTA AUTENTICADA */
+
+  $("btn-check").addEventListener(
+    "click",
+    verificarAutorizacao
+  );
+
+  $("btn-verify-email").addEventListener(
+    "click",
+    async () => {
+      if (!auth.currentUser) return;
+
+      const botao = $("btn-verify-email");
+
+      definirOcupado(botao, true);
+
+      try {
+        await sendEmailVerification(
+          auth.currentUser
+        );
+
+        informar(
+          "Mensagem de verificação solicitada. " +
+          "Confira sua caixa de entrada e a pasta " +
+          "de spam. Após confirmar o e-mail, clique " +
+          "em Verificar meu acesso.",
+          "success"
+        );
+
+      } catch (erro) {
+        informar(
+          traduzirErro(erro),
+          "error"
+        );
+
+      } finally {
+        definirOcupado(botao, false);
+      }
+    }
+  );
+
+  $("btn-logout").addEventListener(
+    "click",
+    async () => {
+      try {
+        await signOut(auth);
+
+      } catch (erro) {
+        informar(
+          "Não foi possível encerrar a sessão.",
+          "error"
+        );
+      }
+    }
+  );
+
+  $("btn-enter").addEventListener(
+    "click",
+    () => {
+      if (!usuarioAtual) return;
+
+      /*
+       * A verificação da API já ocorreu antes de
+       * exibir este botão.
+       *
+       * O bloqueio de acesso direto ao index.html
+       * e a proteção das demais rotas são uma etapa
+       * de segurança separada.
+       */
+      window.location.assign(
+        CONFIG.destino
+      );
+    }
+  );
+
+
+  /* 09 | OBSERVACAO DA SESSAO FIREBASE */
+
+  onAuthStateChanged(
+    auth,
+    async usuario => {
+      verificacaoAtual += 1;
+      usuarioAtual = usuario;
+
+      if (!usuario) {
+        mostrarTela("view-login");
+        return;
+      }
+
+      $("account-name").textContent =
+        usuario.displayName ||
+        "Conta de pesquisador";
+
+      $("account-email").textContent =
+        usuario.email ||
+        "Conta autenticada";
+
+      $("btn-enter").hidden = true;
+
+      mostrarTela("view-account");
+
+      await verificarAutorizacao();
+    },
+    erro => {
+      console.error(
+        "Sessão Firebase:",
+        erro
+      );
+
+      mostrarTela("view-login");
+
+      informar(
+        "Não foi possível recuperar a sessão.",
+        "error"
+      );
+    }
+  );
+
+</script>
 
 </body>
 </html>
