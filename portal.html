@@ -1,0 +1,1241 @@
+
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#0d1728">
+
+  <title>Research Studio | Portal de Pesquisa</title>
+
+  <meta
+    name="description"
+    content="Portal científico do Research Studio. Pesquisa, metodologia, documentação e ambiente de análise de dados."
+  >
+
+  <style>
+    :root {
+      color-scheme: light;
+
+      --navy: #0d1728;
+      --navy-2: #15243b;
+      --ink: #192438;
+      --muted: #64748b;
+      --line: #dfe6ee;
+      --paper: #ffffff;
+      --soft: #f4f7fa;
+      --accent: #2666bc;
+      --accent-soft: #eaf2fd;
+      --radius: 16px;
+      --max: 1180px;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      margin: 0;
+      background: var(--paper);
+      color: var(--ink);
+      font-family:
+        Inter,
+        -apple-system,
+        BlinkMacSystemFont,
+        "Segoe UI",
+        Arial,
+        sans-serif;
+      line-height: 1.65;
+    }
+
+    button,
+    a {
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    button,
+    input {
+      font: inherit;
+    }
+
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
+
+    a:focus-visible,
+    button:focus-visible {
+      outline: 3px solid #579af2;
+      outline-offset: 4px;
+    }
+
+    .container {
+      width: min(
+        calc(100% - 48px),
+        var(--max)
+      );
+      margin-inline: auto;
+    }
+
+    .skip {
+      position: absolute;
+      top: -100px;
+      left: 16px;
+      z-index: 200;
+      padding: 12px 18px;
+      background: white;
+      color: var(--navy);
+    }
+
+    .skip:focus {
+      top: 12px;
+    }
+
+    /* ==========================================
+       CABECALHO
+       ========================================== */
+
+    .header {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      background: rgba(255, 255, 255, .97);
+      border-bottom: 1px solid var(--line);
+      backdrop-filter: blur(12px);
+    }
+
+    .header-inner {
+      min-height: 78px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 24px;
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 13px;
+      min-width: 0;
+    }
+
+    .brand-icon {
+      width: 42px;
+      height: 42px;
+      display: grid;
+      place-items: center;
+      background: var(--navy);
+      color: white;
+      border-radius: 12px;
+      font-size: 20px;
+      font-weight: 800;
+      letter-spacing: -3px;
+      flex-shrink: 0;
+    }
+
+    .brand-name {
+      font-size: 17px;
+      font-weight: 750;
+      line-height: 1.2;
+      letter-spacing: -.5px;
+    }
+
+    .brand-sub {
+      display: block;
+      margin-top: 4px;
+      color: var(--muted);
+      font-size: 10px;
+      font-weight: 600;
+      letter-spacing: 1.7px;
+      text-transform: uppercase;
+    }
+
+    .nav {
+      display: flex;
+      align-items: center;
+      gap: 26px;
+    }
+
+    .nav-link {
+      font-size: 13px;
+      font-weight: 600;
+      color: #475569;
+      transition: color .2s;
+    }
+
+    .nav-link:hover {
+      color: var(--accent);
+    }
+
+    .nav-access {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 40px;
+      padding: 0 17px;
+      border-radius: 8px;
+      color: white;
+      background: var(--navy);
+      font-size: 12px;
+      font-weight: 700;
+      white-space: nowrap;
+    }
+
+    .nav-access:hover {
+      background: #25436b;
+    }
+
+    .menu-toggle {
+      display: none;
+      border: 1px solid var(--line);
+      background: white;
+      color: var(--ink);
+      border-radius: 8px;
+      padding: 8px 12px;
+      cursor: pointer;
+    }
+
+    /* ==========================================
+       HERO
+       ========================================== */
+
+    .hero {
+      position: relative;
+      overflow: hidden;
+      background:
+        radial-gradient(
+          ellipse at 85% 22%,
+          rgba(55, 113, 191, .22),
+          transparent 35%
+        ),
+        linear-gradient(
+          125deg,
+          #0d1728 0%,
+          #15253c 60%,
+          #101b2c 100%
+        );
+      color: white;
+    }
+
+    .hero::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      opacity: .12;
+      pointer-events: none;
+      background-image:
+        linear-gradient(
+          #91aacc 1px,
+          transparent 1px
+        ),
+        linear-gradient(
+          90deg,
+          #91aacc 1px,
+          transparent 1px
+        );
+      background-size: 64px 64px;
+      mask-image:
+        linear-gradient(
+          90deg,
+          transparent 25%,
+          black 100%
+        );
+    }
+
+    .hero-inner {
+      position: relative;
+      z-index: 1;
+      display: grid;
+      grid-template-columns: 1.15fr 1fr;
+      align-items: center;
+      gap: 65px;
+      min-height: 550px;
+      padding-block: 82px;
+    }
+
+    .eyebrow {
+      margin: 0 0 22px;
+      font-size: 11px;
+      font-weight: 750;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      color: #a9c7f2;
+    }
+
+    h1 {
+      margin: 0;
+      max-width: 710px;
+      font-size: clamp(
+        36px,
+        4.6vw,
+        64px
+      );
+      line-height: 1.08;
+      letter-spacing: -2.2px;
+      font-weight: 760;
+    }
+
+    .hero-description {
+      max-width: 580px;
+      margin: 26px 0 32px;
+      color: #c4d0df;
+      font-size: 15px;
+      line-height: 1.9;
+    }
+
+    .hero-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+    }
+
+    .button {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 46px;
+      gap: 10px;
+      padding: 0 20px;
+      border-radius: 9px;
+      font-size: 13px;
+      font-weight: 750;
+      transition:
+        transform .2s,
+        background .2s;
+    }
+
+    .button:hover {
+      transform: translateY(-2px);
+    }
+
+    .button-primary {
+      background: white;
+      color: var(--navy);
+    }
+
+    .button-secondary {
+      border: 1px solid #61718a;
+      color: white;
+    }
+
+    /* ==========================================
+       REPRESENTACAO DO FLUXO
+       ========================================== */
+
+    .research-visual {
+      border: 1px solid rgba(167, 193, 224, .22);
+      border-radius: 18px;
+      background: rgba(11, 23, 40, .65);
+      padding: 25px;
+      box-shadow: 0 30px 80px rgba(0,0,0,.2);
+    }
+
+    .visual-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      padding-bottom: 20px;
+      border-bottom: 1px solid rgba(255,255,255,.12);
+    }
+
+    .visual-title {
+      font-size: 12px;
+      color: #d4e2f2;
+      font-weight: 700;
+    }
+
+    .visual-label {
+      font-size: 10px;
+      letter-spacing: 1px;
+      color: #91a8c7;
+    }
+
+    .pipeline {
+      padding-top: 23px;
+    }
+
+    .pipeline-step {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+    }
+
+    .pipeline-number {
+      display: grid;
+      place-items: center;
+      width: 35px;
+      height: 35px;
+      border: 1px solid #416182;
+      border-radius: 9px;
+      background: #203750;
+      color: #a6d1ff;
+      font-size: 12px;
+      font-weight: 800;
+      flex-shrink: 0;
+    }
+
+    .pipeline-content {
+      flex: 1;
+      min-width: 0;
+    }
+
+    .pipeline-name {
+      font-size: 12px;
+      font-weight: 700;
+      color: white;
+    }
+
+    .pipeline-description {
+      margin-top: 2px;
+      color: #9aadc3;
+      font-size: 10px;
+    }
+
+    .pipeline-connector {
+      width: 1px;
+      height: 22px;
+      margin: 5px 0 5px 17px;
+      background: #426181;
+    }
+
+    .visual-footer {
+      display: flex;
+      gap: 7px;
+      margin-top: 25px;
+    }
+
+    .visual-footer span {
+      height: 4px;
+      flex: 1;
+      border-radius: 3px;
+      background: #2c496a;
+    }
+
+    .visual-footer span:first-child {
+      background: #75b7fa;
+    }
+
+    /* ==========================================
+       SECOES
+       ========================================== */
+
+    section {
+      scroll-margin-top: 100px;
+    }
+
+    .section {
+      padding: 90px 0;
+    }
+
+    .section-soft {
+      background: var(--soft);
+    }
+
+    .section-tag {
+      margin: 0 0 13px;
+      color: var(--accent);
+      font-size: 11px;
+      font-weight: 800;
+      letter-spacing: 1.8px;
+      text-transform: uppercase;
+    }
+
+    .section-title {
+      max-width: 710px;
+      margin: 0 0 18px;
+      font-size: clamp(27px,3vw,39px);
+      line-height: 1.22;
+      letter-spacing: -1.2px;
+      color: var(--navy);
+    }
+
+    .section-description {
+      max-width: 760px;
+      margin: 0 0 34px;
+      color: var(--muted);
+      font-size: 15px;
+    }
+
+    .cards {
+      display: grid;
+      grid-template-columns: repeat(3,1fr);
+      gap: 18px;
+    }
+
+    .card {
+      min-height: 215px;
+      padding: 28px;
+      background: var(--paper);
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+    }
+
+    .card-number {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 35px;
+      height: 35px;
+      border-radius: 9px;
+      background: var(--accent-soft);
+      color: var(--accent);
+      font-size: 12px;
+      font-weight: 800;
+    }
+
+    .card h3 {
+      margin: 23px 0 10px;
+      color: var(--navy);
+      font-size: 16px;
+      line-height: 1.3;
+    }
+
+    .card p {
+      margin: 0;
+      color: var(--muted);
+      font-size: 13px;
+    }
+
+    /* ==========================================
+       PERCURSO
+       ========================================== */
+
+    .method-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 38px;
+      align-items: start;
+    }
+
+    .method-steps {
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      overflow: hidden;
+    }
+
+    .method-item {
+      display: flex;
+      gap: 16px;
+      padding: 21px;
+      border-bottom: 1px solid var(--line);
+    }
+
+    .method-item:last-child {
+      border-bottom: 0;
+    }
+
+    .method-index {
+      font-size: 12px;
+      font-weight: 800;
+      color: var(--accent);
+    }
+
+    .method-item strong {
+      display: block;
+      color: var(--navy);
+      font-size: 13px;
+    }
+
+    .method-item small {
+      display: block;
+      margin-top: 5px;
+      color: var(--muted);
+      font-size: 12px;
+    }
+
+    /* ==========================================
+       ENTRADA NO AMBIENTE
+       ========================================== */
+
+    .access-section {
+      padding: 80px 0;
+      background: var(--navy);
+      color: white;
+    }
+
+    .access-grid {
+      display: grid;
+      grid-template-columns: 1.2fr .8fr;
+      gap: 45px;
+      align-items: center;
+    }
+
+    .access-section .section-title {
+      color: white;
+    }
+
+    .access-section .section-description {
+      margin-bottom: 0;
+      color: #b6c5d8;
+    }
+
+    .access-panel {
+      padding: 28px;
+      border: 1px solid #38506c;
+      border-radius: var(--radius);
+      background: var(--navy-2);
+    }
+
+    .access-panel strong {
+      display: block;
+      font-size: 15px;
+      margin-bottom: 10px;
+    }
+
+    .access-panel p {
+      margin: 0 0 22px;
+      color: #b6c5d8;
+      font-size: 13px;
+    }
+
+    .access-panel .button {
+      width: 100%;
+    }
+
+    /* ==========================================
+       RODAPE
+       ========================================== */
+
+    .footer {
+      border-top: 1px solid var(--line);
+      padding: 34px 0;
+    }
+
+    .footer-inner {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 20px;
+      color: var(--muted);
+      font-size: 12px;
+    }
+
+    /* ==========================================
+       RESPONSIVIDADE
+       ========================================== */
+
+    @media (max-width: 960px) {
+      .hero-inner {
+        grid-template-columns: 1fr;
+        gap: 35px;
+        min-height: auto;
+      }
+
+      .research-visual {
+        max-width: 600px;
+      }
+
+      .cards {
+        grid-template-columns: repeat(2,1fr);
+      }
+
+      .access-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    @media (max-width: 760px) {
+      .container {
+        width: min(calc(100% - 32px),var(--max));
+      }
+
+      .header-inner {
+        min-height: 68px;
+      }
+
+      .menu-toggle {
+        display: inline-flex;
+      }
+
+      .nav {
+        display: none;
+        position: absolute;
+        top: 68px;
+        left: 0;
+        right: 0;
+        padding: 22px 16px;
+        background: white;
+        border-bottom: 1px solid var(--line);
+        flex-direction: column;
+        align-items: stretch;
+        gap: 17px;
+        box-shadow: 0 14px 25px rgba(0,0,0,.08);
+      }
+
+      .nav.open {
+        display: flex;
+      }
+
+      .nav-access {
+        width: 100%;
+      }
+
+      .hero-inner {
+        padding-block: 70px;
+      }
+
+      h1 {
+        letter-spacing: -1.3px;
+      }
+
+      .section {
+        padding: 65px 0;
+      }
+
+      .cards,
+      .method-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .footer-inner {
+        flex-direction: column;
+        align-items: flex-start;
+      }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      html {
+        scroll-behavior: auto;
+      }
+
+      *,
+      *::before,
+      *::after {
+        transition: none !important;
+        animation: none !important;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <a class="skip" href="#conteudo">
+    Ir para o conteúdo
+  </a>
+
+  <!-- ========================================
+       01 | NAVEGACAO PUBLICA
+       ======================================== -->
+
+  <header class="header">
+    <div class="container header-inner">
+
+      <a class="brand" href="#inicio"
+         aria-label="Research Studio, início">
+        <span class="brand-icon" aria-hidden="true">
+          R·
+        </span>
+        <span>
+          <span class="brand-name">Research Studio</span>
+          <span class="brand-sub">
+            Plataforma de pesquisa
+          </span>
+        </span>
+      </a>
+
+      <button
+        class="menu-toggle"
+        id="menu-toggle"
+        type="button"
+        aria-expanded="false"
+        aria-controls="main-nav"
+      >
+        Menu
+      </button>
+
+      <nav
+        class="nav"
+        id="main-nav"
+        aria-label="Navegação principal"
+      >
+        <a class="nav-link" href="#projeto">
+          Projeto
+        </a>
+
+        <a class="nav-link" href="#metodologia">
+          Metodologia
+        </a>
+
+        <a class="nav-link" href="#recursos">
+          Pesquisa e dados
+        </a>
+
+        <a class="nav-link" href="#acesso">
+          Acesso
+        </a>
+
+        <a class="nav-access" href="./index.html">
+          Entrar no ambiente
+        </a>
+      </nav>
+
+    </div>
+  </header>
+
+  <main id="conteudo">
+
+    <!-- ======================================
+         02 | HERO INSTITUCIONAL
+         ====================================== -->
+
+    <section class="hero" id="inicio">
+      <div class="container hero-inner">
+
+        <div>
+          <p class="eyebrow">
+            Pesquisa · Dados · Conhecimento
+          </p>
+
+          <h1>
+            Research Studio
+          </h1>
+
+          <p class="hero-description">
+            Um ambiente para organizar, documentar,
+            analisar e reutilizar dados científicos
+            relacionados ao trabalho e à saúde
+            na pesca artesanal.
+          </p>
+
+          <div class="hero-actions">
+            <a
+              href="#projeto"
+              class="button button-primary"
+            >
+              Conhecer o projeto
+              <span aria-hidden="true">↗</span>
+            </a>
+
+            <a
+              href="#acesso"
+              class="button button-secondary"
+            >
+              Ambiente de pesquisa
+            </a>
+          </div>
+        </div>
+
+        <div class="research-visual"
+             aria-label="Etapas do processamento científico">
+          <div class="visual-header">
+            <span class="visual-title">
+              Fluxo de trabalho científico
+            </span>
+            <span class="visual-label">
+              DATA PIPELINE
+            </span>
+          </div>
+
+          <div class="pipeline">
+
+            <div class="pipeline-step">
+              <span class="pipeline-number">01</span>
+              <div class="pipeline-content">
+                <div class="pipeline-name">
+                  Fontes de pesquisa
+                </div>
+                <div class="pipeline-description">
+                  Instrumentos e registros
+                </div>
+              </div>
+            </div>
+
+            <div class="pipeline-connector"></div>
+
+            <div class="pipeline-step">
+              <span class="pipeline-number">02</span>
+              <div class="pipeline-content">
+                <div class="pipeline-name">
+                  Engenharia de dados
+                </div>
+                <div class="pipeline-description">
+                  Ingestão, modelagem e integridade
+                </div>
+              </div>
+            </div>
+
+            <div class="pipeline-connector"></div>
+
+            <div class="pipeline-step">
+              <span class="pipeline-number">03</span>
+              <div class="pipeline-content">
+                <div class="pipeline-name">
+                  Governança e validação
+                </div>
+                <div class="pipeline-description">
+                  Qualidade, rastreabilidade e acesso
+                </div>
+              </div>
+            </div>
+
+            <div class="pipeline-connector"></div>
+
+            <div class="pipeline-step">
+              <span class="pipeline-number">04</span>
+              <div class="pipeline-content">
+                <div class="pipeline-name">
+                  Análises e cruzamentos
+                </div>
+                <div class="pipeline-description">
+                  Recortes, consultas e comparações
+                </div>
+              </div>
+            </div>
+
+            <div class="pipeline-connector"></div>
+
+            <div class="pipeline-step">
+              <span class="pipeline-number">05</span>
+              <div class="pipeline-content">
+                <div class="pipeline-name">
+                  Produção científica
+                </div>
+                <div class="pipeline-description">
+                  Resultados e reutilização documentada
+                </div>
+              </div>
+            </div>
+
+          </div>
+
+          <div class="visual-footer" aria-hidden="true">
+            <span></span>
+            <span></span>
+            <span></span>
+            <span></span>
+            <span></span>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- ======================================
+         03 | VISAO DO PROJETO
+         ====================================== -->
+
+    <section class="section section-soft" id="projeto">
+      <div class="container">
+
+        <p class="section-tag">
+          Sobre o projeto
+        </p>
+
+        <h2 class="section-title">
+          Uma infraestrutura para pesquisa,
+          documentação e análise.
+        </h2>
+
+        <p class="section-description">
+          Estrutura inicial de apresentação institucional.
+          Os conteúdos científicos definitivos
+          serão incorporados posteriormente.
+        </p>
+
+        <div class="cards">
+
+          <article class="card">
+            <span class="card-number">01</span>
+            <h3>Banco de dados</h3>
+            <p>
+              Organização e estruturação das
+              informações provenientes da pesquisa.
+            </p>
+          </article>
+
+          <article class="card">
+            <span class="card-number">02</span>
+            <h3>Percurso metodológico</h3>
+            <p>
+              Documentação das etapas, escolhas,
+              procedimentos e verificações.
+            </p>
+          </article>
+
+          <article class="card">
+            <span class="card-number">03</span>
+            <h3>Produção científica</h3>
+            <p>
+              Apoio a análises, publicações,
+              visualizações e novas investigações.
+            </p>
+          </article>
+
+        </div>
+      </div>
+    </section>
+
+    <!-- ======================================
+         04 | METODOLOGIA
+         ====================================== -->
+
+    <section class="section" id="metodologia">
+      <div class="container method-grid">
+
+        <div>
+          <p class="section-tag">
+            Percurso metodológico
+          </p>
+
+          <h2 class="section-title">
+            Da pesquisa à reutilização dos dados.
+          </h2>
+
+          <p class="section-description">
+            Espaço reservado à apresentação
+            dos procedimentos científicos e
+            técnicos do projeto.
+          </p>
+        </div>
+
+        <div class="method-steps">
+
+          <div class="method-item">
+            <span class="method-index">01</span>
+            <div>
+              <strong>Pesquisa e instrumentos</strong>
+              <small>
+                Referências e desenho da coleta.
+              </small>
+            </div>
+          </div>
+
+          <div class="method-item">
+            <span class="method-index">02</span>
+            <div>
+              <strong>Tratamento e organização</strong>
+              <small>
+                Estruturação e modelagem dos registros.
+              </small>
+            </div>
+          </div>
+
+          <div class="method-item">
+            <span class="method-index">03</span>
+            <div>
+              <strong>Qualidade e governança</strong>
+              <small>
+                Verificações e regras de utilização.
+              </small>
+            </div>
+          </div>
+
+          <div class="method-item">
+            <span class="method-index">04</span>
+            <div>
+              <strong>Análise e interpretação</strong>
+              <small>
+                Recortes e cruzamentos de informações.
+              </small>
+            </div>
+          </div>
+
+          <div class="method-item">
+            <span class="method-index">05</span>
+            <div>
+              <strong>Documentação e produção</strong>
+              <small>
+                Comunicação e reutilização científica.
+              </small>
+            </div>
+          </div>
+
+        </div>
+
+      </div>
+    </section>
+
+    <!-- ======================================
+         05 | RECURSOS
+         ====================================== -->
+
+    <section class="section section-soft" id="recursos">
+      <div class="container">
+
+        <p class="section-tag">
+          Ambiente científico
+        </p>
+
+        <h2 class="section-title">
+          Recursos para pesquisadores.
+        </h2>
+
+        <p class="section-description">
+          Funcionalidades previstas para a área
+          autenticada, sujeitas às permissões
+          de acesso correspondentes.
+        </p>
+
+        <div class="cards">
+
+          <article class="card">
+            <span class="card-number">A</span>
+            <h3>Perfil populacional</h3>
+            <p>
+              Composição dos participantes e
+              recortes cadastrais progressivos.
+            </p>
+          </article>
+
+          <article class="card">
+            <span class="card-number">B</span>
+            <h3>Laboratório analítico</h3>
+            <p>
+              Frequências, cruzamentos e
+              construção de grupos comparativos.
+            </p>
+          </article>
+
+          <article class="card">
+            <span class="card-number">C</span>
+            <h3>Resultados e visualizações</h3>
+            <p>
+              Exploração e comunicação de resultados,
+              com documentação dos parâmetros.
+            </p>
+          </article>
+
+        </div>
+
+      </div>
+    </section>
+
+    <!-- ======================================
+         06 | ACESSO
+         ====================================== -->
+
+    <section class="access-section" id="acesso">
+      <div class="container access-grid">
+
+        <div>
+          <p class="section-tag" style="color:#9dc5ff">
+            Acesso ao ambiente
+          </p>
+
+          <h2 class="section-title">
+            Entre no ambiente de pesquisa.
+          </h2>
+
+          <p class="section-description">
+            O Research Studio contará com
+            autenticação de pesquisadores,
+            perfis acadêmicos e permissões
+            específicas para utilização dos dados.
+          </p>
+        </div>
+
+        <div class="access-panel">
+          <strong>
+            Área de pesquisadores
+          </strong>
+
+          <p>
+            Entrada temporária para o ambiente
+            existente durante a implantação
+            do controle de acesso.
+          </p>
+
+          <a
+            href="./index.html"
+            class="button button-primary"
+            id="research-entry"
+          >
+            Abrir Research Studio
+            <span aria-hidden="true">↗</span>
+          </a>
+        </div>
+
+      </div>
+    </section>
+
+  </main>
+
+  <!-- ========================================
+       07 | RODAPE
+       ======================================== -->
+
+  <footer class="footer">
+    <div class="container footer-inner">
+
+      <div>
+        <strong>Research Studio</strong>
+        <div>
+          Banco de dados e produções científicas
+        </div>
+      </div>
+
+      <div>
+        Portal institucional | Versão de desenvolvimento
+      </div>
+
+    </div>
+  </footer>
+
+  <!-- ========================================
+       08 | INTERACAO MOBILE
+       ======================================== -->
+
+  <script>
+    (() => {
+      "use strict";
+
+      const botao = document.getElementById(
+        "menu-toggle"
+      );
+
+      const nav = document.getElementById(
+        "main-nav"
+      );
+
+      if (!botao || !nav) return;
+
+      function fecharMenu() {
+        nav.classList.remove("open");
+        botao.setAttribute(
+          "aria-expanded",
+          "false"
+        );
+      }
+
+      botao.addEventListener(
+        "click",
+        () => {
+          const aberto = nav.classList.toggle(
+            "open"
+          );
+
+          botao.setAttribute(
+            "aria-expanded",
+            String(aberto)
+          );
+        }
+      );
+
+      nav.querySelectorAll("a").forEach(
+        link => {
+          link.addEventListener(
+            "click",
+            fecharMenu
+          );
+        }
+      );
+
+      document.addEventListener(
+        "keydown",
+        evento => {
+          if (evento.key === "Escape") {
+            fecharMenu();
+          }
+        }
+      );
+    })();
+  </script>
+
+</body>
+</html>
