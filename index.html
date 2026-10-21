@@ -1306,71 +1306,97 @@
       renderChartExplorar();
     });
   </script>
+
 <script>
-/* 26F.04: Consultas reais sob demanda ao CORE via API agregada Cloud Run. */
+/* 26F.09H | CONSULTAS REAIS AO CORE COM FIREBASE */
 (() => {
   'use strict';
+
   const API_BASE = 'https://pesca-analytics-api-v1-311761842391.southamerica-east1.run.app';
   const CATALOG_URL = './data/questoes_alternativas.json';
+
   let catalog = null;
+
   const byId = id => document.getElementById(id);
-  const qmap = () => new Map((catalog?.questoes || []).map(q => [q.codigo, q]));
-  const countText = n => Number.isInteger(n) ? n.toLocaleString('pt-BR') : 'Suprimida (1 a 4)';
+
+  const qmap = () => new Map(
+    (catalog?.questoes || []).map(q => [q.codigo, q])
+  );
+
+  const countText = n =>
+    Number.isInteger(n)
+      ? n.toLocaleString('pt-BR')
+      : 'Suprimida (1 a 4)';
+
   function note(element, text) {
     element.hidden = false;
     element.replaceChildren();
+
     const p = document.createElement('p');
     p.className = 'funda-state';
     p.textContent = text;
+
     element.appendChild(p);
   }
+
   function setOptions(element, questions) {
     element.replaceChildren();
+
     for (const q of questions) {
       const option = document.createElement('option');
+
       option.value = q.codigo;
       option.textContent = q.codigo + ' · ' + q.texto;
+
       element.appendChild(option);
     }
   }
+
   function updateExplore() {
     const q = qmap().get(byId('exp-questao').value);
+
     if (!q) return;
-    byId('exp-enunciado').textContent = q.codigo + ' · ' + q.texto;
+
+    byId('exp-enunciado').textContent =
+      q.codigo + ' · ' + q.texto;
+
     const target = byId('exp-alternativas');
     target.replaceChildren();
+
     for (const a of q.alternativas) {
       const div = document.createElement('div');
       div.className = 'funda-option';
       div.textContent = a.codigo + ' · ' + a.texto;
       target.appendChild(div);
     }
-    byId('exp-status').textContent = `${q.alternativas.length} alternativas catalogadas · CORE`;
+
+    byId('exp-status').textContent =
+      `${q.alternativas.length} alternativas catalogadas · CORE`;
+
     byId('exp-resultado').hidden = true;
   }
+
   function updatePhrase() {
     const q1 = qmap().get(byId('lab-q1').value);
-    const crossed = byId('lab-tipo').value === 'cruzamento';
+    const crossed =
+      byId('lab-tipo').value === 'cruzamento';
+
     byId('lab-q2-wrap').hidden = !crossed;
+
     const q2 = qmap().get(byId('lab-q2').value);
+
     byId('lab-frase').textContent = crossed
       ? `Quero cruzar ${q1?.codigo}: ${q1?.texto} com ${q2?.codigo}: ${q2?.texto}.`
       : `Quero consultar a distribuição de ${q1?.codigo}: ${q1?.texto}.`;
+
     byId('lab-resultado').hidden = true;
   }
-  async function apiRequest(path, body = null) 
+
+  /* ================================================
+     AUTENTICACAO DAS CONSULTAS ORIGINAIS
+     ================================================ */
+
   async function apiRequest(path, body = null) {
-    /*
-     * 26F.09F
-     * Autenticacao das consultas originais ao CORE.
-     *
-     * Compatibilidade:
-     * - Explorar: frequencia por questao
-     * - Laboratorio: frequencia e cruzamento
-     * - Login Google
-     * - Login por email e senha
-     * - Consultas integradas existentes
-     */
 
     const {
       initializeApp,
@@ -1445,7 +1471,7 @@
           : "";
 
       } catch (_) {
-        // Preserva o status HTTP como diagnostico.
+        // Preserva o status HTTP para diagnostico.
       }
 
       if (
@@ -1467,106 +1493,346 @@
     return response.json();
   }
 
-    return response.json();
-  }
-  function cell(tr, value, tag='td') {
+  /* ================================================
+     FORMATACAO DAS TABELAS
+     ================================================ */
+
+  function cell(tr, value, tag = 'td') {
     const el = document.createElement(tag);
     el.textContent = value;
     tr.appendChild(el);
   }
-  function showTable(target, headingText, heads, rows, details) {
+
+  function showTable(
+    target,
+    headingText,
+    heads,
+    rows,
+    details
+  ) {
     target.hidden = false;
     target.replaceChildren();
+
     const heading = document.createElement('h3');
     heading.textContent = headingText;
     target.appendChild(heading);
+
     const table = document.createElement('table');
     table.className = 'funda-result-table';
+
     const thead = document.createElement('thead');
     const trh = document.createElement('tr');
+
     heads.forEach(h => cell(trh, h, 'th'));
+
     thead.appendChild(trh);
     table.appendChild(thead);
+
     const tbody = document.createElement('tbody');
+
     for (const row of rows) {
       const tr = document.createElement('tr');
-      row.forEach(v => cell(tr,v));
+
+      row.forEach(v => cell(tr, v));
+
       tbody.appendChild(tr);
     }
+
     table.appendChild(tbody);
     target.appendChild(table);
+
     const p = document.createElement('p');
     p.className = 'funda-note';
     p.textContent = details;
+
     target.appendChild(p);
   }
-  async function runQuery(type, q1, q2, target, button) {
-    if (!catalog) {note(target,'Catálogo ainda não disponível.');return;}
+
+  /* ================================================
+     EXECUCAO DAS CONSULTAS
+     ================================================ */
+
+  async function runQuery(
+    type,
+    q1,
+    q2,
+    target,
+    button
+  ) {
+    if (!catalog) {
+      note(target, 'Catálogo ainda não disponível.');
+      return;
+    }
+
     const previous = button.textContent;
+
     button.disabled = true;
     button.textContent = 'Consultando o CORE...';
-    note(target,'Consultando contagens reais no PostgreSQL. Aguarde...');
+
+    note(
+      target,
+      'Consultando contagens reais no PostgreSQL. Aguarde...'
+    );
+
     try {
       if (type === 'frequencia') {
-        const data = await apiRequest('/consultas/frequencia?questao=' + encodeURIComponent(q1));
-        if (data.tipo !== 'frequencia' || data.questao !== q1 || !Array.isArray(data.resultados)) throw new Error('Resposta da API inválida');
+
+        const data = await apiRequest(
+          '/consultas/frequencia?questao=' +
+          encodeURIComponent(q1)
+        );
+
+        if (
+          data.tipo !== 'frequencia' ||
+          data.questao !== q1 ||
+          !Array.isArray(data.resultados)
+        ) {
+          throw new Error('Resposta da API inválida');
+        }
+
         const item = qmap().get(q1);
-        const counts = new Map(data.resultados.map(r => [r.alternativa, r]));
+
+        const counts = new Map(
+          data.resultados.map(
+            r => [r.alternativa, r]
+          )
+        );
+
         const rows = item.alternativas.map(a => {
           const r = counts.get(a.codigo);
-          return [a.codigo, a.texto, r ? countText(r.quantidade) : '0'];
+
+          return [
+            a.codigo,
+            a.texto,
+            r ? countText(r.quantidade) : '0'
+          ];
         });
-        showTable(target, `${q1} · Distribuição real por alternativa`, ['Código', 'Alternativa', 'Respondentes'], rows,
-          'Fonte: PostgreSQL CORE via Cloud Run. Respondentes distintos por alternativa marcada. Múltiplas alternativas podem ser marcadas por pessoa. Valores de 1 a 4 suprimidos; percentuais não calculados.');
+
+        showTable(
+          target,
+          `${q1} · Distribuição real por alternativa`,
+          [
+            'Código',
+            'Alternativa',
+            'Respondentes'
+          ],
+          rows,
+          'Fonte: PostgreSQL CORE via Cloud Run. ' +
+          'Respondentes distintos por alternativa marcada. ' +
+          'Múltiplas alternativas podem ser marcadas por pessoa. ' +
+          'Valores de 1 a 4 suprimidos; percentuais não calculados.'
+        );
+
       } else {
-        const data = await apiRequest('/consultas/cruzamento', {questao_1:q1,questao_2:q2});
-        if (data.tipo !== 'cruzamento' || data.questao_1 !== q1 || data.questao_2 !== q2 || !Array.isArray(data.resultados)) throw new Error('Resposta da API inválida');
+
+        const data = await apiRequest(
+          '/consultas/cruzamento',
+          {
+            questao_1: q1,
+            questao_2: q2
+          }
+        );
+
+        if (
+          data.tipo !== 'cruzamento' ||
+          data.questao_1 !== q1 ||
+          data.questao_2 !== q2 ||
+          !Array.isArray(data.resultados)
+        ) {
+          throw new Error('Resposta da API inválida');
+        }
+
         const qs = qmap();
-        const labels1 = new Map((qs.get(q1)?.alternativas||[]).map(a => [a.codigo,a.texto]));
-        const labels2 = new Map((qs.get(q2)?.alternativas||[]).map(a => [a.codigo,a.texto]));
+
+        const labels1 = new Map(
+          (qs.get(q1)?.alternativas || []).map(
+            a => [a.codigo, a.texto]
+          )
+        );
+
+        const labels2 = new Map(
+          (qs.get(q2)?.alternativas || []).map(
+            a => [a.codigo, a.texto]
+          )
+        );
+
         const rows = data.resultados.map(r => [
-          `${r.alternativa_1} · ${labels1.get(r.alternativa_1)||r.alternativa_1}`,
-          `${r.alternativa_2} · ${labels2.get(r.alternativa_2)||r.alternativa_2}`,
+          `${r.alternativa_1} · ${
+            labels1.get(r.alternativa_1) ||
+            r.alternativa_1
+          }`,
+          `${r.alternativa_2} · ${
+            labels2.get(r.alternativa_2) ||
+            r.alternativa_2
+          }`,
           countText(r.quantidade)
         ]);
-        showTable(target, `${q1} × ${q2} · Cruzamento real`, [`${q1} · alternativa`, `${q2} · alternativa`, 'Respondentes'], rows,
-          'Fonte: PostgreSQL CORE via Cloud Run. Respondentes distintos com ambas as alternativas marcadas na mesma aplicação. Múltiplas escolhas podem produzir mais de uma combinação. Células de 1 a 4 suprimidas.');
+
+        showTable(
+          target,
+          `${q1} × ${q2} · Cruzamento real`,
+          [
+            `${q1} · alternativa`,
+            `${q2} · alternativa`,
+            'Respondentes'
+          ],
+          rows,
+          'Fonte: PostgreSQL CORE via Cloud Run. ' +
+          'Respondentes distintos com ambas as alternativas ' +
+          'marcadas na mesma aplicação. Múltiplas escolhas podem ' +
+          'produzir mais de uma combinação. ' +
+          'Células de 1 a 4 suprimidas.'
+        );
       }
-    } catch(e) {
+
+    } catch (e) {
       console.error('Falha na consulta da API:', e);
-      note(target, `Não foi possível executar a consulta: ${e.message}. Se a API funciona isoladamente, conferir CORS e permissões de invocação do Cloud Run.`);
+
+      note(
+        target,
+        'Não foi possível executar a consulta: ' +
+        e.message +
+        '. Se a API funciona isoladamente, ' +
+        'conferir CORS e permissões do Cloud Run.'
+      );
+
     } finally {
       button.disabled = false;
       button.textContent = previous;
     }
   }
+
+  /* ================================================
+     INICIALIZACAO DO LABORATORIO
+     ================================================ */
+
   async function init() {
     try {
-      const response = await fetch(CATALOG_URL,{cache:'no-store'});
-      if (!response.ok) throw new Error('Catálogo HTTP '+response.status);
+      const response = await fetch(
+        CATALOG_URL,
+        { cache: 'no-store' }
+      );
+
+      if (!response.ok) {
+        throw new Error(
+          'Catálogo HTTP ' + response.status
+        );
+      }
+
       catalog = await response.json();
-      if (!Array.isArray(catalog.questoes) || catalog.questoes.length!==36 || catalog.questoes.reduce((n,q)=>n+(q.alternativas?.length||0),0)!==251) throw new Error('Catálogo divergente');
-      for (const id of ['exp-questao','lab-q1','lab-q2']) setOptions(byId(id),catalog.questoes);
+
+      if (
+        !Array.isArray(catalog.questoes) ||
+        catalog.questoes.length !== 36 ||
+        catalog.questoes.reduce(
+          (n, q) =>
+            n + (q.alternativas?.length || 0),
+          0
+        ) !== 251
+      ) {
+        throw new Error('Catálogo divergente');
+      }
+
+      for (
+        const id of [
+          'exp-questao',
+          'lab-q1',
+          'lab-q2'
+        ]
+      ) {
+        setOptions(
+          byId(id),
+          catalog.questoes
+        );
+      }
+
       byId('exp-questao').value = 'Q23';
       byId('lab-q1').value = 'Q05';
       byId('lab-q2').value = 'Q23';
-      byId('exp-questao').addEventListener('change',updateExplore);
-      for (const id of ['lab-tipo','lab-q1','lab-q2']) byId(id).addEventListener('change',updatePhrase);
-      byId('exp-abrir').addEventListener('click',()=>runQuery('frequencia',byId('exp-questao').value,null,byId('exp-resultado'),byId('exp-abrir')));
-      byId('lab-executar').addEventListener('click',()=>{
-        const crossed=byId('lab-tipo').value==='cruzamento';
-        runQuery(crossed?'cruzamento':'frequencia',byId('lab-q1').value,crossed?byId('lab-q2').value:null,byId('lab-resultado'),byId('lab-executar'));
-      });
-      updateExplore(); updatePhrase();
-    } catch(e) {
-      console.error('Falha no catálogo:',e);
-      byId('exp-status').textContent = 'Catálogo indisponível: '+e.message;
-      note(byId('lab-resultado'),'Falha ao carregar catálogo: '+e.message);
+
+      byId('exp-questao').addEventListener(
+        'change',
+        updateExplore
+      );
+
+      for (
+        const id of [
+          'lab-tipo',
+          'lab-q1',
+          'lab-q2'
+        ]
+      ) {
+        byId(id).addEventListener(
+          'change',
+          updatePhrase
+        );
+      }
+
+      byId('exp-abrir').addEventListener(
+        'click',
+        () => runQuery(
+          'frequencia',
+          byId('exp-questao').value,
+          null,
+          byId('exp-resultado'),
+          byId('exp-abrir')
+        )
+      );
+
+      byId('lab-executar').addEventListener(
+        'click',
+        () => {
+          const crossed =
+            byId('lab-tipo').value === 'cruzamento';
+
+          runQuery(
+            crossed
+              ? 'cruzamento'
+              : 'frequencia',
+            byId('lab-q1').value,
+            crossed
+              ? byId('lab-q2').value
+              : null,
+            byId('lab-resultado'),
+            byId('lab-executar')
+          );
+        }
+      );
+
+      updateExplore();
+      updatePhrase();
+
+    } catch (e) {
+      console.error('Falha no catálogo:', e);
+
+      byId('exp-status').textContent =
+        'Catálogo indisponível: ' + e.message;
+
+      note(
+        byId('lab-resultado'),
+        'Falha ao carregar catálogo: ' + e.message
+      );
     }
   }
+
   window.renderChartExplorar = () => {};
-  window.openQuestion = code => {showTab('explorar');if(catalog&&qmap().has(code)){byId('exp-questao').value=code;updateExplore();}};
-  document.addEventListener('DOMContentLoaded',init);
+
+  window.openQuestion = code => {
+    showTab('explorar');
+
+    if (
+      catalog &&
+      qmap().has(code)
+    ) {
+      byId('exp-questao').value = code;
+      updateExplore();
+    }
+  };
+
+  document.addEventListener(
+    'DOMContentLoaded',
+    init
+  );
 
 })();
 </script>
