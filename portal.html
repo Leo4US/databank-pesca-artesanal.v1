@@ -8,6 +8,30 @@
   <title>Research studio | Acesso</title>
 
   <style>
+    /* 26F.09M | Navegacao interna do portal */
+
+.portal-back {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 12px;
+  background: transparent;
+  color: var(--text-muted);
+  border: 1px solid transparent;
+  border-radius: 6px;
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.portal-back:hover {
+  background: var(--bg-subtle);
+  color: var(--text-main);
+}
+
+.portal-back[hidden] {
+  display: none;
+}
     :root {
       --bg-cream: #FBF9F0;
       --bg-card: #FFFFFF;
@@ -355,22 +379,16 @@
   </div>
 
   <header class="header">
-    <a class="brand" href="./portal.html">
-      <svg class="logo" viewBox="0 0 100 100"
-           fill="none" aria-hidden="true">
-        <path d="M10 35 L35 10 L60 35 L35 60Z" fill="#E4C027"/>
-        <path d="M60 10 H85 V35 H60Z" fill="#22C55E"/>
-        <path d="M35 35 H85 V85 H35Z" fill="#C27329"/>
-        <path d="M10 60 H35 V85Z" fill="#1D4FB1"/>
-        <path d="M60 85 H85 L60 98Z" fill="#E22927"/>
-      </svg>
-      <span>
-        <strong>Research studio</strong>
-        <small>Banco de Dados e Produções Científicas p/ PSSPA</small>
-      </span>
-    </a>
-  </header>
-
+  <button
+    type="button"
+    id="portal-voltar"
+    class="portal-back"
+    hidden
+  >
+    ← Voltar
+  </button>
+</header>
+  
   <main class="main">
     <div class="content">
 
