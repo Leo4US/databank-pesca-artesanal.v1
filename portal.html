@@ -838,19 +838,22 @@ $("portal-voltar").addEventListener("click", () => {
     const email = $("register-email").value.trim();
     const senha = $("register-password").value;
     const confirmar = $("register-confirm").value;
+/* 26F.10M | Validacao do nome completo */
+const partesNome = nome
+  .normalize("NFC")
+  .trim()
+  .split(/\s+/)
+  .filter(parte => parte.length > 0);
 
-    if (nome.split(" ").length < 2) {
-      mensagem(
-        "Informe nome e sobrenome para concluir o cadastro.",
-        "error"
-      );
-      return;
-    }
+if (partesNome.length < 2) {
+  mensagem(
+    "Informe pelo menos nome e sobrenome para concluir o cadastro.",
+    "error"
+  );
 
-    if (!$("register-email").checkValidity()) {
-      mensagem("Informe um e-mail válido.", "error");
-      return;
-    }
+  $("register-name").focus();
+  return;
+}
 
     if (senha.length < 6) {
       mensagem(
