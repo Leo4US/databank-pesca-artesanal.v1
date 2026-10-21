@@ -1358,15 +1358,115 @@
       : `Quero consultar a distribuição de ${q1?.codigo}: ${q1?.texto}.`;
     byId('lab-resultado').hidden = true;
   }
+  async function apiRequest(path, body = null) 
   async function apiRequest(path, body = null) {
-    const settings = {method: body ? 'POST' : 'GET', cache: 'no-store', headers: {Accept:'application/json'}};
-    if (body) {settings.headers['Content-Type'] = 'application/json';settings.body = JSON.stringify(body);}
-    const response = await fetch(API_BASE + path, settings);
-    if (!response.ok) {
-      let detail = '';
-      try {const data = await response.json();detail = data.detail || '';} catch (_) {}
-      throw new Error(`HTTP ${response.status}${detail ? ' · ' + detail : ''}`);
+    /*
+     * 26F.09F
+     * Autenticacao das consultas originais ao CORE.
+     *
+     * Compatibilidade:
+     * - Explorar: frequencia por questao
+     * - Laboratorio: frequencia e cruzamento
+     * - Login Google
+     * - Login por email e senha
+     * - Consultas integradas existentes
+     */
+
+    const {
+      initializeApp,
+      getApps,
+      getApp
+    } = await import(
+      "https://www.gstatic.com/firebasejs/11.10.0/firebase-app.js"
+    );
+
+    const {
+      getAuth
+    } = await import(
+      "https://www.gstatic.com/firebasejs/11.10.0/firebase-auth.js"
+    );
+
+    const firebaseConfig = {
+      apiKey: "AIzaSyC77JxCZFJrrgA8twSNYke3VDXaqwiwrSE",
+      authDomain: "databank-pesca-2026.firebaseapp.com",
+      projectId: "databank-pesca-2026",
+      appId: "1:311761842391:web:ae666a2a20f5a7cc04c092"
+    };
+
+    const firebaseApp = getApps().length
+      ? getApp()
+      : initializeApp(firebaseConfig);
+
+    const auth = getAuth(firebaseApp);
+
+    // Aguarda a restauracao da sessao Firebase.
+    await auth.authStateReady();
+
+    const usuario = auth.currentUser;
+
+    if (!usuario) {
+      throw new Error(
+        "Entre com sua conta de pesquisador " +
+        "para executar consultas ao CORE."
+      );
     }
+
+    const token = await usuario.getIdToken();
+
+    const settings = {
+      method: body ? "POST" : "GET",
+      cache: "no-store",
+      headers: {
+        "Accept": "application/json",
+        "Authorization": `Bearer ${token}`
+      }
+    };
+
+    if (body) {
+      settings.headers["Content-Type"] =
+        "application/json";
+
+      settings.body = JSON.stringify(body);
+    }
+
+    const response = await fetch(
+      API_BASE + path,
+      settings
+    );
+
+    if (!response.ok) {
+      let detail = "";
+
+      try {
+        const data = await response.json();
+
+        detail = typeof data.detail === "string"
+          ? data.detail
+          : "";
+
+      } catch (_) {
+        // Preserva o status HTTP como diagnostico.
+      }
+
+      if (
+        response.status === 401 ||
+        response.status === 403
+      ) {
+        throw new Error(
+          "Acesso não autorizado. Verifique sua " +
+          "conta e as permissões do pesquisador."
+        );
+      }
+
+      throw new Error(
+        `HTTP ${response.status}` +
+        (detail ? ` · ${detail}` : "")
+      );
+    }
+
+    return response.json();
+  }
+
     return response.json();
   }
   function cell(tr, value, tag='td') {
