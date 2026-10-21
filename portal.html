@@ -5,7 +5,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="theme-color" content="#FBF9F0">
-  <title>Research Studio | Acesso</title>
+  <title>Research studio | Acesso</title>
 
   <style>
     :root {
@@ -365,8 +365,8 @@
         <path d="M60 85 H85 L60 98Z" fill="#E22927"/>
       </svg>
       <span>
-        <strong>Research Studio</strong>
-        <small>Banco de Dados e Produções Científicas</small>
+        <strong>Research studio</strong>
+        <small>Banco de Dados e Produções Científicas p/ PSSPA</small>
       </span>
     </a>
   </header>
@@ -376,14 +376,14 @@
 
       <div class="intro">
         <div class="eyebrow">Ambiente científico</div>
-        <h1>Research Studio</h1>
+        <h1>Research studio</h1>
         <p class="subtitle">
           Ambiente de pesquisa, análise e
-          reutilização científica de dados.
+          reutilização de dados.
         </p>
       </div>
 
-      <section class="panel" aria-label="Acesso ao Research Studio">
+      <section class="panel" aria-label="Acesso ao Research studio">
 
         <!-- VERIFICACAO DA SESSAO -->
         <div id="view-loading">
@@ -396,7 +396,7 @@
         <!-- LOGIN -->
         <div id="view-login" hidden>
           <div class="panel-heading">
-            <h2>Acesso do pesquisador</h2>
+            <h2>Acesso do pesquisador/a</h2>
             <p>Entre com sua conta ou faça seu cadastro.</p>
           </div>
 
@@ -441,7 +441,7 @@
         <!-- CADASTRO -->
         <div id="view-register" hidden>
           <div class="panel-heading">
-            <h2>Cadastro de pesquisador</h2>
+            <h2>Cadastro de pesquisador/a</h2>
             <p>E-mail pessoal ou institucional.</p>
           </div>
 
@@ -492,7 +492,7 @@
 
           <p class="note">
             ORCID, Lattes e Google Acadêmico serão opcionais
-            no perfil do pesquisador. O cadastro não
+            no perfil do pesquisador/a. O cadastro não
             concede automaticamente acesso aos dados restritos.
           </p>
 
@@ -548,7 +548,7 @@
           <div class="stack">
             <button id="btn-enter" type="button"
                     class="button primary" hidden>
-              Entrar no Research Studio
+              Entrar no Research studio
             </button>
 
             <button id="btn-check" type="button"
@@ -575,7 +575,7 @@
   </main>
 
   <footer class="footer">
-    Research Studio · Ambiente de pesquisa
+    Research studio · Ambiente de pesquisa
   </footer>
 </div>
 
@@ -861,7 +861,7 @@
     autorizacaoConfirmada = false;
 
     $("account-name").textContent =
-      usuario.displayName || "Conta de pesquisador";
+      usuario.displayName || "Conta de pesquisador/a";
 
     $("account-email").textContent =
       usuario.email || "E-mail não disponível";
@@ -895,7 +895,7 @@
       if (sequencia !== verificacao) return;
 
       $("account-name").textContent =
-        usuario.displayName || "Conta de pesquisador";
+        usuario.displayName || "Conta de pesquisador/a";
 
       if (!usuario.emailVerified) {
         $("account-description").textContent =
