@@ -2,449 +2,305 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="theme-color" content="#FBF9F0">
-  <title>Estúdio de pesquisa | Acesso</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="theme-color" content="#FBF9F0">
+<title>Estúdio de pesquisa | Acesso</title>
 
-  <style>
-    
-/* ==========================================================
-   26F.09N | VISUALIZACAO DE SENHAS
-   ========================================================== */
-
-.password-wrapper {
-  position: relative;
-  width: 100%;
+<style>
+:root {
+  --bg-cream:#FBF9F0;
+  --bg-card:#FFFFFF;
+  --bg-subtle:#F3F1E5;
+  --text-main:#0F172A;
+  --text-muted:#475569;
+  --text-light:#64748B;
+  --border-subtle:#E2E0D2;
+  --border-accent:#CBD5E1;
+  --color-primary:#1D4FB1;
+  --color-secondary:#C27329;
+  --color-success:#22C55E;
+  --color-danger:#E22927;
+  --font-sans:Inter,system-ui,-apple-system,sans-serif;
+  --font-serif:Newsreader,Georgia,serif;
 }
-
-.password-wrapper input {
-  width: 100%;
-  padding-right: 50px;
+* {box-sizing:border-box}
+[hidden] {display:none!important}
+body {
+  margin:0;
+  min-height:100vh;
+  background:var(--bg-cream);
+  color:var(--text-main);
+  font-family:var(--font-sans);
+  background-image:radial-gradient(
+    rgba(15,23,42,.035) 1px,
+    transparent 0
+  );
+  background-size:24px 24px;
 }
-
-.password-toggle {
-  position: absolute;
-  right: 5px;
-  top: 50%;
-  transform: translateY(-50%);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width: 38px;
-  height: 36px;
-  padding: 0;
-  border: 0;
-  border-radius: 5px;
-  background: transparent;
-  color: var(--text-muted);
-  cursor: pointer;
-}
-
-.password-toggle:hover {
-  color: var(--color-primary);
-  background: var(--bg-subtle);
-}
-
-.password-toggle:focus-visible {
-  outline: 2px solid var(--color-primary);
-  outline-offset: 1px;
-}
-
-.password-toggle svg {
-  width: 18px;
-  height: 18px;
-  stroke: currentColor;
-  fill: none;
-  stroke-width: 1.8;
-  stroke-linecap: round;
-  stroke-linejoin: round;
-}
-    /* 26F.09M | Navegacao interna do portal */
+button,input {font:inherit}
+button {cursor:pointer}
+button:disabled {opacity:.55;cursor:not-allowed}
+.page {min-height:100vh;display:flex;flex-direction:column}
+.mosaic {display:flex;height:4px}
+.mosaic span {flex:1}
+.mosaic span:nth-child(1){background:#E4C027}
+.mosaic span:nth-child(2){background:#C27329}
+.mosaic span:nth-child(3){background:#22C55E}
+.mosaic span:nth-child(4){background:#1D4FB1}
+.mosaic span:nth-child(5){background:#E22927}
+.header {padding:24px 30px;min-height:76px}
 .portal-back {
-  display: inline-flex;
-  align-items: center;
-  gap: 8px;
-  padding: 8px 12px;
-  background: transparent;
-  color: var(--text-muted);
-  border: 1px solid transparent;
-  border-radius: 6px;
-  font-size: 13px;
-  font-weight: 600;
-  cursor: pointer;
+  border:0;
+  padding:8px 12px;
+  background:transparent;
+  color:var(--text-muted);
+  font-size:13px;
+  font-weight:600;
+  border-radius:6px;
 }
-
-.portal-back:hover {
-  background: var(--bg-subtle);
-  color: var(--text-main);
+.portal-back:hover {background:var(--bg-subtle)}
+.main {
+  flex:1;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  padding:24px 20px 65px;
 }
-
-.portal-back[hidden] {
-  display: none;
+.content {width:100%;max-width:435px}
+.intro {text-align:center;margin-bottom:28px}
+h1 {
+  font-family:var(--font-serif);
+  font-size:clamp(36px,5vw,47px);
+  font-weight:400;
+  letter-spacing:-1.4px;
+  line-height:1.15;
+  margin:0;
 }
-    :root {
-      --bg-cream: #FBF9F0;
-      --bg-card: #FFFFFF;
-      --bg-subtle: #F3F1E5;
-      --text-main: #0F172A;
-      --text-muted: #475569;
-      --text-light: #64748B;
-      --border-subtle: #E2E0D2;
-      --border-accent: #CBD5E1;
-      --color-primary: #1D4FB1;
-      --color-secondary: #C27329;
-      --color-accent: #E4C027;
-      --color-success: #22C55E;
-      --color-danger: #E22927;
-      --font-sans: "Inter", system-ui, -apple-system, sans-serif;
-      --font-serif: "Newsreader", Georgia, serif;
-    }
-
-    * { box-sizing: border-box; }
-    [hidden] { display: none !important; }
-
-    body {
-      margin: 0;
-      min-height: 100vh;
-      background: var(--bg-cream);
-      color: var(--text-main);
-      font-family: var(--font-sans);
-      background-image:
-        radial-gradient(rgba(15,23,42,.035) 1px,transparent 0);
-      background-size: 24px 24px;
-    }
-
-    button, input { font: inherit; }
-    button { cursor: pointer; }
-    button:disabled { opacity: .55; cursor: not-allowed; }
-    a { color: inherit; text-decoration: none; }
-
-    .page {
-      min-height: 100vh;
-      display: flex;
-      flex-direction: column;
-    }
-
-    .mosaic {
-      display: flex;
-      height: 4px;
-      width: 100%;
-    }
-    .mosaic span { flex: 1; }
-    .mosaic span:nth-child(1) { background: var(--color-accent); }
-    .mosaic span:nth-child(2) { background: var(--color-secondary); }
-    .mosaic span:nth-child(3) { background: var(--color-success); }
-    .mosaic span:nth-child(4) { background: var(--color-primary); }
-    .mosaic span:nth-child(5) { background: var(--color-danger); }
-
-    .header {
-      padding: 24px 30px;
-    }
-
-    .brand {
-      display: inline-flex;
-      align-items: center;
-      gap: 11px;
-    }
-
-    .brand strong {
-      display: block;
-      font-size: 14px;
-      font-weight: 800;
-    }
-
-    .brand small {
-      display: block;
-      margin-top: 2px;
-      color: var(--color-secondary);
-      font-size: 9px;
-      font-weight: 700;
-      letter-spacing: .45px;
-      text-transform: uppercase;
-    }
-
-    .logo {
-      width: 36px;
-      height: 36px;
-      flex-shrink: 0;
-    }
-
-    .main {
-      flex: 1;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      padding: 24px 20px 65px;
-    }
-
-    .content {
-      width: 100%;
-      max-width: 435px;
-    }
-
-    .intro {
-      margin-bottom: 28px;
-      text-align: center;
-    }
-
-    .eyebrow {
-      margin-bottom: 10px;
-      color: var(--color-secondary);
-      font-size: 10px;
-      font-weight: 700;
-      letter-spacing: 1.5px;
-      text-transform: uppercase;
-    }
-
-    h1 {
-      font-family: var(--font-serif);
-      margin: 0;
-      font-size: clamp(38px,5vw,47px);
-      font-weight: 400;
-      letter-spacing: -1.4px;
-      line-height: 1.15;
-    }
-
-    .subtitle {
-      margin: 12px auto 0;
-      max-width: 375px;
-      color: var(--text-muted);
-      font-size: 13px;
-      line-height: 1.7;
-    }
-
-    .panel {
-      background: var(--bg-card);
-      border: 1px solid var(--border-subtle);
-      border-radius: 12px;
-      padding: 28px;
-    }
-
-    .panel-heading {
-      text-align: center;
-      margin-bottom: 23px;
-    }
-
-    .panel-heading h2 {
-      margin: 0 0 5px;
-      font-size: 17px;
-      font-weight: 750;
-    }
-
-    .panel-heading p {
-      margin: 0;
-      color: var(--text-muted);
-      font-size: 12px;
-      line-height: 1.6;
-    }
-
-    .fields {
-      display: grid;
-      gap: 14px;
-    }
-
-    .field label {
-      display: block;
-      margin-bottom: 6px;
-      font-size: 11px;
-      font-weight: 700;
-    }
-
-    .field input {
-      display: block;
-      width: 100%;
-      min-height: 43px;
-      padding: 10px 12px;
-      background: white;
-      border: 1px solid var(--border-accent);
-      border-radius: 6px;
-      color: var(--text-main);
-      font-size: 13px;
-    }
-
-    .field input:focus-visible {
-      outline: 2px solid var(--color-primary);
-      outline-offset: 1px;
-    }
-
-    .field-note {
-      display: block;
-      margin-top: 5px;
-      color: var(--text-light);
-      font-size: 10px;
-      line-height: 1.5;
-    }
-
-    .button {
-      width: 100%;
-      min-height: 43px;
-      padding: 10px 15px;
-      border-radius: 6px;
-      border: 1px solid transparent;
-      font-size: 12px;
-      font-weight: 700;
-      transition: background .2s;
-    }
-
-    .primary {
-      background: var(--text-main);
-      color: white;
-    }
-
-    .primary:hover:not(:disabled) {
-      background: #253550;
-    }
-
-    .outline {
-      background: white;
-      border-color: var(--border-subtle);
-      color: var(--text-main);
-    }
-
-    .outline:hover:not(:disabled) {
-      background: var(--bg-subtle);
-    }
-
-    .divider {
-      display: flex;
-      align-items: center;
-      gap: 12px;
-      margin: 19px 0;
-      color: var(--text-light);
-      font-size: 10px;
-      text-transform: uppercase;
-    }
-
-    .divider::before,
-    .divider::after {
-      content: "";
-      height: 1px;
-      background: var(--border-subtle);
-      flex: 1;
-    }
-
-    .stack {
-      display: grid;
-      gap: 9px;
-    }
-
-    .actions { margin-top: 20px; }
-
-    .switch {
-      margin-top: 17px;
-      text-align: center;
-      color: var(--text-muted);
-      font-size: 12px;
-      line-height: 1.8;
-    }
-
-    .link-button {
-      border: 0;
-      background: transparent;
-      color: var(--color-primary);
-      padding: 3px;
-      font-size: inherit;
-      font-weight: 700;
-      text-decoration: underline;
-      text-underline-offset: 3px;
-    }
-
-    .identity {
-      margin-bottom: 19px;
-      padding: 17px;
-      background: var(--bg-subtle);
-      border: 1px solid var(--border-subtle);
-      border-radius: 7px;
-      text-align: center;
-      overflow-wrap: anywhere;
-    }
-
-    .identity strong {
-      display: block;
-      font-size: 13px;
-    }
-
-    .identity span {
-      display: block;
-      margin-top: 5px;
-      font-size: 11px;
-      color: var(--text-muted);
-    }
-
-    .status {
-      margin-top: 17px;
-      padding: 12px 13px;
-      background: var(--bg-subtle);
-      border: 1px solid var(--border-subtle);
-      border-radius: 6px;
-      font-size: 12px;
-      line-height: 1.65;
-      overflow-wrap: anywhere;
-    }
-
-    .status[data-type="error"] {
-      color: #9F2828;
-      background: #FFF0EF;
-      border-color: #F6D5D2;
-    }
-
-    .status[data-type="success"] {
-      color: #16633B;
-      background: #EAF8EF;
-      border-color: #C9EFD9;
-    }
-
-    .note {
-      margin: 16px 0 0;
-      font-size: 11px;
-      line-height: 1.7;
-      color: var(--text-muted);
-      text-align: center;
-    }
-
-    .footer {
-      padding: 19px;
-      color: var(--text-light);
-      text-align: center;
-      font-size: 10px;
-    }
-
-    :focus-visible {
-      outline-offset: 3px;
-    }
-
-    @media(max-width:560px) {
-      .header { padding: 18px; }
-      .panel { padding: 23px 19px; }
-      .main { align-items: flex-start; padding-top: 30px; }
-    }
-  </style>
+.subtitle {
+  color:var(--text-muted);
+  font-size:13px;
+  line-height:1.7;
+  max-width:375px;
+  margin:12px auto 0;
+}
+.panel {
+  background:var(--bg-card);
+  border:1px solid var(--border-subtle);
+  border-radius:12px;
+  padding:28px;
+}
+.panel-heading {text-align:center;margin-bottom:23px}
+.panel-heading h2 {
+  margin:0 0 5px;
+  font-size:17px;
+  font-weight:750;
+}
+.panel-heading p {
+  color:var(--text-muted);
+  font-size:12px;
+  line-height:1.6;
+  margin:0;
+}
+.fields {display:grid;gap:14px}
+.field label {
+  display:block;
+  font-size:11px;
+  font-weight:700;
+  margin-bottom:6px;
+}
+.field input {
+  display:block;
+  width:100%;
+  min-height:43px;
+  padding:10px 12px;
+  background:#fff;
+  border:1px solid var(--border-accent);
+  border-radius:6px;
+  color:var(--text-main);
+  font-size:13px;
+}
+.field input[readonly] {
+  background:var(--bg-subtle);
+  color:var(--text-muted);
+}
+.field input:focus-visible {
+  outline:2px solid var(--color-primary);
+  outline-offset:1px;
+}
+.field-note {
+  display:block;
+  margin-top:5px;
+  color:var(--text-light);
+  font-size:10px;
+  line-height:1.5;
+}
+.button {
+  width:100%;
+  min-height:43px;
+  padding:10px 15px;
+  border:1px solid transparent;
+  border-radius:6px;
+  font-size:12px;
+  font-weight:700;
+}
+.primary {background:var(--text-main);color:#fff}
+.primary:hover:not(:disabled){background:#253550}
+.outline {
+  background:#fff;
+  color:var(--text-main);
+  border-color:var(--border-subtle);
+}
+.outline:hover:not(:disabled){background:var(--bg-subtle)}
+.divider {
+  display:flex;
+  gap:12px;
+  align-items:center;
+  margin:19px 0;
+  color:var(--text-light);
+  font-size:10px;
+  text-transform:uppercase;
+}
+.divider:before,.divider:after {
+  content:"";
+  flex:1;
+  height:1px;
+  background:var(--border-subtle);
+}
+.stack {display:grid;gap:9px}
+.actions {margin-top:20px}
+.switch {
+  margin-top:17px;
+  text-align:center;
+  color:var(--text-muted);
+  font-size:12px;
+  line-height:1.8;
+}
+.link-button {
+  border:0;
+  padding:3px;
+  background:transparent;
+  color:var(--color-primary);
+  font-size:inherit;
+  font-weight:700;
+  text-decoration:underline;
+}
+.identity {
+  margin-bottom:19px;
+  padding:17px;
+  background:var(--bg-subtle);
+  border:1px solid var(--border-subtle);
+  border-radius:7px;
+  text-align:center;
+  overflow-wrap:anywhere;
+}
+.identity strong {display:block;font-size:13px}
+.identity span {
+  display:block;
+  font-size:11px;
+  color:var(--text-muted);
+  margin-top:5px;
+}
+.status {
+  margin-top:17px;
+  padding:12px 13px;
+  background:var(--bg-subtle);
+  border:1px solid var(--border-subtle);
+  border-radius:6px;
+  font-size:12px;
+  line-height:1.65;
+  overflow-wrap:anywhere;
+}
+.status[data-type="error"] {
+  background:#FFF0EF;
+  border-color:#F6D5D2;
+  color:#9F2828;
+}
+.status[data-type="success"] {
+  background:#EAF8EF;
+  border-color:#C9EFD9;
+  color:#16633B;
+}
+.note {
+  color:var(--text-muted);
+  text-align:center;
+  font-size:11px;
+  line-height:1.7;
+  margin:16px 0 0;
+}
+.profile-indicator {
+  margin-bottom:16px;
+  padding:11px 12px;
+  background:var(--bg-subtle);
+  border-radius:6px;
+  color:var(--text-muted);
+  font-size:12px;
+  line-height:1.6;
+}
+.password-wrapper {position:relative;width:100%}
+.password-wrapper input {padding-right:50px}
+.password-toggle {
+  position:absolute;
+  right:5px;
+  top:50%;
+  transform:translateY(-50%);
+  width:38px;
+  height:36px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  padding:0;
+  border:0;
+  border-radius:5px;
+  background:transparent;
+  color:var(--text-muted);
+}
+.password-toggle:hover {
+  color:var(--color-primary);
+  background:var(--bg-subtle);
+}
+.password-toggle svg {
+  width:18px;
+  height:18px;
+  fill:none;
+  stroke:currentColor;
+  stroke-width:1.8;
+  stroke-linejoin:round;
+  stroke-linecap:round;
+}
+.footer {
+  padding:19px;
+  color:var(--text-light);
+  text-align:center;
+  font-size:10px;
+}
+:focus-visible {outline-offset:3px}
+@media(max-width:560px){
+  .header{padding:18px}
+  .main{align-items:flex-start;padding-top:30px}
+  .panel{padding:23px 19px}
+}
+</style>
 </head>
 
 <body>
 <div class="page">
-
   <div class="mosaic" aria-hidden="true">
-    <span></span><span></span><span></span><span></span><span></span>
+    <span></span><span></span><span></span>
+    <span></span><span></span>
   </div>
 
   <header class="header">
-  <button
-    type="button"
-    id="portal-voltar"
-    class="portal-back"
-    hidden
-  >
-    ← Voltar
-  </button>
-</header>
-  
+    <button id="portal-voltar"
+            class="portal-back"
+            type="button" hidden>
+      ← Voltar
+    </button>
+  </header>
+
   <main class="main">
     <div class="content">
-
       <div class="intro">
-        <div class="eyebrow">.</div>
         <h1>Estúdio de pesquisa</h1>
         <p class="subtitle">
           Tratamento, processamento, pré-análise e
@@ -452,9 +308,10 @@
         </p>
       </div>
 
-      <section class="panel" aria-label="Acesso ao Estúdio de pesquisa">
+      <section class="panel"
+               aria-label="Acesso ao Estúdio de pesquisa">
 
-        <!-- VERIFICACAO DA SESSAO -->
+        <!-- CARREGAMENTO -->
         <div id="view-loading">
           <div class="panel-heading">
             <h2>Verificando acesso</h2>
@@ -469,8 +326,8 @@
             <p>Entre com sua conta ou faça seu cadastro.</p>
           </div>
 
-          <button id="btn-google" type="button"
-                  class="button outline">
+          <button id="btn-google"
+                  class="button outline" type="button">
             Continuar com Google
           </button>
 
@@ -480,30 +337,40 @@
             <div class="fields">
               <div class="field">
                 <label for="login-email">E-mail</label>
-                <input id="login-email" type="email"
+                <input id="login-email"
+                       type="email"
                        autocomplete="email" required>
               </div>
+
               <div class="field">
                 <label for="login-password">Senha</label>
-                <input id="login-password" type="password"
-                       autocomplete="current-password" required>
+                <input id="login-password"
+                       type="password"
+                       autocomplete="current-password"
+                       required>
               </div>
             </div>
+
             <div class="actions">
-              <button id="btn-login" type="submit"
-                      class="button primary">Entrar</button>
+              <button id="btn-login"
+                      class="button primary"
+                      type="submit">Entrar</button>
             </div>
           </form>
 
           <div class="switch">
-            <button id="open-reset" type="button"
-                    class="link-button">Esqueci minha senha</button>
+            <button id="open-reset"
+                    class="link-button" type="button">
+              Esqueci minha senha
+            </button>
           </div>
 
           <div class="switch">
             Ainda não tem conta?
-            <button id="open-register" type="button"
-                    class="link-button">Cadastrar-se</button>
+            <button id="open-register"
+                    class="link-button" type="button">
+              Cadastrar-se
+            </button>
           </div>
         </div>
 
@@ -517,27 +384,32 @@
           <form id="form-register">
             <div class="fields">
               <div class="field">
-                <label for="register-name">Nome completo *</label>
-                <input id="register-name" type="text"
-                       autocomplete="name" maxlength="250" required>
+                <label for="register-name">
+                  Nome completo *
+                </label>
+                <input id="register-name"
+                       type="text"
+                       autocomplete="name"
+                       maxlength="250" required>
               </div>
 
               <div class="field">
                 <label for="register-email">E-mail *</label>
-                <input id="register-email" type="email"
+                <input id="register-email"
+                       type="email"
                        autocomplete="email"
-                       placeholder="nome@qualquer-dominio.com"
                        required>
               </div>
 
               <div class="field">
                 <label for="register-password">Senha *</label>
-                <input id="register-password" type="password"
-                       autocomplete="new-password" minlength="6"
-                       required>
+                <input id="register-password"
+                       type="password"
+                       autocomplete="new-password"
+                       minlength="6" required>
                 <span class="field-note">
-                  Mínimo de 6 caracteres. Recomendamos uma senha
-                  longa e exclusiva.
+                  Mínimo de 6 caracteres. Recomendamos
+                  uma senha longa e exclusiva.
                 </span>
               </div>
 
@@ -545,34 +417,37 @@
                 <label for="register-confirm">
                   Confirmar senha *
                 </label>
-                <input id="register-confirm" type="password"
-                       autocomplete="new-password" minlength="6"
-                       required>
+                <input id="register-confirm"
+                       type="password"
+                       autocomplete="new-password"
+                       minlength="6" required>
               </div>
             </div>
 
             <div class="actions">
-              <button id="btn-register" type="submit"
-                      class="button primary">
+              <button id="btn-register"
+                      class="button primary"
+                      type="submit">
                 Criar minha conta
               </button>
             </div>
           </form>
 
           <p class="note">
-            ORCID, Lattes e Google Acadêmico serão opcionais
-            no perfil do pesquisador/a. O cadastro não
-            concede automaticamente acesso aos dados restritos.
+            ORCID, Lattes e Google Acadêmico são opcionais.
+            O cadastro não concede automaticamente
+            acesso aos dados restritos.
           </p>
 
           <div class="switch">
             Já possui conta?
-            <button id="back-login" type="button"
-                    class="link-button">Entrar</button>
+            <button id="back-login"
+                    class="link-button"
+                    type="button">Entrar</button>
           </div>
         </div>
 
-        <!-- RECUPERACAO DE SENHA -->
+        <!-- RECUPERACAO -->
         <div id="view-reset" hidden>
           <div class="panel-heading">
             <h2>Recuperar senha</h2>
@@ -582,25 +457,125 @@
           <form id="form-reset">
             <div class="field">
               <label for="reset-email">E-mail</label>
-              <input id="reset-email" type="email"
+              <input id="reset-email"
+                     type="email"
                      autocomplete="email" required>
             </div>
-
             <div class="actions">
-              <button id="btn-reset" type="submit"
-                      class="button primary">
+              <button id="btn-reset"
+                      class="button primary"
+                      type="submit">
                 Solicitar recuperação
               </button>
             </div>
           </form>
 
           <div class="switch">
-            <button id="reset-back" type="button"
-                    class="link-button">Voltar ao login</button>
+            <button id="reset-back"
+                    type="button"
+                    class="link-button">
+              Voltar ao login
+            </button>
           </div>
         </div>
 
-        <!-- CONTA -->
+        <!-- PERFIL ACADEMICO -->
+        <div id="view-profile" hidden>
+          <div class="panel-heading">
+            <h2>Meu perfil acadêmico</h2>
+            <p>
+              Identificação vinculada à sua conta.
+            </p>
+          </div>
+
+          <div id="profile-indicator"
+               class="profile-indicator">
+            Consultando o cadastro acadêmico.
+          </div>
+
+          <form id="form-profile">
+            <div class="fields">
+              <div class="field">
+                <label for="profile-name">
+                  Nome completo *
+                </label>
+                <input id="profile-name"
+                       type="text"
+                       autocomplete="name"
+                       maxlength="250" required>
+              </div>
+
+              <div class="field">
+                <label for="profile-email">
+                  E-mail da conta
+                </label>
+                <input id="profile-email"
+                       type="email"
+                       readonly>
+                <span class="field-note">
+                  Identidade confirmada pelo Firebase.
+                </span>
+              </div>
+
+              <div class="field">
+                <label for="profile-orcid">
+                  ORCID (opcional)
+                </label>
+                <input id="profile-orcid"
+                       type="text"
+                       maxlength="100"
+                       placeholder="0000-0000-0000-0000">
+              </div>
+
+              <div class="field">
+                <label for="profile-lattes">
+                  Currículo Lattes (opcional)
+                </label>
+                <input id="profile-lattes"
+                       type="url"
+                       maxlength="2048"
+                       placeholder="https://lattes.cnpq.br/...">
+              </div>
+
+              <div class="field">
+                <label for="profile-scholar">
+                  Google Acadêmico (opcional)
+                </label>
+                <input id="profile-scholar"
+                       type="url"
+                       maxlength="2048"
+                       placeholder="https://scholar.google.com/...">
+              </div>
+            </div>
+
+            <div class="actions stack">
+              <button id="btn-save-profile"
+                      type="submit"
+                      class="button primary">
+                Salvar meu perfil
+              </button>
+
+              <button id="btn-back-account"
+                      type="button"
+                      class="button outline">
+                Voltar à minha conta
+              </button>
+
+              <button id="btn-profile-logout"
+                      type="button"
+                      class="button outline">
+                Sair da conta
+              </button>
+            </div>
+          </form>
+
+          <p class="note">
+            Preencher o perfil não concede autorização
+            para consultar os dados restritos.
+          </p>
+        </div>
+
+        <!-- MINHA CONTA -->
         <div id="view-account" hidden>
           <div class="panel-heading">
             <h2>Minha conta</h2>
@@ -615,30 +590,43 @@
           </div>
 
           <div class="stack">
-            <button id="btn-enter" type="button"
+            <button id="btn-enter"
+                    type="button"
                     class="button primary" hidden>
               Entrar no Estúdio de pesquisa
             </button>
 
-            <button id="btn-check" type="button"
+            <button id="btn-open-profile"
+                    type="button"
+                    class="button outline">
+              Meu perfil acadêmico
+            </button>
+
+            <button id="btn-check"
+                    type="button"
                     class="button outline">
               Verificar meu acesso
             </button>
 
-            <button id="btn-verify" type="button"
+            <button id="btn-verify"
+                    type="button"
                     class="button outline" hidden>
               Enviar verificação de e-mail
             </button>
 
-            <button id="btn-logout" type="button"
+            <button id="btn-logout"
+                    type="button"
                     class="button outline">
               Sair da conta
             </button>
           </div>
         </div>
 
-        <div id="auth-status" class="status"
-             role="status" aria-live="polite" hidden></div>
+        <div id="auth-status"
+             class="status"
+             role="status"
+             aria-live="polite"
+             hidden></div>
       </section>
     </div>
   </main>
@@ -649,215 +637,350 @@
 </div>
 
 <script type="module">
-  import {
-    initializeApp,
-    getApps,
-    getApp
-  } from "https://www.gstatic.com/firebasejs/11.10.0/firebase-app.js";
+import {
+  initializeApp,
+  getApps,
+  getApp
+} from "https://www.gstatic.com/firebasejs/11.10.0/firebase-app.js";
 
-  import {
-    getAuth,
-    GoogleAuthProvider,
-    signInWithPopup,
-    signInWithEmailAndPassword,
-    createUserWithEmailAndPassword,
-    updateProfile,
-    sendEmailVerification,
-    sendPasswordResetEmail,
-    onAuthStateChanged,
-    signOut
-  } from "https://www.gstatic.com/firebasejs/11.10.0/firebase-auth.js";
+import {
+  getAuth,
+  GoogleAuthProvider,
+  signInWithPopup,
+  signInWithEmailAndPassword,
+  createUserWithEmailAndPassword,
+  updateProfile,
+  sendEmailVerification,
+  sendPasswordResetEmail,
+  onAuthStateChanged,
+  signOut
+} from "https://www.gstatic.com/firebasejs/11.10.0/firebase-auth.js";
 
-  const FIREBASE_CONFIG = {
-    apiKey: "AIzaSyC77JxCZFJrrgA8twSNYke3VDXaqwiwrSE",
-    authDomain: "databank-pesca-2026.firebaseapp.com",
-    projectId: "databank-pesca-2026",
-    appId: "1:311761842391:web:ae666a2a20f5a7cc04c092"
-  };
+const FIREBASE_CONFIG = {
+  apiKey:"AIzaSyC77JxCZFJrrgA8twSNYke3VDXaqwiwrSE",
+  authDomain:"databank-pesca-2026.firebaseapp.com",
+  projectId:"databank-pesca-2026",
+  appId:"1:311761842391:web:ae666a2a20f5a7cc04c092"
+};
 
-  const API =
-    "https://pesca-analytics-api-v1-" +
-    "311761842391.southamerica-east1.run.app";
+const API =
+  "https://pesca-analytics-api-v1-" +
+  "311761842391.southamerica-east1.run.app";
 
-  const app = getApps().length
-    ? getApp()
-    : initializeApp(FIREBASE_CONFIG);
+const app = getApps().length
+  ? getApp()
+  : initializeApp(FIREBASE_CONFIG);
 
-  const auth = getAuth(app);
-  const $ = id => document.getElementById(id);
+const auth = getAuth(app);
+const $ = id => document.getElementById(id);
 
-/* ==========================================================
-   26F.10M | CONTROLE DE BOTOES DURANTE OPERACOES
+const TELAS = [
+  "view-loading",
+  "view-login",
+  "view-register",
+  "view-reset",
+  "view-profile",
+  "view-account"
+];
 
-   Corrige:
-   ReferenceError: ocupado is not defined
-
-   Utilizado no cadastro, login, recuperacao de senha
-   e verificacao de acesso.
-   ========================================================== */
+let usuarioAtual = null;
+let verificacao = 0;
+let autorizacaoConfirmada = false;
+let perfilCompleto = false;
+let perfilValidado = false;
+let perfilSincronizado = null;
+let houveCadastroNovo = false;
 
 function ocupado(id, valor) {
-  const elemento = document.getElementById(id);
-
-  if (!elemento) {
-    console.warn(
-      "Controle nao encontrado:",
-      id
-    );
-    return;
-  }
-
-  elemento.disabled = Boolean(valor);
+  const elemento = $(id);
+  if (elemento) elemento.disabled = Boolean(valor);
 }
 
-  let usuarioAtual = null;
-  let verificacao = 0;
-  let autorizacaoConfirmada = false;
+function mensagem(texto, tipo = "") {
+  const elemento = $("auth-status");
+  elemento.textContent = texto;
+  elemento.dataset.type = tipo;
+  elemento.hidden = false;
+}
 
-  const telas = [
-    "view-loading",
-    "view-login",
-    "view-register",
-    "view-reset",
-    "view-account"
-  ];
+function limparMensagem() {
+  const elemento = $("auth-status");
+  elemento.textContent = "";
+  elemento.dataset.type = "";
+  elemento.hidden = true;
+}
 
-  function mensagem(texto, tipo = "") {
-    const elemento = $("auth-status");
-    elemento.textContent = texto;
-    elemento.dataset.type = tipo;
-    elemento.hidden = false;
-  }
-
-  function limparMensagem() {
-    $("auth-status").hidden = true;
-    $("auth-status").textContent = "";
-    $("auth-status").dataset.type = "";
-  }
-
-  function tela(id) {
-  for (const item of telas) {
+function tela(id) {
+  for (const item of TELAS) {
     $(item).hidden = item !== id;
   }
 
-  const voltar = $("portal-voltar");
-
-  if (voltar) {
-    voltar.hidden = ![
-      "view-register",
-      "view-reset"
-    ].includes(id);
-  }
+  $("portal-voltar").hidden = ![
+    "view-register",
+    "view-reset",
+    "view-profile"
+  ].includes(id);
 
   limparMensagem();
 }
 
-$("portal-voltar").addEventListener("click", () => {
-  tela("view-login");
-});
+function erroLegivel(erro) {
+  const erros = {
+    "auth/email-already-in-use":
+      "Este e-mail já possui cadastro. Tente entrar ou recuperar a senha.",
+    "auth/invalid-email":
+      "Informe um endereço de e-mail válido.",
+    "auth/weak-password":
+      "A senha não atende aos requisitos de segurança.",
+    "auth/invalid-credential":
+      "Não foi possível autenticar. Confira os dados ou recupere a senha.",
+    "auth/too-many-requests":
+      "Muitas tentativas. Tente novamente mais tarde.",
+    "auth/operation-not-allowed":
+      "Cadastro por e-mail não habilitado no Firebase.",
+    "auth/unauthorized-domain":
+      "O domínio não está autorizado no Firebase.",
+    "auth/popup-blocked":
+      "O navegador bloqueou a janela Google.",
+    "auth/popup-closed-by-user":
+      "A janela de login Google foi fechada.",
+    "auth/network-request-failed":
+      "Falha de conexão com o serviço.",
+    "auth/user-token-expired":
+      "A sessão expirou. Entre novamente."
+  };
 
-  function erroLegivel(erro) {
-    const mensagens = {
-      "auth/email-already-in-use":
-        "Este e-mail já possui cadastro. Tente entrar ou recuperar a senha.",
-      "auth/invalid-email":
-        "O endereço de e-mail informado não é válido.",
-      "auth/weak-password":
-        "A senha não atende aos requisitos de segurança.",
-      "auth/invalid-credential":
-        "Não foi possível autenticar. Confira os dados ou recupere sua senha.",
-      "auth/too-many-requests":
-        "Muitas tentativas. Tente novamente mais tarde.",
-      "auth/operation-not-allowed":
-        "Cadastro por e-mail ainda não está habilitado na configuração do Firebase.",
-      "auth/popup-closed-by-user":
-        "A janela de autenticação foi fechada.",
-      "auth/popup-blocked":
-        "O navegador bloqueou a janela de autenticação.",
-      "auth/unauthorized-domain":
-        "O domínio do portal não está autorizado no Firebase.",
-      "auth/network-request-failed":
-        "Falha de conexão. Verifique sua internet."
-    };
+  return erros[erro?.code] ||
+    "Não foi possível concluir a operação. " +
+    "Verifique a conexão ou tente novamente.";
+}
 
-    return mensagens[erro?.code] ||
-      "Não foi possível concluir a operação. " +
-      "Tente novamente ou informe o erro ao administrador.";
+function nomeCompletoValido(nome) {
+  return String(nome || "")
+    .normalize("NFC")
+    .trim()
+    .split(/\s+/)
+    .filter(Boolean)
+    .length >= 2;
+}
+
+function preencherPerfil(dados = {}) {
+  const usuario = auth.currentUser;
+
+  $("profile-name").value =
+    dados.nome_completo ||
+    usuario?.displayName ||
+    "";
+
+  $("profile-email").value =
+    usuario?.email || "";
+
+  $("profile-orcid").value =
+    dados.orcid || "";
+
+  $("profile-lattes").value =
+    dados.curriculo_lattes || "";
+
+  $("profile-scholar").value =
+    dados.google_academico || "";
+}
+
+/* ==========================================================
+   API DO PERFIL
+   ========================================================== */
+
+async function solicitarPerfil(metodo, dados = null) {
+  const usuario = auth.currentUser;
+
+  if (!usuario) {
+    throw new Error("Entre com sua conta.");
   }
 
-  /* ========================================================
-     LOGIN GOOGLE
-     ======================================================== */
+  const uidAntes = usuario.uid;
+  const token = await usuario.getIdToken();
 
-  $("btn-google").addEventListener("click", async () => {
-    ocupado("btn-google", true);
+  const configuracao = {
+    method: metodo,
+    cache: "no-store",
+    headers: {
+      "Accept": "application/json",
+      "Authorization": "Bearer " + token
+    }
+  };
+
+  if (dados !== null) {
+    configuracao.headers["Content-Type"] =
+      "application/json";
+
+    configuracao.body = JSON.stringify(dados);
+  }
+
+  const resposta = await fetch(
+    API + "/pesquisadores/meu-perfil",
+    configuracao
+  );
+
+  if (auth.currentUser?.uid !== uidAntes) {
+    throw new Error(
+      "A conta mudou durante a operação."
+    );
+  }
+
+  if (!resposta.ok) {
+    let detalhe = "";
 
     try {
-      await signInWithPopup(
-        auth,
-        new GoogleAuthProvider()
-      );
-    } catch (erro) {
-      mensagem(erroLegivel(erro), "error");
-    } finally {
-      ocupado("btn-google", false);
-    }
-  });
+      const corpo = await resposta.json();
+      detalhe = corpo.detail || "";
+    } catch (_) {}
 
-  /* ========================================================
-     LOGIN EMAIL E SENHA
-     ======================================================== */
+    throw new Error(
+      typeof detalhe === "string" && detalhe
+        ? detalhe
+        : "Erro HTTP " + resposta.status
+    );
+  }
 
-  $("form-login").addEventListener("submit", async evento => {
+  return resposta.json();
+}
+
+async function carregarPerfil() {
+  const uidAntes = auth.currentUser?.uid;
+
+  perfilCompleto = false;
+  perfilValidado = false;
+  perfilSincronizado = null;
+  $("btn-enter").hidden = true;
+
+  const retorno = await solicitarPerfil("GET");
+
+  if (!auth.currentUser ||
+      auth.currentUser.uid !== uidAntes) {
+    throw new Error(
+      "A sessão mudou durante a consulta."
+    );
+  }
+
+  const dados = retorno.perfil || {};
+
+  preencherPerfil(dados);
+
+  perfilCompleto =
+    retorno.perfil_existe === true &&
+    nomeCompletoValido(dados.nome_completo);
+
+  perfilValidado = true;
+  perfilSincronizado = dados;
+
+  return perfilCompleto;
+}
+
+async function abrirPerfil() {
+  if (!auth.currentUser) {
+    tela("view-login");
+    return;
+  }
+
+  tela("view-profile");
+  mensagem("Carregando seu perfil...");
+
+  try {
+    const completo = await carregarPerfil();
+
+    $("profile-indicator").textContent = completo
+      ? "Perfil existente. Você pode atualizar suas informações."
+      : "Complete seu nome e sobrenome e salve para prosseguir.";
+
+    limparMensagem();
+  } catch (erro) {
+    console.error("Perfil:", erro);
+
+    mensagem(
+      "Não foi possível carregar seu perfil: " +
+      erro.message,
+      "error"
+    );
+  }
+}
+
+/* ==========================================================
+   LOGIN GOOGLE
+   ========================================================== */
+
+$("btn-google").addEventListener("click", async () => {
+  ocupado("btn-google", true);
+
+  try {
+    await signInWithPopup(
+      auth,
+      new GoogleAuthProvider()
+    );
+  } catch (erro) {
+    mensagem(erroLegivel(erro), "error");
+  } finally {
+    ocupado("btn-google", false);
+  }
+});
+
+/* ==========================================================
+   LOGIN COM EMAIL E SENHA
+   ========================================================== */
+
+$("form-login").addEventListener(
+  "submit",
+  async evento => {
     evento.preventDefault();
-
-    const email = $("login-email").value.trim();
-    const senha = $("login-password").value;
-
     ocupado("btn-login", true);
 
     try {
-      await signInWithEmailAndPassword(auth, email, senha);
+      await signInWithEmailAndPassword(
+        auth,
+        $("login-email").value.trim(),
+        $("login-password").value
+      );
+
       $("login-password").value = "";
     } catch (erro) {
       mensagem(erroLegivel(erro), "error");
     } finally {
       ocupado("btn-login", false);
     }
-  });
+  }
+);
 
-  /* ========================================================
-     CADASTRO COM CONFIRMACAO DE SENHA
-     ======================================================== */
+/* ==========================================================
+   CADASTRO DE NOVA CONTA
+   ========================================================== */
 
-  $("form-register").addEventListener("submit", async evento => {
+$("form-register").addEventListener(
+  "submit",
+  async evento => {
     evento.preventDefault();
 
-    const nome = $("register-name").value.trim()
+    const nome = $("register-name").value
+      .trim()
       .replace(/\s+/g, " ");
+
     const email = $("register-email").value.trim();
     const senha = $("register-password").value;
     const confirmar = $("register-confirm").value;
-/* 26F.10M | Validacao do nome completo */
-const partesNome = nome
-  .normalize("NFC")
-  .trim()
-  .split(/\s+/)
-  .filter(parte => parte.length > 0);
 
-if (partesNome.length < 2) {
-  mensagem(
-    "Informe pelo menos nome e sobrenome para concluir o cadastro.",
-    "error"
-  );
+    if (!nomeCompletoValido(nome)) {
+      mensagem(
+        "Informe nome e sobrenome para concluir o cadastro.",
+        "error"
+      );
+      return;
+    }
 
-  $("register-name").focus();
-  return;
-}
+    if (!$("register-email").checkValidity()) {
+      mensagem("Informe um e-mail válido.", "error");
+      return;
+    }
 
     if (senha.length < 6) {
       mensagem(
-        "A senha precisa ter pelo menos 6 caracteres.",
+        "A senha deve ter ao menos seis caracteres.",
         "error"
       );
       return;
@@ -865,7 +988,7 @@ if (partesNome.length < 2) {
 
     if (senha !== confirmar) {
       mensagem(
-        "As senhas digitadas não coincidem. Confira e tente novamente.",
+        "As senhas digitadas não coincidem.",
         "error"
       );
       $("register-confirm").focus();
@@ -875,11 +998,14 @@ if (partesNome.length < 2) {
     ocupado("btn-register", true);
 
     try {
-      const credencial = await createUserWithEmailAndPassword(
-        auth,
-        email,
-        senha
-      );
+      const credencial =
+        await createUserWithEmailAndPassword(
+          auth,
+          email,
+          senha
+        );
+
+      houveCadastroNovo = true;
 
       await updateProfile(credencial.user, {
         displayName: nome
@@ -890,43 +1016,38 @@ if (partesNome.length < 2) {
 
       try {
         await sendEmailVerification(credencial.user);
-        mensagem(
-          "Conta criada. Enviamos um pedido de confirmação " +
-          "para o seu e-mail. Verifique sua caixa de entrada.",
-          "success"
-        );
       } catch (erroEnvio) {
-        console.warn("Verificação:", erroEnvio);
-        mensagem(
-          "Conta criada, mas não foi possível enviar " +
-          "a confirmação agora. Utilize o botão " +
-          "Enviar verificação de e-mail.",
-          "error"
+        console.warn(
+          "Falha no envio da verificação:",
+          erroEnvio
         );
       }
 
       await apresentarConta(credencial.user, false);
 
+      mensagem(
+        "Conta criada. Confirme seu e-mail e depois " +
+        "complete o perfil acadêmico.",
+        "success"
+      );
     } catch (erro) {
       mensagem(erroLegivel(erro), "error");
     } finally {
       ocupado("btn-register", false);
     }
-  });
+  }
+);
 
-  /* ========================================================
-     RECUPERACAO DE SENHA
-     ======================================================== */
+/* ==========================================================
+   RECUPERACAO DE SENHA
+   ========================================================== */
 
-  $("form-reset").addEventListener("submit", async evento => {
+$("form-reset").addEventListener(
+  "submit",
+  async evento => {
     evento.preventDefault();
 
     const email = $("reset-email").value.trim();
-
-    if (!$("reset-email").checkValidity()) {
-      mensagem("Informe um e-mail válido.", "error");
-      return;
-    }
 
     ocupado("btn-reset", true);
 
@@ -935,8 +1056,7 @@ if (partesNome.length < 2) {
 
       mensagem(
         "Se houver uma conta compatível com recuperação " +
-        "de senha para esse endereço, você receberá " +
-        "as orientações por e-mail.",
+        "de senha, você receberá instruções por e-mail.",
         "success"
       );
     } catch (erro) {
@@ -944,253 +1064,455 @@ if (partesNome.length < 2) {
     } finally {
       ocupado("btn-reset", false);
     }
-  });
+  }
+);
 
-  /* ========================================================
-     ALTERNANCIA DE TELAS
-     ======================================================== */
+/* ==========================================================
+   NAVEGACAO
+   ========================================================== */
 
-  $("open-register").onclick = () => tela("view-register");
-  $("back-login").onclick = () => tela("view-login");
-  $("open-reset").onclick = () => {
-    $("reset-email").value = $("login-email").value;
-    tela("view-reset");
-  };
-  $("reset-back").onclick = () => tela("view-login");
+$("open-register").onclick =
+  () => tela("view-register");
 
-  /* ========================================================
-     VERIFICACAO DE AUTORIZACAO
-     ======================================================== */
+$("back-login").onclick =
+  () => tela("view-login");
 
-  async function apresentarConta(usuario, verificar = true) {
-    usuarioAtual = usuario;
-    autorizacaoConfirmada = false;
+$("open-reset").onclick = () => {
+  $("reset-email").value = $("login-email").value;
+  tela("view-reset");
+};
 
-    $("account-name").textContent =
-      usuario.displayName || "Conta de pesquisador/a";
+$("reset-back").onclick =
+  () => tela("view-login");
 
-    $("account-email").textContent =
-      usuario.email || "E-mail não disponível";
-
-    $("btn-enter").hidden = true;
-    $("btn-verify").hidden = true;
-
+$("portal-voltar").onclick = () => {
+  if (!auth.currentUser) {
+    tela("view-login");
+  } else {
     tela("view-account");
-
-    if (verificar) {
-      await verificarAcesso();
-    }
   }
+};
 
-  async function verificarAcesso() {
-    const usuario = auth.currentUser;
-    const sequencia = ++verificacao;
+$("btn-open-profile").onclick = abrirPerfil;
 
-    autorizacaoConfirmada = false;
-    $("btn-enter").hidden = true;
-
-    if (!usuario) {
-      tela("view-login");
-      return;
-    }
-
-    ocupado("btn-check", true);
-
-    try {
-      await usuario.reload();
-      if (sequencia !== verificacao) return;
-
-      $("account-name").textContent =
-        usuario.displayName || "Conta de pesquisador/a";
-
-      if (!usuario.emailVerified) {
-        $("account-description").textContent =
-          "Conta criada. Confirmação de e-mail pendente.";
-
-        $("btn-verify").hidden = false;
-
-        mensagem(
-          "Confira seu e-mail e confirme a conta. " +
-          "Depois clique em Verificar meu acesso."
-        );
-        return;
-      }
-
-      $("btn-verify").hidden = true;
-
-      const token = await usuario.getIdToken(true);
-
-      const resposta = await fetch(
-        API + "/catalogo/cadastro",
-        {
-          method: "GET",
-          cache: "no-store",
-          headers: {
-            "Accept": "application/json",
-            "Authorization": "Bearer " + token
-          }
-        }
-      );
-
-      if (sequencia !== verificacao) return;
-
-      if (resposta.ok) {
-        autorizacaoConfirmada = true;
-        $("btn-enter").hidden = false;
-
-        $("account-description").textContent =
-          "Conta autorizada para o ambiente de pesquisa.";
-
-        mensagem(
-          "Autenticação e autorização confirmadas.",
-          "success"
-        );
-        return;
-      }
-
-      if (resposta.status === 401 ||
-          resposta.status === 403) {
-        $("account-description").textContent =
-          "Conta autenticada.";
-
-        mensagem(
-          "Sua conta está ativa, mas ainda não possui " +
-          "autorização para as consultas restritas. " +
-          "O acesso deverá ser liberado pelo administrador."
-        );
-        return;
-      }
-
-      throw new Error("HTTP " + resposta.status);
-
-    } catch (erro) {
-      if (sequencia !== verificacao) return;
-
-      $("account-description").textContent =
-        "Não foi possível verificar a autorização.";
-
-      mensagem(
-        "O servidor não confirmou seu acesso. " +
-        "A sessão foi preservada para nova verificação.",
-        "error"
-      );
-
-      console.error("Autorização:", erro);
-
-    } finally {
-      if (sequencia === verificacao) {
-        ocupado("btn-check", false);
-      }
-    }
-  }
-
-  $("btn-check").onclick = verificarAcesso;
-
-  $("btn-verify").onclick = async () => {
-    if (!auth.currentUser) return;
-
-    ocupado("btn-verify", true);
-
-    try {
-      await sendEmailVerification(auth.currentUser);
-      mensagem(
-        "Solicitamos o envio de um e-mail de verificação. " +
-        "Depois de confirmar, clique em Verificar meu acesso.",
-        "success"
-      );
-    } catch (erro) {
-      mensagem(erroLegivel(erro), "error");
-    } finally {
-      ocupado("btn-verify", false);
-    }
+$("btn-back-account").onclick =
+  async () => {
+    tela("view-account");
+    await verificarAcesso();
   };
 
-  $("btn-logout").onclick = async () => {
+$("btn-profile-logout").onclick =
+  async () => {
     try {
-      autorizacaoConfirmada = false;
       await signOut(auth);
     } catch (erro) {
       mensagem(erroLegivel(erro), "error");
     }
   };
 
-  $("btn-enter").onclick = () => {
-    if (!usuarioAtual || !autorizacaoConfirmada) return;
-    window.location.assign("./index.html");
-  };
+/* ==========================================================
+   SALVAR PERFIL NO POSTGRESQL
+   ========================================================== */
 
-  /* ========================================================
-     RESTAURACAO DA SESSAO
-     ======================================================== */
+$("form-profile").addEventListener(
+  "submit",
+  async evento => {
+    evento.preventDefault();
 
-  onAuthStateChanged(auth, async usuario => {
+    const nome = $("profile-name").value
+      .trim()
+      .replace(/\s+/g, " ");
+
+    if (!nomeCompletoValido(nome)) {
+      mensagem(
+        "Informe nome e sobrenome para completar o perfil.",
+        "error"
+      );
+      return;
+    }
+
+    const opcional = id =>
+      $(id).value.trim() || null;
+
+    const dados = {
+      nome_completo: nome,
+      orcid: opcional("profile-orcid"),
+      curriculo_lattes: opcional(
+        "profile-lattes"
+      ),
+      google_academico: opcional(
+        "profile-scholar"
+      )
+    };
+
+    ocupado("btn-save-profile", true);
+
+    try {
+      const retorno = await solicitarPerfil(
+        "PUT",
+        dados
+      );
+
+      const perfil = retorno.perfil || {};
+
+      if (!nomeCompletoValido(
+        perfil.nome_completo
+      )) {
+        throw new Error(
+          "O servidor não confirmou o nome completo."
+        );
+      }
+
+      perfilSincronizado = perfil;
+      perfilValidado = true;
+      perfilCompleto = true;
+
+      preencherPerfil(perfil);
+
+      $("account-name").textContent =
+        perfil.nome_completo;
+
+      tela("view-account");
+
+      await verificarAcesso();
+
+      mensagem(
+        "Perfil acadêmico salvo no PostgreSQL.",
+        "success"
+      );
+    } catch (erro) {
+      console.error("Salvar perfil:", erro);
+
+      mensagem(
+        "Não foi possível salvar o perfil: " +
+        erro.message,
+        "error"
+      );
+    } finally {
+      ocupado("btn-save-profile", false);
+    }
+  }
+);
+
+/* ==========================================================
+   MINHA CONTA E AUTORIZACAO
+   ========================================================== */
+
+async function apresentarConta(
+  usuario,
+  verificar = true
+) {
+  usuarioAtual = usuario;
+  autorizacaoConfirmada = false;
+
+  $("account-name").textContent =
+    usuario.displayName || "Conta de pesquisador/a";
+
+  $("account-email").textContent =
+    usuario.email || "E-mail não disponível";
+
+  $("btn-enter").hidden = true;
+  $("btn-verify").hidden = true;
+
+  tela("view-account");
+
+  if (verificar) {
+    await verificarAcesso();
+  }
+}
+
+async function verificarAcesso() {
+  const usuario = auth.currentUser;
+  const sequencia = ++verificacao;
+
+  autorizacaoConfirmada = false;
+  $("btn-enter").hidden = true;
+
+  if (!usuario) {
+    tela("view-login");
+    return;
+  }
+
+  ocupado("btn-check", true);
+
+  try {
+    await usuario.reload();
+
+    if (sequencia !== verificacao) return;
+
+    $("account-name").textContent =
+      usuario.displayName ||
+      "Conta de pesquisador/a";
+
+    if (!usuario.emailVerified) {
+      $("account-description").textContent =
+        "Confirmação de e-mail pendente.";
+
+      $("btn-verify").hidden = false;
+
+      mensagem(
+        "Confirme seu endereço de e-mail e depois " +
+        "clique em Verificar meu acesso."
+      );
+
+      return;
+    }
+
+    $("btn-verify").hidden = true;
+
+    let completo = false;
+
+    try {
+      completo = await carregarPerfil();
+    } catch (erroPerfil) {
+      if (sequencia !== verificacao) return;
+
+      console.error(
+        "Perfil indisponível:",
+        erroPerfil
+      );
+
+      $("account-description").textContent =
+        "Não foi possível validar o perfil.";
+
+      mensagem(
+        "Falha ao consultar seu perfil acadêmico. " +
+        "Tente verificar novamente.",
+        "error"
+      );
+
+      return;
+    }
+
+    if (sequencia !== verificacao) return;
+
+    if (!completo) {
+      tela("view-profile");
+
+      $("profile-indicator").textContent =
+        "Preencha seu nome e sobrenome e salve " +
+        "o perfil antes de entrar no Estúdio.";
+
+      mensagem(
+        "Complete sua identificação acadêmica."
+      );
+
+      return;
+    }
+
+    const token = await usuario.getIdToken(true);
+
+    const resposta = await fetch(
+      API + "/catalogo/cadastro",
+      {
+        method: "GET",
+        cache: "no-store",
+        headers: {
+          "Accept": "application/json",
+          "Authorization": "Bearer " + token
+        }
+      }
+    );
+
+    if (sequencia !== verificacao) return;
+
+    if (resposta.ok) {
+      autorizacaoConfirmada = true;
+      $("btn-enter").hidden = false;
+
+      $("account-description").textContent =
+        "Conta autorizada para o ambiente de pesquisa.";
+
+      mensagem(
+        "Perfil e autorização confirmados.",
+        "success"
+      );
+
+      return;
+    }
+
+    if (
+      resposta.status === 401 ||
+      resposta.status === 403
+    ) {
+      $("account-description").textContent =
+        "Perfil completo. Autorização pendente.";
+
+      mensagem(
+        "Seu perfil está completo, mas a conta ainda " +
+        "não possui autorização para consultar o CORE."
+      );
+
+      return;
+    }
+
+    throw new Error(
+      "Falha HTTP " + resposta.status
+    );
+  } catch (erro) {
+    if (sequencia !== verificacao) return;
+
+    console.error("Autorização:", erro);
+
+    $("account-description").textContent =
+      "Não foi possível verificar o acesso.";
+
+    mensagem(
+      "O servidor não confirmou a autorização. " +
+      "Sua sessão foi preservada.",
+      "error"
+    );
+  } finally {
+    if (sequencia === verificacao) {
+      ocupado("btn-check", false);
+    }
+  }
+}
+
+$("btn-check").onclick = verificarAcesso;
+
+$("btn-verify").onclick = async () => {
+  if (!auth.currentUser) return;
+
+  ocupado("btn-verify", true);
+
+  try {
+    await sendEmailVerification(auth.currentUser);
+
+    mensagem(
+      "E-mail de verificação solicitado.",
+      "success"
+    );
+  } catch (erro) {
+    mensagem(erroLegivel(erro), "error");
+  } finally {
+    ocupado("btn-verify", false);
+  }
+};
+
+$("btn-logout").onclick = async () => {
+  try {
+    autorizacaoConfirmada = false;
+    await signOut(auth);
+  } catch (erro) {
+    mensagem(erroLegivel(erro), "error");
+  }
+};
+
+$("btn-enter").onclick = () => {
+  if (
+    !usuarioAtual ||
+    !autorizacaoConfirmada ||
+    !perfilCompleto ||
+    !perfilValidado
+  ) {
+    return;
+  }
+
+  window.location.assign("./index.html");
+};
+
+/* ==========================================================
+   SESSAO FIREBASE
+   ========================================================== */
+
+onAuthStateChanged(
+  auth,
+  async usuario => {
     verificacao += 1;
     usuarioAtual = usuario;
     autorizacaoConfirmada = false;
+    perfilCompleto = false;
+    perfilValidado = false;
+    perfilSincronizado = null;
 
     if (!usuario) {
       tela("view-login");
       return;
     }
 
-    await apresentarConta(usuario);
+    await apresentarConta(
+      usuario,
+      !houveCadastroNovo
+    );
 
-  }, erro => {
+    houveCadastroNovo = false;
+  },
+  erro => {
     tela("view-login");
     mensagem(erroLegivel(erro), "error");
-  });
-  
+  }
+);
+
 /* ==========================================================
-   26F.09N | MOSTRAR E OCULTAR SENHAS
+   MOSTRAR E OCULTAR SENHAS
    ========================================================== */
 
 function instalarVisualizacaoSenha(idCampo) {
-  const campo = document.getElementById(idCampo);
+  const campo = $(idCampo);
 
-  if (!campo || campo.dataset.toggleInstalado === "true") {
+  if (
+    !campo ||
+    campo.dataset.toggleInstalado === "true"
+  ) {
     return;
   }
 
   const wrapper = document.createElement("div");
   wrapper.className = "password-wrapper";
 
-  campo.parentNode.insertBefore(wrapper, campo);
+  campo.parentNode.insertBefore(
+    wrapper,
+    campo
+  );
+
   wrapper.appendChild(campo);
 
   const botao = document.createElement("button");
   botao.type = "button";
   botao.className = "password-toggle";
 
-  botao.setAttribute("aria-pressed", "false");
-  botao.setAttribute("aria-label", "Mostrar senha");
-  botao.title = "Mostrar senha";
+  botao.setAttribute(
+    "aria-pressed",
+    "false"
+  );
 
-  const iconeOlho = `
+  botao.setAttribute(
+    "aria-label",
+    "Mostrar senha"
+  );
+
+  const olho = `
     <svg viewBox="0 0 24 24" aria-hidden="true">
-      <path d="M2 12s3.5-7 10-7 10 7 10 7-3.5 7-10 7S2 12 2 12Z"/>
+      <path d="M2 12s3.5-7 10-7 10 7
+      10 7-3.5 7-10 7S2 12 2 12Z"/>
       <circle cx="12" cy="12" r="3"/>
     </svg>
   `;
 
-  const iconeOculto = `
+  const oculto = `
     <svg viewBox="0 0 24 24" aria-hidden="true">
       <path d="M3 3l18 18"/>
-      <path d="M10.6 5.1A11 11 0 0 1 12 5c6.5 0 10 7 10 7a15 15 0 0 1-3.2 3.9"/>
-      <path d="M6.1 6.1C3.4 8 2 12 2 12s3.5 7 10 7c1.4 0 2.7-.3 3.8-.8"/>
+      <path d="M10.6 5.1A11 11 0 0 1 12 5
+      c6.5 0 10 7 10 7a15 15 0 0 1-3.2 3.9"/>
+      <path d="M6.1 6.1C3.4 8 2 12
+      2 12s3.5 7 10 7c1.4 0 2.7-.3 3.8-.8"/>
       <path d="M10 10a3 3 0 0 0 4 4"/>
     </svg>
   `;
 
-  botao.innerHTML = iconeOlho;
+  botao.innerHTML = olho;
 
-  botao.addEventListener("click", () => {
+  botao.onclick = () => {
     const mostrar = campo.type === "password";
 
-    campo.type = mostrar ? "text" : "password";
+    campo.type = mostrar
+      ? "text"
+      : "password";
 
     botao.innerHTML = mostrar
-      ? iconeOculto
-      : iconeOlho;
+      ? oculto
+      : olho;
 
     botao.setAttribute(
       "aria-pressed",
@@ -1201,14 +1523,9 @@ function instalarVisualizacaoSenha(idCampo) {
       "aria-label",
       mostrar ? "Ocultar senha" : "Mostrar senha"
     );
-
-    botao.title = mostrar
-      ? "Ocultar senha"
-      : "Mostrar senha";
-  });
+  };
 
   wrapper.appendChild(botao);
-
   campo.dataset.toggleInstalado = "true";
 }
 
@@ -1217,6 +1534,7 @@ function instalarVisualizacaoSenha(idCampo) {
   "register-password",
   "register-confirm"
 ].forEach(instalarVisualizacaoSenha);
+
 </script>
 </body>
 </html>
