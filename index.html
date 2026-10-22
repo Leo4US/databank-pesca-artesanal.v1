@@ -2,7 +2,126 @@
 <html lang="pt-BR">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+<!-- =====================================================
+     26F.09J | PORTA DE ENTRADA DO RESEARCH STUDIO
+
+     Oculta a interface ate confirmar:
+     1. Sessao Firebase ativa
+     2. Email verificado
+     3. Autorizacao no backend
+
+     Usuarios nao autorizados seguem para portal.html.
+
+     IMPORTANTE:
+     A seguranca dos dados depende tambem da API.
+     Este bloco controla a visibilidade e a navegacao.
+     ===================================================== -->
+
+<style id="research-studio-access-gate">
+  html {
+    visibility: hidden !important;
+  }
+</style>
+
+<script type="module">
+  import {
+    initializeApp,
+    getApps,
+    getApp
+  } from "https://www.gstatic.com/firebasejs/11.10.0/firebase-app.js";
+
+  import {
+    getAuth
+  } from "https://www.gstatic.com/firebasejs/11.10.0/firebase-auth.js";
+
+  const FIREBASE_CONFIG = {
+    apiKey: "AIzaSyC77JxCZFJrrgA8twSNYke3VDXaqwiwrSE",
+    authDomain: "databank-pesca-2026.firebaseapp.com",
+    projectId: "databank-pesca-2026",
+    appId: "1:311761842391:web:ae666a2a20f5a7cc04c092"
+  };
+
+  const API_BASE =
+    "https://pesca-analytics-api-v1-" +
+    "311761842391.southamerica-east1.run.app";
+
+  function voltarAoPortal() {
+    window.location.replace("./portal.html");
+  }
+
+  function liberarPlataforma() {
+    const protecao = document.getElementById(
+      "research-studio-access-gate"
+    );
+
+    if (protecao) {
+      protecao.remove();
+    }
+  }
+
+  async function verificarEntrada() {
+    try {
+      const aplicativo = getApps().length
+        ? getApp()
+        : initializeApp(FIREBASE_CONFIG);
+
+      const autenticacao = getAuth(aplicativo);
+
+      // Aguarda recuperar a sessao Firebase existente.
+      await autenticacao.authStateReady();
+
+      const usuario = autenticacao.currentUser;
+
+      if (!usuario) {
+        voltarAoPortal();
+        return;
+      }
+
+      // Atualiza a situacao da conta.
+      await usuario.reload();
+
+      if (!usuario.emailVerified) {
+        voltarAoPortal();
+        return;
+      }
+
+      const token = await usuario.getIdToken(true);
+
+      // A autorizacao e confirmada pelo servidor.
+      const resposta = await fetch(
+        API_BASE + "/catalogo/cadastro",
+        {
+          method: "GET",
+          cache: "no-store",
+          headers: {
+            "Accept": "application/json",
+            "Authorization": "Bearer " + token
+          }
+        }
+      );
+
+      if (!resposta.ok) {
+        voltarAoPortal();
+        return;
+      }
+
+      // Somente agora o HTML pode ficar visivel.
+      liberarPlataforma();
+
+    } catch (erro) {
+      console.error(
+        "Falha na verificacao de acesso:",
+        erro
+      );
+
+      voltarAoPortal();
+    }
+  }
+
+  verificarEntrada();
+</script>
+<!-- FIM | 26F.09J -->
   <title>Data studio sobre Pesca Artesanal</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -198,7 +317,7 @@
     }
 
     /* ==========================================================================
-       ESTILOS DA Início EDITORIAL EDITORIAL / HERO
+       ESTILOS DA HOME EDITORIAL EDITORIAL / HERO
        ========================================================================== */
     .hero-section {
       padding: 3rem 0 4rem;
@@ -208,20 +327,20 @@
 
     .hero-title {
       font-family: var(--font-serif);
-      font-size: clamp(2rem, 3.4vw, 2.8rem);
+      font-size: 3.2rem;
       font-weight: 400;
       line-height: 1.15;
       letter-spacing: -0.02em;
-      max-width: 820px;
+      max-width: 960px;
       margin-top: 1rem;
       margin-bottom: 1.5rem;
       color: var(--text-main);
     }
 
     .hero-subtitle {
-      font-size: 1.03rem;
+      font-size: 1.15rem;
       color: var(--text-muted);
-      max-width: 720px;
+      max-width: 780px;
       margin-bottom: 2rem;
       line-height: 1.6;
     }
@@ -578,36 +697,6 @@
       .drawer-panel { width: 100%; right: -100%; }
       .hero-title { font-size: 2.2rem; }
     }
-
-/* CHAT 10: apresentação metodológica, estilos isolados */
-.research-intro{padding:2.4rem 0 2.8rem;border-bottom:1px solid var(--border-subtle)}
-.research-kicker{font:700 .72rem var(--font-mono);letter-spacing:.08em;color:var(--color-secondary);margin-bottom:.85rem}
-.research-title{font:400 clamp(2.1rem,4vw,3.4rem)/1.12 var(--font-serif);letter-spacing:-.025em;max-width:840px;margin-bottom:1.2rem}
-.research-lead{max-width:850px;font-size:1.04rem;line-height:1.75;color:var(--text-muted);margin-bottom:1.5rem}
-.research-index{display:flex;flex-wrap:wrap;gap:.5rem;padding:1.3rem 0;border-bottom:1px solid var(--border-subtle)}
-.research-index a{padding:.55rem .75rem;background:var(--bg-subtle);border:1px solid var(--border-subtle);border-radius:6px;font-size:.75rem;font-weight:650}
-.research-index a:hover,.research-qgrid button:hover{border-color:var(--color-primary)}
-.research-panel{padding:3.1rem 0;border-bottom:1px solid var(--border-subtle);scroll-margin-top:105px}
-.research-panel h2{font:400 clamp(1.65rem,3vw,2.4rem)/1.2 var(--font-serif);margin-bottom:1rem;max-width:850px}
-.research-panel>p:not(.research-kicker){max-width:900px;color:var(--text-muted);line-height:1.75;margin-bottom:1rem}
-.research-note{border-left:3px solid var(--color-accent);padding:.85rem 1rem;background:var(--bg-subtle);font-size:.82rem}
-.research-flow{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:.6rem;margin:1.6rem 0}
-.research-flow div{border-top:3px solid var(--color-primary);background:var(--bg-card);padding:1.1rem .8rem;min-height:110px;display:flex;flex-direction:column;gap:.75rem}
-.research-flow strong{font:700 .8rem var(--font-mono);color:var(--color-primary)}
-.research-flow span{font-size:.82rem;font-weight:600}
-.research-numbers{display:flex;flex-wrap:wrap;gap:2.4rem;margin:1.5rem 0 2rem}
-.research-numbers div{display:flex;flex-direction:column;gap:.2rem}
-.research-numbers strong{font:700 2rem var(--font-mono)}
-.research-numbers span{font-size:.76rem;color:var(--text-muted)}
-.research-qgrid{display:grid;grid-template-columns:repeat(12,minmax(0,1fr));gap:.45rem;margin:1.5rem 0}
-.research-qgrid button{border:1px solid var(--border-subtle);border-radius:5px;background:white;padding:.75rem .15rem;font:700 .72rem var(--font-mono);cursor:pointer;color:var(--color-primary)}
-.research-timeline{border-left:2px solid var(--border-accent);margin:1.5rem 0 0 1rem;padding-left:1.6rem}
-.research-timeline div{position:relative;margin-bottom:2rem}
-.research-timeline div:before{content:'';position:absolute;left:-2.02rem;top:.25rem;width:10px;height:10px;border-radius:50%;background:var(--color-secondary)}
-.research-timeline strong{font-size:.95rem}.research-timeline p{margin:.4rem 0;color:var(--text-muted);font-size:.85rem;line-height:1.65}.research-timeline span{font-size:.72rem;color:var(--color-secondary);font-weight:700}
-@media(max-width:900px){.research-flow{grid-template-columns:repeat(2,minmax(0,1fr))}.research-qgrid{grid-template-columns:repeat(6,minmax(0,1fr))}}
-@media(max-width:520px){.research-flow{grid-template-columns:1fr}.research-qgrid{grid-template-columns:repeat(4,minmax(0,1fr))}.research-panel{padding:2.1rem 0}}
-
   </style>
 <style>
 .funda-form-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:1rem}
@@ -620,30 +709,6 @@
 .funda-result-table th,.funda-result-table td{padding:.65rem;border-bottom:1px solid var(--border-subtle);text-align:left}
 .funda-result-table th{background:var(--bg-subtle)}
 .funda-state{padding:1rem;border-left:3px solid var(--color-secondary);background:var(--bg-subtle);border-radius:4px;font-size:.88rem}
-</style>
-<style>
-/* Exclusivo da Home: não altera layout global nem abas analíticas */
-.hs-home{--hs-navy:#101a2e;--hs-cream:#f8f6ed;--hs-muted:#64748b}
-.hs-home .hs-hero{padding-bottom:2.6rem;margin-bottom:1.6rem}
-.hs-home .hero-title{max-width:790px;font-size:clamp(2rem,3.3vw,3rem)}
-.hs-home .hs-colorbar{display:grid;grid-template-columns:repeat(5,1fr);gap:3px;height:7px;margin-bottom:2.5rem}
-.hs-home .hs-colorbar i:nth-child(1){background:#E4C027}.hs-home .hs-colorbar i:nth-child(2){background:#C27329}.hs-home .hs-colorbar i:nth-child(3){background:#22C55E}.hs-home .hs-colorbar i:nth-child(4){background:#1D4FB1}.hs-home .hs-colorbar i:nth-child(5){background:#E22927}
-.hs-home .hs-eyebrow{font-size:.68rem;font-weight:800;letter-spacing:.12em;text-transform:uppercase;color:#a16a16}
-.hs-home .hs-intro{max-width:850px;margin:0 0 1.7rem}.hs-home .hs-intro h2,.hs-home .hs-panel h2,.hs-home .hs-end h2{font-family:var(--font-serif);font-weight:400;line-height:1.13;letter-spacing:-.02em;font-size:clamp(1.75rem,2.8vw,2.8rem);margin:.6rem 0 1rem}.hs-home .hs-intro p{color:var(--text-muted);line-height:1.7}
-.hs-home .hs-steps{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px;margin:1.5rem 0 4rem}
-.hs-home .hs-step{display:flex;flex-direction:column;gap:.65rem;position:relative;text-decoration:none!important;background:#fff;border:1px solid #e0ddce;border-top:6px solid var(--hs-accent);padding:1.3rem;min-height:205px;border-radius:8px;transition:transform .2s,box-shadow .2s;color:#172033!important}
-.hs-home .hs-step:hover{transform:translateY(-4px);box-shadow:0 12px 25px #101a2e14}.hs-home .hs-step-index{font:700 .8rem var(--font-mono);color:var(--hs-accent)}.hs-home .hs-step-title{font-size:1.06rem;font-weight:800}.hs-home .hs-step-desc{font-size:.8rem;color:#64748b;line-height:1.5}.hs-home .hs-step-arrow{margin-top:auto;text-align:right;color:var(--hs-accent)}
-.hs-home .hs-panel{padding:clamp(1.3rem,3.3vw,3.2rem);margin-bottom:2.2rem;border-radius:13px;scroll-margin-top:100px;border:1px solid #e4dfcf}.hs-home .hs-light{background:#fff}.hs-home .hs-dark{background:#101a2e;color:#f8fafc;border-color:#26354d}.hs-home .hs-dark .hs-eyebrow{color:#e4c027}.hs-home .hs-panel-head{display:flex;justify-content:space-between;align-items:center;gap:1rem}.hs-home .hs-figure-label{font:700 .75rem var(--font-mono);color:#94a3b8}.hs-home .hs-panel>p{max-width:880px;line-height:1.75;font-size:.94rem}.hs-home .hs-dark>p{color:#cbd5e1}
-.hs-home .hs-question-grid,.hs-home .hs-two-cols{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:1rem;margin-top:1.7rem}.hs-home .hs-question-grid>div{background:#f7f6ef;border-left:4px solid #e4c027;padding:1.3rem;display:flex;flex-direction:column;gap:.5rem}.hs-home .hs-question-grid span{font-size:.68rem;letter-spacing:.1em;font-weight:800;color:#a16a16}.hs-home .hs-question-grid small{color:#64748b}
-.hs-home .hs-figure-foot{border-top:1px solid #d8d5c9;padding-top:1rem;margin-top:2rem;display:flex;align-items:center;flex-wrap:wrap;gap:.7rem 1.4rem;font-size:.73rem;color:#64748b}.hs-home .hs-dark .hs-figure-foot{border-color:#334155;color:#cbd5e1}.hs-home .hs-figure-foot button{margin-left:auto;border:1px solid currentColor;border-radius:5px;padding:.45rem .65rem;color:inherit;background:transparent;cursor:pointer}
-.hs-home .hs-metrics{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:1px;background:#334155;margin:2rem 0}.hs-home .hs-metrics>div{background:#19263e;padding:1.2rem;display:flex;flex-direction:column;gap:.4rem}.hs-home .hs-metrics b{font-size:clamp(1.5rem,3vw,2.7rem);letter-spacing:-.04em}.hs-home .hs-metrics span{font-size:.75rem;color:#cbd5e1}
-.hs-home .hs-branch{display:grid;grid-template-columns:1fr 1fr;gap:1rem;margin-bottom:2rem}.hs-home .hs-branch>div{display:flex;flex-direction:column;gap:.4rem;padding:1.1rem;border:1px solid #334155;border-radius:7px}.hs-home .hs-branch-no{font-size:.8rem;font-weight:800;color:#e4c027}.hs-home .hs-branch small{color:#cbd5e1}.hs-home .hs-panel h3{font-size:1.05rem;margin-bottom:1rem}.hs-home .hs-qgrid{display:grid;grid-template-columns:repeat(12,1fr);gap:.45rem}.hs-home .hs-qgrid button{background:#22314c;color:#fff;border:1px solid #41506b;padding:.75rem .1rem;border-radius:5px;font-size:.76rem;cursor:pointer}.hs-home .hs-qgrid button:hover,.hs-home .hs-qgrid button:focus-visible{background:#e4c027;color:#101a2e}
-.hs-home .hs-note{margin-top:1.5rem;padding:1rem;border-left:3px solid #e4c027;background:#1b2b46;color:#cbd5e1!important;font-size:.8rem!important}.hs-home .hs-light .hs-note{background:#f6f3e7;color:#475569!important}
-.hs-home .hs-flow{display:grid;grid-template-columns:repeat(5,1fr);gap:.65rem;margin:2rem 0}.hs-home .hs-flow>div{border:1px solid #111827;border-top:5px solid #111827;min-height:135px;padding:1rem .65rem;display:flex;flex-direction:column;gap:.6rem;position:relative}.hs-home .hs-flow>div:nth-child(2){border-top-color:#c27329}.hs-home .hs-flow>div:nth-child(3){border-top-color:#22c55e}.hs-home .hs-flow>div:nth-child(4){border-top-color:#1d4fb1}.hs-home .hs-flow>div:nth-child(5){border-top-color:#e22927}.hs-home .hs-flow em{font-style:normal;font-size:.7rem;color:#64748b}.hs-home .hs-flow strong{font-size:.85rem}.hs-home .hs-flow small{font-size:.72rem;color:#64748b}.hs-home .hs-timeline{border-left:2px solid #b4bac2;margin-left:.4rem}.hs-home .hs-timeline>div{padding:0 0 1.3rem 1.2rem;position:relative;display:flex;flex-direction:column;gap:.4rem}.hs-home .hs-timeline>div:before{content:'';position:absolute;left:-6px;top:4px;width:10px;height:10px;border-radius:50%;background:#1d4fb1}.hs-home .hs-timeline small{color:#64748b}
-.hs-home .hs-analysis-chain{display:grid;grid-template-columns:repeat(5,1fr);gap:.55rem;margin:2rem 0}.hs-home .hs-analysis-chain>div{background:#22314c;padding:1.2rem .8rem;min-height:105px;display:flex;flex-direction:column;gap:.8rem}.hs-home .hs-analysis-chain span{color:#e4c027;font-weight:800;font-size:.7rem}.hs-home .hs-analysis-chain b{font-size:.8rem}.hs-home .hs-explain{border:1px solid #334155;padding:1.2rem}.hs-home .hs-explain p{color:#cbd5e1;font-size:.83rem;line-height:1.7}.hs-home .hs-end{padding:2.3rem 0 4rem;display:flex;justify-content:space-between;align-items:center;gap:2rem}.hs-home .hs-end p{color:#64748b;max-width:700px}.hs-home .hs-end .btn-group{flex-shrink:0}
-@media(max-width:950px){.hs-home .hs-steps{grid-template-columns:repeat(2,1fr)}.hs-home .hs-metrics{grid-template-columns:repeat(2,1fr)}.hs-home .hs-qgrid{grid-template-columns:repeat(9,1fr)}.hs-home .hs-flow{grid-template-columns:repeat(3,1fr)}.hs-home .hs-analysis-chain{grid-template-columns:repeat(3,1fr)}}
-@media(max-width:650px){.hs-home .hs-steps,.hs-home .hs-question-grid,.hs-home .hs-two-cols,.hs-home .hs-branch{grid-template-columns:1fr}.hs-home .hs-qgrid{grid-template-columns:repeat(6,1fr)}.hs-home .hs-flow,.hs-home .hs-analysis-chain{grid-template-columns:repeat(2,1fr)}.hs-home .hs-end{display:block}.hs-home .hs-end .btn-group{margin-top:1.5rem}}
-@media(prefers-reduced-motion:reduce){.hs-home .hs-step{transition:none}}
 </style>
 </head>
 <body>
@@ -676,8 +741,7 @@
 
       <nav>
         <ul>
-          <li><a href="#" onclick="showTab('Início')" class="active" id="nav-Início">Início</a></li>
-          <li><a href="#" onclick="showTab('pesquisa'); return false;" id="nav-pesquisa">Pesquisa e metodologia</a></li>
+          <li><a href="#" onclick="showTab('home')" class="active" id="nav-home">Home</a></li>
           <li><a href="#" onclick="showTab('explorar')" id="nav-explorar">Explorar</a></li>
           <li><a href="#" onclick="showTab('laboratorio')" id="nav-laboratorio">Laboratório</a></li>
           <li><a href="#" onclick="showTab('visualizacoes')" id="nav-visualizacoes">Visualizações</a></li>
@@ -688,7 +752,7 @@
       </nav>
 
       <div class="nav-right">
-        <button class="btn-analys" onclick="showTab('laboratorio')" id="btn-top-analys">Cruzamento de dados</button>
+        <button class="btn-analys" onclick="showTab('laboratorio')" id="btn-top-analys">Analisar Dados</button>
         <div class="lang-selector">
           <div class="lang-btn active" onclick="setLanguage('PT')">PT</div>
           <div class="lang-btn" onclick="setLanguage('EN')">EN</div>
@@ -701,82 +765,97 @@
   <!-- CONTEÚDO PRINCIPAL -->
   <main>
 
-    <!-- TELA 1: Início EDITORIAL (SEÇÃO 8 DA ESPECIFICAÇÃO) -->
-    <section id="tab-Início" class="tab-content active hs-home">
- <div class="hero-section hs-hero">
-  <span class="badge badge-demo" id="badge-hero">Estúdio de pesquisa · PTSSPA</span>
-  <h1 class="hero-title" id="hero-title">Trabalho, saúde e pesca artesanal no Brasil</h1>
-  <p class="hero-subtitle" id="hero-subtitle">Conheça a pesquisa vinculada ao Programa Trabalho Saudável e Seguro na Pesca Artesanal (PTSSPA), seu instrumento quantitativo, o percurso de organização dos dados e os cuidados necessários à interpretação dos resultados.</p>
-  <div class="btn-group"><button class="btn btn-primary" onclick="showTab('explorar')" id="btn-hero-1">Explorar questões</button><button class="btn btn-secondary" onclick="showTab('laboratorio')" id="btn-hero-2">Analisar dados</button><a class="btn btn-secondary" href="#home-presentation" id="btn-hero-3">Conhecer a pesquisa ↓</a></div>
- </div>
- <div class="hs-colorbar" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i></div>
- <div class="hs-intro"><span class="hs-eyebrow" data-pt="ESTÚDIO DE PESQUISA / PERCURSO METODOLÓGICO" data-en="RESEARCH STUDIO / METHODOLOGICAL JOURNEY">ESTÚDIO DE PESQUISA / PERCURSO METODOLÓGICO</span><h2 data-pt="Como a pesquisa se transforma em conhecimento?" data-en="How does research become knowledge?">Como a pesquisa se transforma em conhecimento?</h2><p data-pt="Percorra o desenho da pesquisa, sua operacionalização e as decisões que orientam a leitura científica do banco de dados." data-en="Explore the research design, field operations and decisions that guide the scientific interpretation of the database.">Percorra o desenho da pesquisa, sua operacionalização e as decisões que orientam a leitura científica do banco de dados.</p></div>
- <div class="hs-steps"><a class="hs-step" href="#home-presentation" style="--hs-accent:#E4C027"><span class="hs-step-index">01</span><span class="hs-step-title" data-pt="Apresentação" data-en="Presentation">Apresentação</span><span class="hs-step-desc" data-pt="Contexto, pergunta de pesquisa e objetivos." data-en="Context, research question and objectives.">Contexto, pergunta de pesquisa e objetivos.</span><span class="hs-step-arrow" aria-hidden="true">↗</span></a><a class="hs-step" href="#home-design" style="--hs-accent:#C27329"><span class="hs-step-index">02</span><span class="hs-step-title" data-pt="Desenho metodológico" data-en="Research design">Desenho metodológico</span><span class="hs-step-desc" data-pt="Abordagem qualitativa e quantitativa, unidades de análise e instrumento." data-en="Qualitative and quantitative approaches, units of analysis and questionnaire.">Abordagem qualitativa e quantitativa, unidades de análise e instrumento.</span><span class="hs-step-arrow" aria-hidden="true">↗</span></a><a class="hs-step" href="#home-operations" style="--hs-accent:#22C55E"><span class="hs-step-index">03</span><span class="hs-step-title" data-pt="Operacionalização" data-en="Operations">Operacionalização</span><span class="hs-step-desc" data-pt="Pesquisa de campo, cronologia, procedimentos e evidências." data-en="Field research, timeline, procedures and evidence.">Pesquisa de campo, cronologia, procedimentos e evidências.</span><span class="hs-step-arrow" aria-hidden="true">↗</span></a><a class="hs-step" href="#home-analytics" style="--hs-accent:#1D4FB1"><span class="hs-step-index">04</span><span class="hs-step-title" data-pt="Leitura dos dados" data-en="Understanding the data">Leitura dos dados</span><span class="hs-step-desc" data-pt="Contagens, denominadores, recortes e possibilidades analíticas." data-en="Counts, denominators, subsets and analytical possibilities.">Contagens, denominadores, recortes e possibilidades analíticas.</span><span class="hs-step-arrow" aria-hidden="true">↗</span></a></div>
- <article class="hs-panel hs-light" id="home-presentation"><div class="hs-panel-head"><span class="hs-eyebrow">01 / <span data-pt="APRESENTAÇÃO" data-en="PRESENTATION">APRESENTAÇÃO</span></span><span class="hs-figure-label">FIG. 01</span></div><h2 data-pt="Uma pesquisa sobre trabalho e saúde na pesca artesanal" data-en="Research on work and health in artisanal fishing">Uma pesquisa sobre trabalho e saúde na pesca artesanal</h2><p data-pt="Esta plataforma reúne a apresentação metodológica e as ferramentas de exploração de dados relacionadas ao Programa Trabalho Saudável e Seguro na Pesca Artesanal (PTSSPA). O enunciado oficial do problema, a pergunta central e os objetivos serão incorporados após conferência dos documentos do projeto." data-en="This platform presents methodological information and data exploration tools related to the Healthy and Safe Work in Artisanal Fishing Programme (PTSSPA). The official problem statement, research question and objectives will be added after documentary verification.">Esta plataforma reúne a apresentação metodológica e as ferramentas de exploração de dados relacionadas ao Programa Trabalho Saudável e Seguro na Pesca Artesanal (PTSSPA). O enunciado oficial do problema, a pergunta central e os objetivos serão incorporados após conferência dos documentos do projeto.</p>
- <div class="hs-question-grid"><div><span data-pt="QUESTÃO DE PESQUISA" data-en="RESEARCH QUESTION">QUESTÃO DE PESQUISA</span><strong data-pt="Enunciado oficial a inserir" data-en="Official statement pending">Enunciado oficial a inserir</strong><small data-pt="Depende do plano de pesquisa." data-en="Requires the research plan.">Depende do plano de pesquisa.</small></div><div><span data-pt="OBJETIVO GERAL" data-en="GENERAL OBJECTIVE">OBJETIVO GERAL</span><strong data-pt="Redação oficial a inserir" data-en="Official wording pending">Redação oficial a inserir</strong><small data-pt="Não substituído por uma interpretação editorial." data-en="Not replaced by an editorial interpretation.">Não substituído por uma interpretação editorial.</small></div></div>
- <div class="hs-figure-foot"><span data-pt="Figura 1. Arquitetura de apresentação científica da pesquisa." data-en="Figure 1. Scientific presentation framework.">Figura 1. Arquitetura de apresentação científica da pesquisa.</span><span>OLIVEIRA, L. A. B. · Fundacentro · 2026</span><button type="button" onclick="hsCopyCitation('Figura 1. Arquitetura de apresentação científica da pesquisa')" data-pt="Copiar referência" data-en="Copy citation">Copiar referência</button></div></article>
- <article class="hs-panel hs-dark" id="home-design"><div class="hs-panel-head"><span class="hs-eyebrow">02 / <span data-pt="DESENHO METODOLÓGICO" data-en="RESEARCH DESIGN">DESENHO METODOLÓGICO</span></span><span class="hs-figure-label">FIG. 02</span></div><h2 data-pt="Do instrumento às possibilidades analíticas" data-en="From the questionnaire to analytical possibilities">Do instrumento às possibilidades analíticas</h2><p data-pt="A apresentação articula as dimensões qualitativa e quantitativa do projeto, com ênfase na estrutura da base quantitativa já documentada. A classificação formal de cada questão e os procedimentos de campo dependem de confirmação nas fontes oficiais." data-en="This presentation considers the qualitative and quantitative dimensions of the project, focusing on the documented quantitative database. Formal question types and field procedures require verification against official sources.">A apresentação articula as dimensões qualitativa e quantitativa do projeto, com ênfase na estrutura da base quantitativa já documentada. A classificação formal de cada questão e os procedimentos de campo dependem de confirmação nas fontes oficiais.</p>
- <div class="hs-metrics"><div><b>36</b><span data-pt="Questões Q01–Q36" data-en="Questions Q01–Q36">Questões Q01–Q36</span></div><div><b>251</b><span data-pt="Campos de alternativas" data-en="Alternative fields">Campos de alternativas</span></div><div><b>26</b><span data-pt="Campos de caracterização" data-en="Characterization fields">Campos de caracterização</span></div><div><b>16.623</b><span data-pt="Registros na base de referência" data-en="Records in reference dataset">Registros na base de referência</span></div></div>
- <div class="hs-branch"><div><span class="hs-branch-no">A</span><strong data-pt="Abordagem qualitativa" data-en="Qualitative approach">Abordagem qualitativa</strong><small data-pt="Procedimentos e materiais a documentar." data-en="Procedures and materials to be documented.">Procedimentos e materiais a documentar.</small></div><div><span class="hs-branch-no">B</span><strong data-pt="Abordagem quantitativa" data-en="Quantitative approach">Abordagem quantitativa</strong><small data-pt="Instrumento e estrutura dos dados já identificados." data-en="Questionnaire and data structure identified.">Instrumento e estrutura dos dados já identificados.</small></div></div>
- <h3 data-pt="Navegue pelas 36 questões" data-en="Browse all 36 questions">Navegue pelas 36 questões</h3><div class="hs-qgrid"><button type="button" onclick="openQuestion('Q01')" title="Q01 · abrir na exploração">Q01</button><button type="button" onclick="openQuestion('Q02')" title="Q02 · abrir na exploração">Q02</button><button type="button" onclick="openQuestion('Q03')" title="Q03 · abrir na exploração">Q03</button><button type="button" onclick="openQuestion('Q04')" title="Q04 · abrir na exploração">Q04</button><button type="button" onclick="openQuestion('Q05')" title="Q05 · abrir na exploração">Q05</button><button type="button" onclick="openQuestion('Q06')" title="Q06 · abrir na exploração">Q06</button><button type="button" onclick="openQuestion('Q07')" title="Q07 · abrir na exploração">Q07</button><button type="button" onclick="openQuestion('Q08')" title="Q08 · abrir na exploração">Q08</button><button type="button" onclick="openQuestion('Q09')" title="Q09 · abrir na exploração">Q09</button><button type="button" onclick="openQuestion('Q10')" title="Q10 · abrir na exploração">Q10</button><button type="button" onclick="openQuestion('Q11')" title="Q11 · abrir na exploração">Q11</button><button type="button" onclick="openQuestion('Q12')" title="Q12 · abrir na exploração">Q12</button><button type="button" onclick="openQuestion('Q13')" title="Q13 · abrir na exploração">Q13</button><button type="button" onclick="openQuestion('Q14')" title="Q14 · abrir na exploração">Q14</button><button type="button" onclick="openQuestion('Q15')" title="Q15 · abrir na exploração">Q15</button><button type="button" onclick="openQuestion('Q16')" title="Q16 · abrir na exploração">Q16</button><button type="button" onclick="openQuestion('Q17')" title="Q17 · abrir na exploração">Q17</button><button type="button" onclick="openQuestion('Q18')" title="Q18 · abrir na exploração">Q18</button><button type="button" onclick="openQuestion('Q19')" title="Q19 · abrir na exploração">Q19</button><button type="button" onclick="openQuestion('Q20')" title="Q20 · abrir na exploração">Q20</button><button type="button" onclick="openQuestion('Q21')" title="Q21 · abrir na exploração">Q21</button><button type="button" onclick="openQuestion('Q22')" title="Q22 · abrir na exploração">Q22</button><button type="button" onclick="openQuestion('Q23')" title="Q23 · abrir na exploração">Q23</button><button type="button" onclick="openQuestion('Q24')" title="Q24 · abrir na exploração">Q24</button><button type="button" onclick="openQuestion('Q25')" title="Q25 · abrir na exploração">Q25</button><button type="button" onclick="openQuestion('Q26')" title="Q26 · abrir na exploração">Q26</button><button type="button" onclick="openQuestion('Q27')" title="Q27 · abrir na exploração">Q27</button><button type="button" onclick="openQuestion('Q28')" title="Q28 · abrir na exploração">Q28</button><button type="button" onclick="openQuestion('Q29')" title="Q29 · abrir na exploração">Q29</button><button type="button" onclick="openQuestion('Q30')" title="Q30 · abrir na exploração">Q30</button><button type="button" onclick="openQuestion('Q31')" title="Q31 · abrir na exploração">Q31</button><button type="button" onclick="openQuestion('Q32')" title="Q32 · abrir na exploração">Q32</button><button type="button" onclick="openQuestion('Q33')" title="Q33 · abrir na exploração">Q33</button><button type="button" onclick="openQuestion('Q34')" title="Q34 · abrir na exploração">Q34</button><button type="button" onclick="openQuestion('Q35')" title="Q35 · abrir na exploração">Q35</button><button type="button" onclick="openQuestion('Q36')" title="Q36 · abrir na exploração">Q36</button></div><p class="hs-note" data-pt="Cada código abre a questão no módulo Explorar, sem modificar a consulta existente. Resposta única ou múltipla deve ser estabelecida pela documentação do instrumento, não inferida apenas da base." data-en="Each code opens the question in Explore without changing the existing query. Single- or multiple-response status must be confirmed from the questionnaire documentation, not inferred from the dataset alone.">Cada código abre a questão no módulo Explorar, sem modificar a consulta existente. Resposta única ou múltipla deve ser estabelecida pela documentação do instrumento, não inferida apenas da base.</p>
- <div class="hs-figure-foot"><span data-pt="Figura 2. Estrutura quantitativa e sequência empírica do instrumento." data-en="Figure 2. Quantitative structure and empirical questionnaire sequence.">Figura 2. Estrutura quantitativa e sequência empírica do instrumento.</span><span>OLIVEIRA, L. A. B. · Fundacentro · 2026</span><button type="button" onclick="hsCopyCitation('Figura 2. Estrutura quantitativa e sequência empírica do instrumento')" data-pt="Copiar referência" data-en="Copy citation">Copiar referência</button></div></article>
- <article class="hs-panel hs-light" id="home-operations"><div class="hs-panel-head"><span class="hs-eyebrow">03 / <span data-pt="OPERACIONALIZAÇÃO" data-en="OPERATIONS">OPERACIONALIZAÇÃO</span></span><span class="hs-figure-label">FIG. 03</span></div><h2 data-pt="Percurso operacional e decisões técnicas" data-en="Operational journey and technical decisions">Percurso operacional e decisões técnicas</h2><p data-pt="O percurso abaixo apresenta categorias de trabalho a documentar. Não estabelece uma cronologia histórica da coleta nem afirma uniformidade dos procedimentos de aplicação." data-en="The journey below shows work categories to be documented. It does not establish a verified fieldwork timeline or imply uniform field procedures.">O percurso abaixo apresenta categorias de trabalho a documentar. Não estabelece uma cronologia histórica da coleta nem afirma uniformidade dos procedimentos de aplicação.</p>
- <div class="hs-flow" role="img" aria-label="Esquema conceitual de etapas metodológicas"><div><em>01</em><strong data-pt="Planejamento" data-en="Planning">Planejamento</strong><small data-pt="Projeto e objetivos" data-en="Project and objectives">Projeto e objetivos</small></div><div><em>02</em><strong data-pt="Instrumento" data-en="Questionnaire">Instrumento</strong><small data-pt="Questões e alternativas" data-en="Questions and alternatives">Questões e alternativas</small></div><div><em>03</em><strong data-pt="Aplicação" data-en="Fieldwork">Aplicação</strong><small data-pt="Evidências a vincular" data-en="Evidence pending">Evidências a vincular</small></div><div><em>04</em><strong data-pt="Modelagem" data-en="Modeling">Modelagem</strong><small>CORE / ANALYTICS</small></div><div><em>05</em><strong data-pt="Validação" data-en="Validation">Validação</strong><small data-pt="Auditorias e Gates" data-en="Audits and gates">Auditorias e Gates</small></div></div>
- <div class="hs-two-cols"><div><h3 data-pt="Cronologia da pesquisa de campo" data-en="Fieldwork chronology">Cronologia da pesquisa de campo</h3><div class="hs-timeline"><div><b data-pt="Planejamento e preparação" data-en="Planning and preparation">Planejamento e preparação</b><small data-pt="Datas e documentos a confirmar" data-en="Dates and documents pending">Datas e documentos a confirmar</small></div><div><b data-pt="Aplicação do instrumento" data-en="Questionnaire administration">Aplicação do instrumento</b><small data-pt="Períodos e procedimentos a confirmar" data-en="Periods and procedures pending">Períodos e procedimentos a confirmar</small></div></div></div><div><h3 data-pt="Cronologia do banco e da plataforma" data-en="Database and platform chronology">Cronologia do banco e da plataforma</h3><div class="hs-timeline"><div><b data-pt="Estruturação e modelo lógico" data-en="Structuring and logical model">Estruturação e modelo lógico</b><small data-pt="Versões técnicas a vincular" data-en="Technical versions pending">Versões técnicas a vincular</small></div><div><b data-pt="Auditoria e integração" data-en="Audit and integration">Auditoria e integração</b><small data-pt="Evidências e marcos a vincular" data-en="Evidence and milestones pending">Evidências e marcos a vincular</small></div></div></div></div>
- <div class="hs-figure-foot"><span data-pt="Figura 3. Fluxo metodológico conceitual e cronologias documentais." data-en="Figure 3. Conceptual methodological flow and documentary timelines.">Figura 3. Fluxo metodológico conceitual e cronologias documentais.</span><span>OLIVEIRA, L. A. B. · Fundacentro · 2026</span><button type="button" onclick="hsCopyCitation('Figura 3. Fluxo metodológico conceitual e cronologias documentais')" data-pt="Copiar referência" data-en="Copy citation">Copiar referência</button></div></article>
- <article class="hs-panel hs-dark" id="home-analytics"><div class="hs-panel-head"><span class="hs-eyebrow">04 / <span data-pt="LEITURA DOS DADOS" data-en="UNDERSTANDING THE DATA">LEITURA DOS DADOS</span></span><span class="hs-figure-label">FIG. 04</span></div><h2 data-pt="Da pergunta ao denominador: como ler uma análise" data-en="From question to denominator: how to read an analysis">Da pergunta ao denominador: como ler uma análise</h2><div class="hs-analysis-chain"><div><span>01</span><b data-pt="Pergunta analítica" data-en="Analytical question">Pergunta analítica</b></div><div><span>02</span><b data-pt="Unidade de análise" data-en="Unit of analysis">Unidade de análise</b></div><div><span>03</span><b data-pt="Recorte elegível" data-en="Eligible subset">Recorte elegível</b></div><div><span>04</span><b data-pt="Contagem e N" data-en="Count and N">Contagem e N</b></div><div><span>05</span><b data-pt="Interpretação" data-en="Interpretation">Interpretação</b></div></div>
- <div class="hs-two-cols"><div class="hs-explain"><h3 data-pt="Universo, base e subamostra" data-en="Population, dataset and subsample">Universo, base e subamostra</h3><p data-pt="O universo ou população-alvo deve ser definido pelo desenho da pesquisa. Os 16.623 registros correspondem à base de referência, não automaticamente ao universo, a uma amostra probabilística ou ao número de respostas válidas em cada questão." data-en="The target population must be defined by the research design. The 16,623 records belong to the reference dataset and do not automatically define the population, a probability sample, or valid responses to each question.">O universo ou população-alvo deve ser definido pelo desenho da pesquisa. Os 16.623 registros correspondem à base de referência, não automaticamente ao universo, a uma amostra probabilística ou ao número de respostas válidas em cada questão.</p></div><div class="hs-explain"><h3 data-pt="Respostas e cruzamentos" data-en="Responses and cross-tabulations">Respostas e cruzamentos</h3><p data-pt="Uma alternativa marcada é codificada como 1. O valor 0 não significa necessariamente resposta negativa. Os 251 campos pertencem às 36 questões: multiplicar 36 × 251 = 9.036 não produz 9.036 cruzamentos independentes ou válidos." data-en="A selected alternative is coded as 1. A zero does not necessarily mean a negative response. The 251 fields belong to the 36 questions: 36 × 251 = 9,036 does not represent 9,036 independent or valid cross-tabulations.">Uma alternativa marcada é codificada como 1. O valor 0 não significa necessariamente resposta negativa. Os 251 campos pertencem às 36 questões: multiplicar 36 × 251 = 9.036 não produz 9.036 cruzamentos independentes ou válidos.</p></div></div>
- <p class="hs-note" data-pt="A cidade e a UF cadastrais não identificam necessariamente o local de pesca ou de aplicação. Resultados estatísticos, prevalências e gráficos empíricos dependem de validação e autorização próprias." data-en="Registered city and state do not necessarily identify fishing or survey locations. Statistical results, prevalence estimates and empirical charts require separate validation and publication authorization.">A cidade e a UF cadastrais não identificam necessariamente o local de pesca ou de aplicação. Resultados estatísticos, prevalências e gráficos empíricos dependem de validação e autorização próprias.</p>
- <div class="hs-figure-foot"><span data-pt="Figura 4. Etapas de interpretação de consultas quantitativas." data-en="Figure 4. Stages of interpreting quantitative queries.">Figura 4. Etapas de interpretação de consultas quantitativas.</span><span>OLIVEIRA, L. A. B. · Fundacentro · 2026</span><button type="button" onclick="hsCopyCitation('Figura 4. Etapas de interpretação de consultas quantitativas')" data-pt="Copiar referência" data-en="Copy citation">Copiar referência</button></div></article>
- <div class="hs-end"><div><span class="hs-eyebrow" data-pt="CONTINUE A EXPLORAÇÃO" data-en="CONTINUE EXPLORING">CONTINUE A EXPLORAÇÃO</span><h2 data-pt="Da metodologia aos dados reais" data-en="From methodology to real data">Da metodologia aos dados reais</h2><p data-pt="As abas Explorar e Laboratório mantêm seus serviços de consulta existentes. Esta Home apresenta contexto e critérios de interpretação." data-en="Explore and Laboratory retain their existing data services. This Home provides context and interpretation guidance.">As abas Explorar e Laboratório mantêm seus serviços de consulta existentes. Esta Home apresenta contexto e critérios de interpretação.</p></div><div class="btn-group"><button class="btn btn-primary" onclick="showTab('explorar')" data-pt="Abrir Explorar" data-en="Open Explore">Abrir Explorar</button><button class="btn btn-secondary" onclick="showTab('laboratorio')" data-pt="Abrir Laboratório" data-en="Open Laboratory">Abrir Laboratório</button></div></div>
- </section>
-
-
-    <!-- CHAT 10: APRESENTAÇÃO CIENTÍFICA, SEM ALTERAR EXPLORAR OU LABORATÓRIO -->
-    <section id="tab-pesquisa" class="tab-content" aria-labelledby="pesquisa-titulo">
-      <div class="research-intro">
-        <span class="badge badge-demo">Apresentação metodológica em documentação</span>
-        <p class="research-kicker">PESQUISA · INSTRUMENTO · DOCUMENTAÇÃO</p>
-        <h1 id="pesquisa-titulo" class="research-title">Da pesquisa ao conhecimento científico</h1>
-        <p class="research-lead">Conheça a estrutura documentada do instrumento, os cuidados na interpretação das respostas e o percurso entre a coleta, a organização do banco de dados e a produção de resultados. As etapas de campo e suas datas serão incorporadas após conferência documental.</p>
-        <div class="btn-group"><button class="btn btn-primary" onclick="showTab('explorar')">Explorar questões reais</button><button class="btn btn-secondary" onclick="showTab('laboratorio')">Abrir Laboratório</button></div>
-      </div>
-      <nav class="research-index" aria-label="Seções da apresentação metodológica">
-        <a href="#pesquisa-contexto">01 · Contexto</a><a href="#pesquisa-percurso">02 · Percurso</a><a href="#pesquisa-instrumento">03 · Instrumento</a><a href="#pesquisa-cronologia">04 · Cronologia</a><a href="#pesquisa-proveniencia">05 · Dados e limites</a>
-      </nav>
-      <article class="research-panel" id="pesquisa-contexto">
-        <p class="research-kicker">01 / CONTEXTO E OBJETIVOS</p>
-        <h2>Trabalho, saúde e territórios da pesca artesanal no Brasil</h2>
-        <p>Esta apresentação integra o projeto Banco de Dados Fundacentro e Produções, relacionado ao Programa Trabalho Saudável e Seguro na Pesca Artesanal (PTSSPA). Os objetivos específicos, a população de referência e o desenho da pesquisa serão apresentados aqui com base nos documentos oficiais, após conferência.</p>
-        <p class="research-note">Documentação a incorporar: plano de trabalho, instrumento, procedimentos de aplicação e registros institucionais pertinentes.</p>
-      </article>
-      <article class="research-panel" id="pesquisa-percurso">
-        <p class="research-kicker">02 / PERCURSO METODOLÓGICO</p><h2>Da fonte à visualização</h2>
-        <div class="research-flow" aria-label="Fluxo conceitual de documentação e tratamento dos dados">
-          <div><strong>01</strong><span>Pesquisa e instrumento</span></div><div><strong>02</strong><span>Aplicação e registros</span></div><div><strong>03</strong><span>Organização dos dados</span></div><div><strong>04</strong><span>Modelagem e validação</span></div><div><strong>05</strong><span>Consultas e produções</span></div>
+    <!-- TELA 1: HOME EDITORIAL (SEÇÃO 8 DA ESPECIFICAÇÃO) -->
+    <section id="tab-home" class="tab-content active">
+      <div class="hero-section">
+        <span class="badge badge-demo" id="badge-hero">Publicação Científica Interativa</span>
+        <h1 class="hero-title" id="hero-title">Dados para compreender o trabalho, a saúde e os territórios da Pesca Artesanal no Brasil</h1>
+        <p class="hero-subtitle" id="hero-subtitle">
+          Construa os cruzamentos partir de uma base de dados do projeto de pesquisa PSSPA.
+        </p>
+        <div class="btn-group">
+          <button class="btn btn-primary" onclick="showTab('explorar')" id="btn-hero-1">Explorar Resultados</button>
+          <button class="btn btn-secondary" onclick="showTab('laboratorio')" id="btn-hero-2">Analisar Dados</button>
+          <button class="btn btn-secondary" onclick="showTab('pesquisa')" id="btn-hero-3">Conhecer a Pesquisa</button>
         </div>
-        <p class="research-note">Fluxo conceitual de apresentação. A cronologia e os procedimentos efetivamente executados serão descritos conforme documentação comprobatória.</p>
-      </article>
-      <article class="research-panel" id="pesquisa-instrumento">
-        <p class="research-kicker">03 / COMPOSIÇÃO DO INSTRUMENTO</p><h2>36 questões, preservadas em sua ordem empírica</h2>
-        <div class="research-numbers"><div><strong>36</strong><span>Questões</span></div><div><strong>251</strong><span>Campos do instrumento</span></div><div><strong>26</strong><span>Campos cadastrais e de caracterização</span></div></div>
-        <p>O instrumento é organizado na sequência Q01 a Q36. As alternativas e os enunciados integrais podem ser consultados na aba Explorar, conectada ao catálogo real. O número de campos não deve ser confundido com número de respondentes ou de seleções.</p>
-        <div class="research-qgrid" aria-label="Sequência das 36 questões"><button type="button" onclick="openQuestion('Q01')" title="Abrir Q01 em Explorar">Q01</button><button type="button" onclick="openQuestion('Q02')" title="Abrir Q02 em Explorar">Q02</button><button type="button" onclick="openQuestion('Q03')" title="Abrir Q03 em Explorar">Q03</button><button type="button" onclick="openQuestion('Q04')" title="Abrir Q04 em Explorar">Q04</button><button type="button" onclick="openQuestion('Q05')" title="Abrir Q05 em Explorar">Q05</button><button type="button" onclick="openQuestion('Q06')" title="Abrir Q06 em Explorar">Q06</button><button type="button" onclick="openQuestion('Q07')" title="Abrir Q07 em Explorar">Q07</button><button type="button" onclick="openQuestion('Q08')" title="Abrir Q08 em Explorar">Q08</button><button type="button" onclick="openQuestion('Q09')" title="Abrir Q09 em Explorar">Q09</button><button type="button" onclick="openQuestion('Q10')" title="Abrir Q10 em Explorar">Q10</button><button type="button" onclick="openQuestion('Q11')" title="Abrir Q11 em Explorar">Q11</button><button type="button" onclick="openQuestion('Q12')" title="Abrir Q12 em Explorar">Q12</button><button type="button" onclick="openQuestion('Q13')" title="Abrir Q13 em Explorar">Q13</button><button type="button" onclick="openQuestion('Q14')" title="Abrir Q14 em Explorar">Q14</button><button type="button" onclick="openQuestion('Q15')" title="Abrir Q15 em Explorar">Q15</button><button type="button" onclick="openQuestion('Q16')" title="Abrir Q16 em Explorar">Q16</button><button type="button" onclick="openQuestion('Q17')" title="Abrir Q17 em Explorar">Q17</button><button type="button" onclick="openQuestion('Q18')" title="Abrir Q18 em Explorar">Q18</button><button type="button" onclick="openQuestion('Q19')" title="Abrir Q19 em Explorar">Q19</button><button type="button" onclick="openQuestion('Q20')" title="Abrir Q20 em Explorar">Q20</button><button type="button" onclick="openQuestion('Q21')" title="Abrir Q21 em Explorar">Q21</button><button type="button" onclick="openQuestion('Q22')" title="Abrir Q22 em Explorar">Q22</button><button type="button" onclick="openQuestion('Q23')" title="Abrir Q23 em Explorar">Q23</button><button type="button" onclick="openQuestion('Q24')" title="Abrir Q24 em Explorar">Q24</button><button type="button" onclick="openQuestion('Q25')" title="Abrir Q25 em Explorar">Q25</button><button type="button" onclick="openQuestion('Q26')" title="Abrir Q26 em Explorar">Q26</button><button type="button" onclick="openQuestion('Q27')" title="Abrir Q27 em Explorar">Q27</button><button type="button" onclick="openQuestion('Q28')" title="Abrir Q28 em Explorar">Q28</button><button type="button" onclick="openQuestion('Q29')" title="Abrir Q29 em Explorar">Q29</button><button type="button" onclick="openQuestion('Q30')" title="Abrir Q30 em Explorar">Q30</button><button type="button" onclick="openQuestion('Q31')" title="Abrir Q31 em Explorar">Q31</button><button type="button" onclick="openQuestion('Q32')" title="Abrir Q32 em Explorar">Q32</button><button type="button" onclick="openQuestion('Q33')" title="Abrir Q33 em Explorar">Q33</button><button type="button" onclick="openQuestion('Q34')" title="Abrir Q34 em Explorar">Q34</button><button type="button" onclick="openQuestion('Q35')" title="Abrir Q35 em Explorar">Q35</button><button type="button" onclick="openQuestion('Q36')" title="Abrir Q36 em Explorar">Q36</button></div>
-        <p class="research-note">O valor 1 representa alternativa marcada. O valor 0 não equivale automaticamente a resposta negativa. Questões com múltiplas marcações exigem interpretação apropriada.</p>
-      </article>
-      <article class="research-panel" id="pesquisa-cronologia">
-        <p class="research-kicker">04 / CRONOLOGIA DOCUMENTADA</p><h2>Marcos da pesquisa e do desenvolvimento técnico</h2>
-        <div class="research-timeline"><div><strong>Pesquisa de campo</strong><p>Datas, localidades, preparação e aplicação: aguardando conferência dos documentos oficiais.</p><span>Documentação pendente</span></div><div><strong>Estruturação e validação do banco</strong><p>Modelo lógico, auditorias e registros técnicos serão vinculados aos respectivos documentos e versões.</p><span>Evidências a vincular</span></div><div><strong>Plataforma Research Studio</strong><p>Exploração e Laboratório possuem integração técnica existente; a apresentação metodológica é uma camada editorial independente.</p><span>Implementação em evolução</span></div></div>
-      </article>
-      <article class="research-panel" id="pesquisa-proveniencia">
-        <p class="research-kicker">05 / DADOS, PROVENIÊNCIA E LIMITES</p><h2>Como interpretar e reutilizar resultados</h2>
-        <p>Os campos End. UF e End. Cidade se referem ao endereço cadastral, não automaticamente ao local de pesca ou de aplicação. Contagens de alternativas marcadas não devem ser interpretadas como percentuais ou prevalências sem denominador e unidade analítica adequados.</p>
-        <p>Resultados agregados e gráficos científicos somente serão apresentados nesta página após validação metodológica e autorização para publicação.</p>
-        <div class="btn-group"><button class="btn btn-primary" onclick="showTab('explorar')">Consultar instrumento</button><button class="btn btn-secondary" onclick="showTab('producoes')">Ver produções</button></div>
-      </article>
+      </div>
+
+      <!-- Pesquisa em Movimento (Q01 a Q36) -->
+      <div style="margin-bottom: 3rem;">
+        <div style="display: flex; justify-content: space-between; align-items: flex-end; margin-bottom: 0.8rem;">
+          <div>
+            <h3 style="font-size: 1rem; font-weight: 700;" id="txt-seq-title">Sequência empírica do instrumento (Q01 a Q36)</h3>
+            <p style="font-size: 0.82rem; color: var(--text-muted);" id="txt-seq-sub">A ordem empírica original do questionário é preservada.</p>
+          </div>
+          <span class="badge badge-validated">Modelo lógico v0.1</span>
+        </div>
+
+        <div class="empiric-strip">
+          <div class="q-node" onclick="openQuestion('Q01')"><div class="q-code">Q01</div><div class="q-label">Escolaridade</div></div>
+          <div class="q-node" onclick="openQuestion('Q02')"><div class="q-code">Q02</div><div class="q-label">Grupo étnico</div></div>
+          <div class="q-node" onclick="openQuestion('Q06')"><div class="q-code">Q06</div><div class="q-label">Embarcação</div></div>
+          <div class="q-node" onclick="openQuestion('Q08')"><div class="q-code">Q08</div><div class="q-label">Apetrechos</div></div>
+          <div class="q-node" onclick="openQuestion('Q09')"><div class="q-code">Q09</div><div class="q-label">Exposição Solar</div></div>
+          <div class="q-node" onclick="openQuestion('Q15')"><div class="q-code">Q15</div><div class="q-label">Ruído</div></div>
+          <div class="q-node" onclick="openQuestion('Q17')"><div class="q-code">Q17</div><div class="q-label">Carga / Peso</div></div>
+          <div class="q-node" onclick="openQuestion('Q23')"><div class="q-code">Q23</div><div class="q-label">Acidentes</div></div>
+          <div class="q-node" onclick="openQuestion('Q27')"><div class="q-code">Q27</div><div class="q-label">CAT / Notificação</div></div>
+          <div class="q-node" onclick="openQuestion('Q30')"><div class="q-code">Q30</div><div class="q-label">Proteção UV</div></div>
+          <div class="q-node" onclick="openQuestion('Q33')"><div class="q-code">Q33</div><div class="q-label">Morbidades</div></div>
+          <div class="q-node" onclick="openQuestion('Q36')"><div class="q-code">Q36</div><div class="q-label">Renda (?)</div></div>
+        </div>
+      </div>
+
+      <!-- Números Conhecidos e Métricas Confirmadas -->
+      <div class="metrics-row">
+        <div class="metric-item">
+          <div class="m-value">36</div>
+          <div class="m-label" id="lbl-m1">Questões do Instrumento</div>
+        </div>
+        <div class="metric-item">
+          <div class="m-value">251</div>
+          <div class="m-label" id="lbl-m2">Atributos / Alternativas</div>
+        </div>
+        <div class="metric-item">
+          <div class="m-value">26</div>
+          <div class="m-label" id="lbl-m3">Campos Cadastrais</div>
+        </div>
+        <div class="metric-item">
+          <div class="m-value">16.623</div>
+          <div class="m-label" id="lbl-m4">Aplicações validadas</div>
+        </div>
+      </div>
+
+      <!-- Portas de Descoberta Editorial -->
+      <div style="margin-bottom: 1.5rem;">
+        <h3 style="font-size: 1.2rem; font-weight: 700; margin-bottom: 1.5rem;" id="txt-disc-title">O que você quer descobrir?</h3>
+      </div>
+      
+      <div class="discovery-grid">
+        <div class="discovery-item">
+          <h3>QUESTÕES</h3>
+          <p>Explore o instrumento empírico Q01 a Q36 e suas distribuições de resposta.</p>
+          <a href="#" onclick="showTab('explorar')" style="font-size: 0.82rem; font-weight: 700; color: var(--color-primary);">Explorar questões →</a>
+        </div>
+        <div class="discovery-item">
+          <h3>TERRITÓRIOS</h3>
+          <p>Observe resultados agrupados por endereço cadastral (End. UF / End. Cidade).</p>
+          <a href="#" onclick="showTab('territorios')" style="font-size: 0.82rem; font-weight: 700; color: var(--color-primary);">Ver Territórios →</a>
+        </div>
+        <div class="discovery-item">
+          <h3>VISUALIZAÇÕES</h3>
+          <p>Descubra produtos visuais selecionados, documentados e citáveis.</p>
+          <a href="#" onclick="showTab('visualizacoes')" style="font-size: 0.82rem; font-weight: 700; color: var(--color-primary);">Galeria de Visualizações →</a>
+        </div>
+        <div class="discovery-item">
+          <h3>PRODUÇÕES</h3>
+          <p>Veja como pesquisadores e gestores reutilizaram os dados em evidências.</p>
+          <a href="#" onclick="showTab('producoes')" style="font-size: 0.82rem; font-weight: 700; color: var(--color-primary);">Biblioteca de produções →</a>
+        </div>
+      </div>
     </section>
 
-        <!-- TELA 2: EXPLORAR | API REAL 26F.05 -->
+    <!-- TELA 2: EXPLORAR | API REAL 26F.05 -->
 <section id="tab-explorar" class="tab-content">
   <div style="margin-bottom:2rem"><span class="badge badge-validated">CORE via API · 26F.05</span>
     <h2 style="font-size:1.8rem;margin-top:.5rem">Explorar as 36 questões da pesquisa</h2>
@@ -1085,7 +1164,7 @@
       <div class="footer-col">
         <h4>Ecossistema</h4>
         <ul>
-          <li><a href="#" onclick="showTab('Início')">Início</a></li>
+          <li><a href="#" onclick="showTab('home')">Home</a></li>
           <li><a href="#" onclick="showTab('explorar')">Explorar</a></li>
           <li><a href="#" onclick="showTab('laboratorio')">Laboratório</a></li>
           <li><a href="#" onclick="showTab('visualizacoes')">Visualizações</a></li>
@@ -1127,8 +1206,8 @@
         subbrand: "Banco de Dados e Produções Científicas",
         btnAnalys: "Analisar Dados",
         badgeHero: "Publicação Científica Interativa",
-        heroTitle: "Trabalho, saúde e territórios da pesca artesanal no Brasil",
-        heroSubtitle: "Conheça a pesquisa do Programa Trabalho Saudável e Seguro na Pesca Artesanal (PTSSPA), seu instrumento e os caminhos de exploração científica dos dados.",
+        heroTitle: "Dados para compreender o trabalho, a saúde e os territórios da pesca artesanal",
+        heroSubtitle: "Explore questões, territórios, evidências, visualizações e produções construídas a partir de uma pesquisa científica pública rigorosa.",
         btnHero1: "Explorar Resultados",
         btnHero2: "Analisar Dados",
         btnHero3: "Conhecer a Pesquisa",
@@ -1144,8 +1223,8 @@
         subbrand: "Database e Scientific Publications",
         btnAnalys: "Analyze Data",
         badgeHero: "Interactive Scientific Publication",
-        heroTitle: "Work, health and territories of artisanal fishing in Brazil",
-        heroSubtitle: "Discover the research, its questionnaire and the scientific data exploration tools developed within the PTSSPA programme.",
+        heroTitle: "Data to understand work, health, and territories in artisanal fisheries",
+        heroSubtitle: "Explore questions, territories, evidence, visualizations, and research produced from a rigorous public scientific project.",
         btnHero1: "Explore Results",
         btnHero2: "Analyze Data",
         btnHero3: "Learn About Research",
@@ -1346,178 +1425,541 @@
       renderChartExplorar();
     });
   </script>
+
 <script>
-/* 26F.04: Consultas reais sob demanda ao CORE via API agregada Cloud Run. */
+/* 26F.09H | CONSULTAS REAIS AO CORE COM FIREBASE */
 (() => {
   'use strict';
+
   const API_BASE = 'https://pesca-analytics-api-v1-311761842391.southamerica-east1.run.app';
   const CATALOG_URL = './data/questoes_alternativas.json';
+
   let catalog = null;
+
   const byId = id => document.getElementById(id);
-  const qmap = () => new Map((catalog?.questoes || []).map(q => [q.codigo, q]));
-  const countText = n => Number.isInteger(n) ? n.toLocaleString('pt-BR') : 'Suprimida (1 a 4)';
+
+  const qmap = () => new Map(
+    (catalog?.questoes || []).map(q => [q.codigo, q])
+  );
+
+  const countText = n =>
+    Number.isInteger(n)
+      ? n.toLocaleString('pt-BR')
+      : 'Suprimida (1 a 4)';
+
   function note(element, text) {
     element.hidden = false;
     element.replaceChildren();
+
     const p = document.createElement('p');
     p.className = 'funda-state';
     p.textContent = text;
+
     element.appendChild(p);
   }
+
   function setOptions(element, questions) {
     element.replaceChildren();
+
     for (const q of questions) {
       const option = document.createElement('option');
+
       option.value = q.codigo;
       option.textContent = q.codigo + ' · ' + q.texto;
+
       element.appendChild(option);
     }
   }
+
   function updateExplore() {
     const q = qmap().get(byId('exp-questao').value);
+
     if (!q) return;
-    byId('exp-enunciado').textContent = q.codigo + ' · ' + q.texto;
+
+    byId('exp-enunciado').textContent =
+      q.codigo + ' · ' + q.texto;
+
     const target = byId('exp-alternativas');
     target.replaceChildren();
+
     for (const a of q.alternativas) {
       const div = document.createElement('div');
       div.className = 'funda-option';
       div.textContent = a.codigo + ' · ' + a.texto;
       target.appendChild(div);
     }
-    byId('exp-status').textContent = `${q.alternativas.length} alternativas catalogadas · CORE`;
+
+    byId('exp-status').textContent =
+      `${q.alternativas.length} alternativas catalogadas · CORE`;
+
     byId('exp-resultado').hidden = true;
   }
+
   function updatePhrase() {
     const q1 = qmap().get(byId('lab-q1').value);
-    const crossed = byId('lab-tipo').value === 'cruzamento';
+    const crossed =
+      byId('lab-tipo').value === 'cruzamento';
+
     byId('lab-q2-wrap').hidden = !crossed;
+
     const q2 = qmap().get(byId('lab-q2').value);
+
     byId('lab-frase').textContent = crossed
       ? `Quero cruzar ${q1?.codigo}: ${q1?.texto} com ${q2?.codigo}: ${q2?.texto}.`
       : `Quero consultar a distribuição de ${q1?.codigo}: ${q1?.texto}.`;
+
     byId('lab-resultado').hidden = true;
   }
+
+  /* ================================================
+     AUTENTICACAO DAS CONSULTAS ORIGINAIS
+     ================================================ */
+
   async function apiRequest(path, body = null) {
-    const settings = {method: body ? 'POST' : 'GET', cache: 'no-store', headers: {Accept:'application/json'}};
-    if (body) {settings.headers['Content-Type'] = 'application/json';settings.body = JSON.stringify(body);}
-    const response = await fetch(API_BASE + path, settings);
-    if (!response.ok) {
-      let detail = '';
-      try {const data = await response.json();detail = data.detail || '';} catch (_) {}
-      throw new Error(`HTTP ${response.status}${detail ? ' · ' + detail : ''}`);
+
+    const {
+      initializeApp,
+      getApps,
+      getApp
+    } = await import(
+      "https://www.gstatic.com/firebasejs/11.10.0/firebase-app.js"
+    );
+
+    const {
+      getAuth
+    } = await import(
+      "https://www.gstatic.com/firebasejs/11.10.0/firebase-auth.js"
+    );
+
+    const firebaseConfig = {
+      apiKey: "AIzaSyC77JxCZFJrrgA8twSNYke3VDXaqwiwrSE",
+      authDomain: "databank-pesca-2026.firebaseapp.com",
+      projectId: "databank-pesca-2026",
+      appId: "1:311761842391:web:ae666a2a20f5a7cc04c092"
+    };
+
+    const firebaseApp = getApps().length
+      ? getApp()
+      : initializeApp(firebaseConfig);
+
+    const auth = getAuth(firebaseApp);
+
+    // Aguarda a restauracao da sessao Firebase.
+    await auth.authStateReady();
+
+    const usuario = auth.currentUser;
+
+    if (!usuario) {
+      throw new Error(
+        "Entre com sua conta de pesquisador " +
+        "para executar consultas ao CORE."
+      );
     }
+
+    const token = await usuario.getIdToken();
+
+    const settings = {
+      method: body ? "POST" : "GET",
+      cache: "no-store",
+      headers: {
+        "Accept": "application/json",
+        "Authorization": `Bearer ${token}`
+      }
+    };
+
+    if (body) {
+      settings.headers["Content-Type"] =
+        "application/json";
+
+      settings.body = JSON.stringify(body);
+    }
+
+    const response = await fetch(
+      API_BASE + path,
+      settings
+    );
+
+    if (!response.ok) {
+      let detail = "";
+
+      try {
+        const data = await response.json();
+
+        detail = typeof data.detail === "string"
+          ? data.detail
+          : "";
+
+      } catch (_) {
+        // Preserva o status HTTP para diagnostico.
+      }
+
+      if (
+        response.status === 401 ||
+        response.status === 403
+      ) {
+        throw new Error(
+          "Acesso não autorizado. Verifique sua " +
+          "conta e as permissões do pesquisador."
+        );
+      }
+
+      throw new Error(
+        `HTTP ${response.status}` +
+        (detail ? ` · ${detail}` : "")
+      );
+    }
+
     return response.json();
   }
-  function cell(tr, value, tag='td') {
+
+  /* ================================================
+     FORMATACAO DAS TABELAS
+     ================================================ */
+
+  function cell(tr, value, tag = 'td') {
     const el = document.createElement(tag);
     el.textContent = value;
     tr.appendChild(el);
   }
-  function showTable(target, headingText, heads, rows, details) {
+
+  function showTable(
+    target,
+    headingText,
+    heads,
+    rows,
+    details
+  ) {
     target.hidden = false;
     target.replaceChildren();
+
     const heading = document.createElement('h3');
     heading.textContent = headingText;
     target.appendChild(heading);
+
     const table = document.createElement('table');
     table.className = 'funda-result-table';
+
     const thead = document.createElement('thead');
     const trh = document.createElement('tr');
+
     heads.forEach(h => cell(trh, h, 'th'));
+
     thead.appendChild(trh);
     table.appendChild(thead);
+
     const tbody = document.createElement('tbody');
+
     for (const row of rows) {
       const tr = document.createElement('tr');
-      row.forEach(v => cell(tr,v));
+
+      row.forEach(v => cell(tr, v));
+
       tbody.appendChild(tr);
     }
+
     table.appendChild(tbody);
     target.appendChild(table);
+
     const p = document.createElement('p');
     p.className = 'funda-note';
     p.textContent = details;
+
     target.appendChild(p);
   }
-  async function runQuery(type, q1, q2, target, button) {
-    if (!catalog) {note(target,'Catálogo ainda não disponível.');return;}
+
+  /* ================================================
+     EXECUCAO DAS CONSULTAS
+     ================================================ */
+
+  async function runQuery(
+    type,
+    q1,
+    q2,
+    target,
+    button
+  ) {
+    if (!catalog) {
+      note(target, 'Catálogo ainda não disponível.');
+      return;
+    }
+
     const previous = button.textContent;
+
     button.disabled = true;
     button.textContent = 'Consultando o CORE...';
-    note(target,'Consultando contagens reais no PostgreSQL. Aguarde...');
+
+    note(
+      target,
+      'Consultando contagens reais no PostgreSQL. Aguarde...'
+    );
+
     try {
       if (type === 'frequencia') {
-        const data = await apiRequest('/consultas/frequencia?questao=' + encodeURIComponent(q1));
-        if (data.tipo !== 'frequencia' || data.questao !== q1 || !Array.isArray(data.resultados)) throw new Error('Resposta da API inválida');
+
+        const data = await apiRequest(
+          '/consultas/frequencia?questao=' +
+          encodeURIComponent(q1)
+        );
+
+        if (
+          data.tipo !== 'frequencia' ||
+          data.questao !== q1 ||
+          !Array.isArray(data.resultados)
+        ) {
+          throw new Error('Resposta da API inválida');
+        }
+
         const item = qmap().get(q1);
-        const counts = new Map(data.resultados.map(r => [r.alternativa, r]));
+
+        const counts = new Map(
+          data.resultados.map(
+            r => [r.alternativa, r]
+          )
+        );
+
         const rows = item.alternativas.map(a => {
           const r = counts.get(a.codigo);
-          return [a.codigo, a.texto, r ? countText(r.quantidade) : '0'];
+
+          return [
+            a.codigo,
+            a.texto,
+            r ? countText(r.quantidade) : '0'
+          ];
         });
-        showTable(target, `${q1} · Distribuição real por alternativa`, ['Código', 'Alternativa', 'Respondentes'], rows,
-          'Fonte: PostgreSQL CORE via Cloud Run. Respondentes distintos por alternativa marcada. Múltiplas alternativas podem ser marcadas por pessoa. Valores de 1 a 4 suprimidos; percentuais não calculados.');
+
+        showTable(
+          target,
+          `${q1} · Distribuição real por alternativa`,
+          [
+            'Código',
+            'Alternativa',
+            'Respondentes'
+          ],
+          rows,
+          'Fonte: PostgreSQL CORE via Cloud Run. ' +
+          'Respondentes distintos por alternativa marcada. ' +
+          'Múltiplas alternativas podem ser marcadas por pessoa. ' +
+          'Valores de 1 a 4 suprimidos; percentuais não calculados.'
+        );
+
       } else {
-        const data = await apiRequest('/consultas/cruzamento', {questao_1:q1,questao_2:q2});
-        if (data.tipo !== 'cruzamento' || data.questao_1 !== q1 || data.questao_2 !== q2 || !Array.isArray(data.resultados)) throw new Error('Resposta da API inválida');
+
+        const data = await apiRequest(
+          '/consultas/cruzamento',
+          {
+            questao_1: q1,
+            questao_2: q2
+          }
+        );
+
+        if (
+          data.tipo !== 'cruzamento' ||
+          data.questao_1 !== q1 ||
+          data.questao_2 !== q2 ||
+          !Array.isArray(data.resultados)
+        ) {
+          throw new Error('Resposta da API inválida');
+        }
+
         const qs = qmap();
-        const labels1 = new Map((qs.get(q1)?.alternativas||[]).map(a => [a.codigo,a.texto]));
-        const labels2 = new Map((qs.get(q2)?.alternativas||[]).map(a => [a.codigo,a.texto]));
+
+        const labels1 = new Map(
+          (qs.get(q1)?.alternativas || []).map(
+            a => [a.codigo, a.texto]
+          )
+        );
+
+        const labels2 = new Map(
+          (qs.get(q2)?.alternativas || []).map(
+            a => [a.codigo, a.texto]
+          )
+        );
+
         const rows = data.resultados.map(r => [
-          `${r.alternativa_1} · ${labels1.get(r.alternativa_1)||r.alternativa_1}`,
-          `${r.alternativa_2} · ${labels2.get(r.alternativa_2)||r.alternativa_2}`,
+          `${r.alternativa_1} · ${
+            labels1.get(r.alternativa_1) ||
+            r.alternativa_1
+          }`,
+          `${r.alternativa_2} · ${
+            labels2.get(r.alternativa_2) ||
+            r.alternativa_2
+          }`,
           countText(r.quantidade)
         ]);
-        showTable(target, `${q1} × ${q2} · Cruzamento real`, [`${q1} · alternativa`, `${q2} · alternativa`, 'Respondentes'], rows,
-          'Fonte: PostgreSQL CORE via Cloud Run. Respondentes distintos com ambas as alternativas marcadas na mesma aplicação. Múltiplas escolhas podem produzir mais de uma combinação. Células de 1 a 4 suprimidas.');
+
+        showTable(
+          target,
+          `${q1} × ${q2} · Cruzamento real`,
+          [
+            `${q1} · alternativa`,
+            `${q2} · alternativa`,
+            'Respondentes'
+          ],
+          rows,
+          'Fonte: PostgreSQL CORE via Cloud Run. ' +
+          'Respondentes distintos com ambas as alternativas ' +
+          'marcadas na mesma aplicação. Múltiplas escolhas podem ' +
+          'produzir mais de uma combinação. ' +
+          'Células de 1 a 4 suprimidas.'
+        );
       }
-    } catch(e) {
+
+    } catch (e) {
       console.error('Falha na consulta da API:', e);
-      note(target, `Não foi possível executar a consulta: ${e.message}. Se a API funciona isoladamente, conferir CORS e permissões de invocação do Cloud Run.`);
+
+      note(
+        target,
+        'Não foi possível executar a consulta: ' +
+        e.message +
+        '. Se a API funciona isoladamente, ' +
+        'conferir CORS e permissões do Cloud Run.'
+      );
+
     } finally {
       button.disabled = false;
       button.textContent = previous;
     }
   }
+
+  /* ================================================
+     INICIALIZACAO DO LABORATORIO
+     ================================================ */
+
   async function init() {
     try {
-      const response = await fetch(CATALOG_URL,{cache:'no-store'});
-      if (!response.ok) throw new Error('Catálogo HTTP '+response.status);
+      const response = await fetch(
+        CATALOG_URL,
+        { cache: 'no-store' }
+      );
+
+      if (!response.ok) {
+        throw new Error(
+          'Catálogo HTTP ' + response.status
+        );
+      }
+
       catalog = await response.json();
-      if (!Array.isArray(catalog.questoes) || catalog.questoes.length!==36 || catalog.questoes.reduce((n,q)=>n+(q.alternativas?.length||0),0)!==251) throw new Error('Catálogo divergente');
-      for (const id of ['exp-questao','lab-q1','lab-q2']) setOptions(byId(id),catalog.questoes);
+
+      if (
+        !Array.isArray(catalog.questoes) ||
+        catalog.questoes.length !== 36 ||
+        catalog.questoes.reduce(
+          (n, q) =>
+            n + (q.alternativas?.length || 0),
+          0
+        ) !== 251
+      ) {
+        throw new Error('Catálogo divergente');
+      }
+
+      for (
+        const id of [
+          'exp-questao',
+          'lab-q1',
+          'lab-q2'
+        ]
+      ) {
+        setOptions(
+          byId(id),
+          catalog.questoes
+        );
+      }
+
       byId('exp-questao').value = 'Q23';
       byId('lab-q1').value = 'Q05';
       byId('lab-q2').value = 'Q23';
-      byId('exp-questao').addEventListener('change',updateExplore);
-      for (const id of ['lab-tipo','lab-q1','lab-q2']) byId(id).addEventListener('change',updatePhrase);
-      byId('exp-abrir').addEventListener('click',()=>runQuery('frequencia',byId('exp-questao').value,null,byId('exp-resultado'),byId('exp-abrir')));
-      byId('lab-executar').addEventListener('click',()=>{
-        const crossed=byId('lab-tipo').value==='cruzamento';
-        runQuery(crossed?'cruzamento':'frequencia',byId('lab-q1').value,crossed?byId('lab-q2').value:null,byId('lab-resultado'),byId('lab-executar'));
-      });
-      updateExplore(); updatePhrase();
-    } catch(e) {
-      console.error('Falha no catálogo:',e);
-      byId('exp-status').textContent = 'Catálogo indisponível: '+e.message;
-      note(byId('lab-resultado'),'Falha ao carregar catálogo: '+e.message);
+
+      byId('exp-questao').addEventListener(
+        'change',
+        updateExplore
+      );
+
+      for (
+        const id of [
+          'lab-tipo',
+          'lab-q1',
+          'lab-q2'
+        ]
+      ) {
+        byId(id).addEventListener(
+          'change',
+          updatePhrase
+        );
+      }
+
+      byId('exp-abrir').addEventListener(
+        'click',
+        () => runQuery(
+          'frequencia',
+          byId('exp-questao').value,
+          null,
+          byId('exp-resultado'),
+          byId('exp-abrir')
+        )
+      );
+
+      byId('lab-executar').addEventListener(
+        'click',
+        () => {
+          const crossed =
+            byId('lab-tipo').value === 'cruzamento';
+
+          runQuery(
+            crossed
+              ? 'cruzamento'
+              : 'frequencia',
+            byId('lab-q1').value,
+            crossed
+              ? byId('lab-q2').value
+              : null,
+            byId('lab-resultado'),
+            byId('lab-executar')
+          );
+        }
+      );
+
+      updateExplore();
+      updatePhrase();
+
+    } catch (e) {
+      console.error('Falha no catálogo:', e);
+
+      byId('exp-status').textContent =
+        'Catálogo indisponível: ' + e.message;
+
+      note(
+        byId('lab-resultado'),
+        'Falha ao carregar catálogo: ' + e.message
+      );
     }
   }
+
   window.renderChartExplorar = () => {};
-  window.openQuestion = code => {showTab('explorar');if(catalog&&qmap().has(code)){byId('exp-questao').value=code;updateExplore();}};
-  document.addEventListener('DOMContentLoaded',init);
+
+  window.openQuestion = code => {
+    showTab('explorar');
+
+    if (
+      catalog &&
+      qmap().has(code)
+    ) {
+      byId('exp-questao').value = code;
+      updateExplore();
+    }
+  };
+
+  document.addEventListener(
+    'DOMContentLoaded',
+    init
+  );
+
 })();
 </script>
-<script>
-/* Tradução PT/EN exclusiva da Home, sem alterar o sistema de dados. */
-(function(){
- const text={PT:{badge:'Estúdio de pesquisa · PTSSPA',title:'Trabalho, saúde e pesca artesanal no Brasil',subtitle:'Conheça a pesquisa vinculada ao Programa Trabalho Saudável e Seguro na Pesca Artesanal (PTSSPA), seu instrumento quantitativo, o percurso de organização dos dados e os cuidados necessários à interpretação dos resultados.',b1:'Explorar questões',b2:'Analisar dados',b3:'Conhecer a pesquisa ↓'},EN:{badge:'Research Studio · PTSSPA',title:'Work, health and artisanal fishing in Brazil',subtitle:'Explore the research linked to the Healthy and Safe Work in Artisanal Fishing Programme (PTSSPA), its quantitative questionnaire, the data preparation journey and the principles for interpreting results.',b1:'Explore questions',b2:'Analyze data',b3:'About the research ↓'}};
- function homeLanguage(lang){const d=text[lang]||text.PT;const ids={'badge-hero':d.badge,'hero-title':d.title,'hero-subtitle':d.subtitle,'btn-hero-1':d.b1,'btn-hero-2':d.b2,'btn-hero-3':d.b3};for(const [id,val] of Object.entries(ids)){const el=document.getElementById(id);if(el)el.textContent=val;}document.querySelectorAll('#tab-Início [data-pt][data-en]').forEach(el=>el.textContent=el.getAttribute('data-'+lang.toLowerCase()));}
- document.querySelectorAll('.lang-btn').forEach((btn,i)=>btn.addEventListener('click',()=>homeLanguage(i===0?'PT':'EN')));
- window.hsCopyCitation=function(title){const t='OLIVEIRA, L. A. B. '+title+'. 2026. Figura metodológica. Fundacentro. Referência provisória, a completar com URL e identificação da publicação.';if(navigator.clipboard&&navigator.clipboard.writeText)navigator.clipboard.writeText(t).catch(()=>window.prompt('Copie a referência:',t));else window.prompt('Copie a referência:',t);};
- homeLanguage('PT');
-})();
-</script>
+
+<!-- 26F.07D | Integracao cadastral e autenticacao Firebase -->
+<!-- Consultas anteriores preservadas -->
+<!-- 26F.08A | Forcar carregamento da versao atualizada -->
+<script type="module" src="./laboratorio-cadastral.js?v=26F08A-20261021"></script>
+
 </body>
 </html>
