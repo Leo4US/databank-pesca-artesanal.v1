@@ -743,7 +743,7 @@
         <ul>
           <li><a href="#" onclick="showTab('home')" class="active" id="nav-home">Home</a></li>
           <li><a href="#" onclick="showTab('explorar')" id="nav-explorar">Explorar</a></li>
-          <li><a href="#" onclick="showTab('laboratorio')" id="nav-laboratorio">Laboratório</a></li>
+          <li><a href="#" onclick="showTab('cruzamento [lab]')" id="nav-cruzamento [lab]">Laboratório</a></li>
           <li><a href="#" onclick="showTab('visualizacoes')" id="nav-visualizacoes">Visualizações</a></li>
           <li><a href="#" onclick="showTab('territorios')" id="nav-territorios">Territórios</a></li>
           <li><a href="#" onclick="showTab('producoes')" id="nav-producoes">Produções</a></li>
@@ -752,7 +752,7 @@
       </nav>
 
       <div class="nav-right">
-        <button class="btn-analys" onclick="showTab('laboratorio')" id="btn-top-analys">Analisar Dados</button>
+        <button class="btn-analys" onclick="showTab('cruzamento [lab]')" id="btn-top-analys">Analisar Dados</button>
         <div class="lang-selector">
           <div class="lang-btn active" onclick="setLanguage('PT')">PT</div>
           <div class="lang-btn" onclick="setLanguage('EN')">EN</div>
@@ -775,7 +775,7 @@
         </p>
         <div class="btn-group">
           <button class="btn btn-primary" onclick="showTab('explorar')" id="btn-hero-1">Explorar Resultados</button>
-          <button class="btn btn-secondary" onclick="showTab('laboratorio')" id="btn-hero-2">Analisar Dados</button>
+          <button class="btn btn-secondary" onclick="showTab('cruzamento [lab]')" id="btn-hero-2">Analisar Dados</button>
           <button class="btn btn-secondary" onclick="showTab('pesquisa')" id="btn-hero-3">Conhecer a Pesquisa</button>
         </div>
       </div>
@@ -874,8 +874,8 @@
 
 
 
-    <!-- TELA 3: LABORATORIO | CRUZAMENTOS 26F.01 -->
-<section id="tab-laboratorio" class="tab-content">
+    <!-- TELA 3: cruzamento [lab] | CRUZAMENTOS 26F.01 -->
+<section id="tab-cruzamento [lab]" class="tab-content">
   <div style="margin-bottom:2rem"><span class="badge badge-validated">CORE via API · 26F.05</span>
     <h2 style="font-size:1.8rem;margin-top:.5rem">Laboratório de cruzamentos</h2>
     <p style="color:var(--text-muted)">Escolha uma ou duas questões do instrumento para consultar frequências ou cruzamentos reais no CORE.</p></div>
@@ -960,7 +960,7 @@
           </div>
           <div style="margin-top: 1rem; padding-top: 1rem; border-top: 1px solid var(--border-subtle); display: flex; justify-content: space-between; align-items: center;">
             <button class="btn btn-secondary" onclick="openDrawer('CITAR')" style="padding: 0.4rem 0.8rem; font-size: 0.78rem;">Citar</button>
-            <a href="#" onclick="showTab('laboratorio')" style="font-size: 0.78rem; font-weight: 700; color: var(--color-primary);">Explorar dados desta visualização →</a>
+            <a href="#" onclick="showTab('cruzamento [lab]')" style="font-size: 0.78rem; font-weight: 700; color: var(--color-primary);">Explorar dados desta visualização →</a>
           </div>
         </div>
       </div>
@@ -1007,7 +1007,7 @@
 
         <div style="display: flex; gap: 1rem;">
           <button class="btn btn-primary" onclick="openDrawer('CITAR')">Citar este relatório</button>
-          <button class="btn btn-secondary" onclick="showTab('laboratorio')">Explorar dados relacionados</button>
+          <button class="btn btn-secondary" onclick="showTab('cruzamento [lab]')">Explorar dados relacionados</button>
         </div>
       </article>
     </section>
@@ -1036,7 +1036,7 @@
         <span class="badge badge-demo" style="margin-bottom: 1rem;">Acesso Autenticado</span>
         <h3 style="font-size: 1.2rem; font-weight: 700; margin-bottom: 1.2rem;">Entrar na Plataforma</h3>
         
-        <form onsubmit="event.preventDefault(); alert('Sessão simulada iniciada.'); showTab('laboratorio');">
+        <form onsubmit="event.preventDefault(); alert('Sessão simulada iniciada.'); showTab('cruzamento [lab]');">
           <div style="margin-bottom: 1rem;">
             <label style="display: block; font-size: 0.75rem; font-weight: 700; text-transform: uppercase; margin-bottom: 0.3rem;">E-mail</label>
             <input type="email" placeholder="pesquisador@instituicao.edu.br" required style="width: 100%; padding: 0.6rem; border: 1px solid var(--border-subtle); border-radius: 6px;">
@@ -1093,7 +1093,7 @@
           Enviamos uma mensagem de ativação para <strong id="sim-email-display">usuario@instituicao.edu.br</strong>.
         </p>
         <div style="display: flex; gap: 0.8rem; justify-content: center; flex-wrap: wrap;">
-          <button class="btn btn-primary" onclick="alert('E-mail simulado verificado com sucesso!'); showTab('laboratorio');">SIMULAR CONFIRMAÇÃO</button>
+          <button class="btn btn-primary" onclick="alert('E-mail simulado verificado com sucesso!'); showTab('cruzamento [lab]');">SIMULAR CONFIRMAÇÃO</button>
           <button class="btn btn-secondary" onclick="alert('Reenviando e-mail...')">Reenviar E-mail</button>
         </div>
       </div>
@@ -1166,7 +1166,7 @@
         <ul>
           <li><a href="#" onclick="showTab('home')">Home</a></li>
           <li><a href="#" onclick="showTab('explorar')">Explorar</a></li>
-          <li><a href="#" onclick="showTab('laboratorio')">Laboratório</a></li>
+          <li><a href="#" onclick="showTab('cruzamento [lab]')">Laboratório</a></li>
           <li><a href="#" onclick="showTab('visualizacoes')">Visualizações</a></li>
         </ul>
       </div>
@@ -1822,7 +1822,7 @@
   }
 
   /* ================================================
-     INICIALIZACAO DO LABORATORIO
+     INICIALIZACAO DO cruzamento [lab]
      ================================================ */
 
   async function init() {
@@ -1959,7 +1959,7 @@
 <!-- 26F.07D | Integracao cadastral e autenticacao Firebase -->
 <!-- Consultas anteriores preservadas -->
 <!-- 26F.08A | Forcar carregamento da versao atualizada -->
-<script type="module" src="./laboratorio-cadastral.js?v=26F08A-20261021"></script>
+<script type="module" src="./cruzamento [lab]-cadastral.js?v=26F08A-20261021"></script>
 
 </body>
 </html>
