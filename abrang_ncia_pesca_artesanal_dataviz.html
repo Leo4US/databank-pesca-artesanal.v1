@@ -1,0 +1,967 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Abrangência da Pesca Artesanal | PTSSPA Dataviz LT-PTSSPA-001/2026</title>
+  <meta name="description" content="Dashboard interativo de datavisualization sobre a abrangência da pesquisa aplicada em campo (PTSSPA).">
+  
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700&family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Newsreader:ital,wght@0,500;0,700;1,400&display=swap">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  
+  <style>
+    :root {
+      --bg-dark: #070C18;
+      --bg-card: #0F172A;
+      --bg-card-hover: #1E293B;
+      --bg-light: #F8FAFC;
+      --panel-border: rgba(255, 255, 255, 0.08);
+      
+      --text-main: #F1F5F9;
+      --text-muted: #94A3B8;
+      --text-dark: #0F172A;
+
+      --cyan: #00E5FF;
+      --teal: #10B981;
+      --gold: #F59E0B;
+      --orange: #FF6B4A;
+      --purple: #8B5CF6;
+      --blue: #3B82F6;
+
+      --font-sans: 'Plus Jakarta Sans', system-ui, sans-serif;
+      --font-mono: 'JetBrains Mono', monospace;
+      --font-serif: 'Newsreader', serif;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body {
+      background-color: var(--bg-dark);
+      color: var(--text-main);
+      font-family: var(--font-sans);
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      overflow-x: hidden;
+    }
+
+    /* Ambient Background Glow */
+    .bg-glow {
+      position: fixed;
+      top: 0; left: 0; width: 100vw; height: 100vh;
+      background: 
+        radial-gradient(circle at 15% 20%, rgba(0, 229, 255, 0.04) 0%, transparent 45%),
+        radial-gradient(circle at 85% 75%, rgba(139, 92, 246, 0.04) 0%, transparent 45%);
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    /* Top Navigation Header */
+    header.app-header {
+      position: relative;
+      z-index: 10;
+      background: rgba(15, 23, 42, 0.85);
+      backdrop-filter: blur(16px);
+      border-bottom: 1px solid var(--panel-border);
+      padding: 16px 32px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 20px;
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+    }
+    .brand-icon {
+      width: 42px;
+      height: 42px;
+      border-radius: 10px;
+      background: linear-gradient(135deg, var(--cyan), var(--blue));
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--bg-dark);
+      font-size: 20px;
+      font-weight: 800;
+      box-shadow: 0 0 20px rgba(0, 229, 255, 0.3);
+    }
+    .brand-text h1 {
+      font-size: 18px;
+      font-weight: 800;
+      letter-spacing: -0.3px;
+      color: #FFF;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .brand-text p {
+      font-size: 12px;
+      color: var(--text-muted);
+      font-family: var(--font-mono);
+    }
+
+    .badge-status {
+      background: rgba(245, 158, 11, 0.15);
+      border: 1px solid rgba(245, 158, 11, 0.4);
+      color: var(--gold);
+      padding: 4px 12px;
+      border-radius: 20px;
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.5px;
+      text-transform: uppercase;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .badge-status i { font-size: 8px; }
+
+    /* Navigation Tabs */
+    .nav-tabs {
+      display: flex;
+      gap: 8px;
+      background: rgba(7, 12, 24, 0.6);
+      padding: 4px;
+      border-radius: 12px;
+      border: 1px solid var(--panel-border);
+    }
+    .tab-btn {
+      background: transparent;
+      border: none;
+      color: var(--text-muted);
+      padding: 8px 16px;
+      border-radius: 8px;
+      font-size: 13px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .tab-btn:hover {
+      color: var(--text-main);
+      background: rgba(255, 255, 255, 0.05);
+    }
+    .tab-btn.active {
+      background: rgba(0, 229, 255, 0.12);
+      color: var(--cyan);
+      border: 1px solid rgba(0, 229, 255, 0.3);
+      box-shadow: 0 0 15px rgba(0, 229, 255, 0.1);
+    }
+
+    /* Main Container */
+    main.app-container {
+      position: relative;
+      z-index: 1;
+      max-width: 1440px;
+      margin: 0 auto;
+      width: 100%;
+      padding: 32px;
+      flex: 1;
+    }
+
+    /* Tab Content Displays */
+    .tab-pane {
+      display: none;
+      animation: fadeIn 0.3s ease;
+    }
+    .tab-pane.active {
+      display: block;
+    }
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(6px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    /* Grid Layouts */
+    .grid-metrics {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 20px;
+      margin-bottom: 32px;
+    }
+
+    .metric-card {
+      background: var(--bg-card);
+      border: 1px solid var(--panel-border);
+      border-radius: 16px;
+      padding: 24px;
+      position: relative;
+      overflow: hidden;
+      transition: all 0.25s ease;
+    }
+    .metric-card:hover {
+      border-color: rgba(0, 229, 255, 0.3);
+      transform: translateY(-2px);
+      box-shadow: 0 12px 24px rgba(0, 0, 0, 0.4);
+    }
+    .metric-card::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; width: 100%; height: 3px;
+      background: linear-gradient(90deg, var(--cyan), transparent);
+      opacity: 0.6;
+    }
+    .metric-card.gold::before { background: linear-gradient(90deg, var(--gold), transparent); }
+    .metric-card.purple::before { background: linear-gradient(90deg, var(--purple), transparent); }
+    .metric-card.teal::before { background: linear-gradient(90deg, var(--teal), transparent); }
+
+    .metric-label {
+      font-size: 12px;
+      font-weight: 700;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      letter-spacing: 0.8px;
+      margin-bottom: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+    .metric-value {
+      font-size: 38px;
+      font-weight: 800;
+      color: #FFF;
+      font-family: var(--font-mono);
+      line-height: 1;
+      margin-bottom: 8px;
+    }
+    .metric-sub {
+      font-size: 12px;
+      color: var(--text-muted);
+    }
+
+    /* Chart Cards Section */
+    .grid-charts {
+      display: grid;
+      grid-template-columns: repeat(12, 1fr);
+      gap: 24px;
+      margin-bottom: 32px;
+    }
+    .col-6 { grid-column: span 6; }
+    .col-7 { grid-column: span 7; }
+    .col-5 { grid-column: span 5; }
+    .col-12 { grid-column: span 12; }
+
+    .chart-card {
+      background: var(--bg-card);
+      border: 1px solid var(--panel-border);
+      border-radius: 16px;
+      padding: 28px;
+      display: flex;
+      flex-direction: column;
+    }
+    .chart-header {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      margin-bottom: 20px;
+    }
+    .chart-title h3 {
+      font-size: 18px;
+      font-weight: 700;
+      color: #FFF;
+      margin-bottom: 4px;
+    }
+    .chart-title p {
+      font-size: 13px;
+      color: var(--text-muted);
+    }
+
+    /* Custom SVG Dataviz & Bar Styling */
+    .bar-group {
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+      margin-top: 10px;
+    }
+    .bar-item {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+    .bar-info {
+      display: flex;
+      justify-content: space-between;
+      font-size: 13px;
+      font-weight: 600;
+    }
+    .bar-info .name { color: #FFF; }
+    .bar-info .val { font-family: var(--font-mono); color: var(--cyan); }
+    
+    .bar-track {
+      height: 10px;
+      background: rgba(255, 255, 255, 0.05);
+      border-radius: 6px;
+      overflow: hidden;
+      position: relative;
+    }
+    .bar-fill {
+      height: 100%;
+      border-radius: 6px;
+      background: linear-gradient(90deg, var(--cyan), var(--blue));
+      transition: width 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    .bar-fill.teal { background: linear-gradient(90deg, var(--teal), #059669); }
+    .bar-fill.orange { background: linear-gradient(90deg, var(--orange), #D97706); }
+    .bar-fill.purple { background: linear-gradient(90deg, var(--purple), #6D28D9); }
+
+    /* Interactive Data Tables */
+    .datatable-wrapper {
+      background: var(--bg-card);
+      border: 1px solid var(--panel-border);
+      border-radius: 16px;
+      overflow: hidden;
+    }
+    .datatable-controls {
+      padding: 20px 24px;
+      background: rgba(255, 255, 255, 0.02);
+      border-bottom: 1px solid var(--panel-border);
+      display: flex;
+      gap: 16px;
+      align-items: center;
+      flex-wrap: wrap;
+    }
+    .search-box {
+      position: relative;
+      flex: 1;
+      min-width: 260px;
+    }
+    .search-box i {
+      position: absolute;
+      left: 14px; top: 50%;
+      transform: translateY(-50%);
+      color: var(--text-muted);
+    }
+    .search-box input {
+      width: 100%;
+      padding: 10px 14px 10px 40px;
+      background: var(--bg-dark);
+      border: 1px solid var(--panel-border);
+      border-radius: 10px;
+      color: #FFF;
+      font-size: 13px;
+      outline: none;
+      transition: border-color 0.2s;
+    }
+    .search-box input:focus {
+      border-color: var(--cyan);
+    }
+
+    select.select-custom {
+      padding: 10px 14px;
+      background: var(--bg-dark);
+      border: 1px solid var(--panel-border);
+      border-radius: 10px;
+      color: #FFF;
+      font-size: 13px;
+      outline: none;
+      cursor: pointer;
+    }
+
+    .table-responsive {
+      max-height: 520px;
+      overflow-y: auto;
+    }
+    table.data-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 13px;
+      text-align: left;
+    }
+    table.data-table th {
+      position: sticky;
+      top: 0;
+      background: #1E293B;
+      color: var(--text-muted);
+      font-weight: 700;
+      padding: 14px 20px;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      font-size: 11px;
+      z-index: 2;
+      border-bottom: 1px solid var(--panel-border);
+    }
+    table.data-table td {
+      padding: 14px 20px;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.04);
+      color: var(--text-main);
+    }
+    table.data-table tr:hover td {
+      background: rgba(255, 255, 255, 0.03);
+    }
+    table.data-table td.num {
+      font-family: var(--font-mono);
+      text-align: right;
+    }
+    .tag-uf {
+      display: inline-block;
+      padding: 3px 8px;
+      border-radius: 6px;
+      font-size: 11px;
+      font-weight: 700;
+      font-family: var(--font-mono);
+      background: rgba(255, 255, 255, 0.08);
+    }
+
+    /* Interactive Balloon/Drawer Tooltip Panel */
+    .interactive-card {
+      background: linear-gradient(135deg, rgba(30, 41, 59, 0.7), rgba(15, 23, 42, 0.9));
+      border: 1px solid rgba(0, 229, 255, 0.2);
+      border-radius: 16px;
+      padding: 24px;
+      position: relative;
+    }
+    .interactive-card .glow-dot {
+      width: 8px; height: 8px;
+      border-radius: 50%;
+      background: var(--cyan);
+      box-shadow: 0 0 10px var(--cyan);
+      display: inline-block;
+      margin-right: 8px;
+    }
+
+    /* Callout & Note Cards */
+    .note-box {
+      background: rgba(245, 158, 11, 0.08);
+      border: 1px solid rgba(245, 158, 11, 0.3);
+      border-radius: 12px;
+      padding: 16px 20px;
+      display: flex;
+      gap: 14px;
+      align-items: flex-start;
+      margin-bottom: 24px;
+    }
+    .note-box i { color: var(--gold); font-size: 18px; margin-top: 2px; }
+    .note-box p { font-size: 13px; color: #FCD34D; line-height: 1.5; }
+
+    /* Footer */
+    footer.app-footer {
+      border-top: 1px solid var(--panel-border);
+      padding: 24px 32px;
+      background: rgba(15, 23, 42, 0.9);
+      font-size: 12px;
+      color: var(--text-muted);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      position: relative;
+      z-index: 1;
+    }
+
+    @media (max-width: 1024px) {
+      .grid-metrics { grid-template-columns: repeat(2, 1fr); }
+      .col-6, .col-7, .col-5, .col-12 { grid-column: span 12; }
+      header.app-header { flex-direction: column; align-items: flex-start; }
+      .nav-tabs { width: 100%; overflow-x: auto; }
+    }
+  </style>
+</head>
+<body>
+  <div class="bg-glow"></div>
+
+  <!-- Header -->
+  <header class="app-header">
+    <div class="brand">
+      <div class="brand-icon"><i class="fa-solid fa-chart-nodes"></i></div>
+      <div class="brand-text">
+        <h1>
+          PTSSPA Dataviz 
+          <span class="badge-status"><i class="fa-solid fa-circle"></i> Homologação R4</span>
+        </h1>
+        <p>LT-PTSSPA-001/2026 · ESTÚDIO DE PESQUISA</p>
+      </div>
+    </div>
+
+    <nav class="nav-tabs" role="tablist">
+      <button class="tab-btn active" onclick="switchTab('infograficos', this)">
+        <i class="fa-solid fa-chart-pie"></i> Infográficos & Visão Geral
+      </button>
+      <button class="tab-btn" onclick="switchTab('municipios', this)">
+        <i class="fa-solid fa-city"></i> 125 Municípios
+      </button>
+      <button class="tab-btn" onclick="switchTab('estados', this)">
+        <i class="fa-solid fa-map-location-dot"></i> Por Estado
+      </button>
+      <button class="tab-btn" onclick="switchTab('concentracao', this)">
+        <i class="fa-solid fa-chart-line"></i> Concentração
+      </button>
+      <button class="tab-btn" onclick="switchTab('metodo', this)">
+        <i class="fa-solid fa-fingerprint"></i> Metodologia & DOI
+      </button>
+    </nav>
+  </header>
+
+  <!-- Container Principal -->
+  <main class="app-container">
+
+    <!-- BANNER DE AVISO TÉCNICO -->
+    <div class="note-box">
+      <i class="fa-solid fa-triangle-exclamation"></i>
+      <div>
+        <strong style="display:block; color:#FFF; font-size:14px; margin-bottom:2px;">Versão técnica para homologação institucional</strong>
+        <p>A divulgação pública dos resultados agregados depende de autorização institucional. Não publicar este arquivo antes da liberação formal. Registro interno CORE 26C.01.</p>
+      </div>
+    </div>
+
+    <!-- TAB 1: INFOGRÁFICOS E VISÃO GERAL -->
+    <div id="tab-infograficos" class="tab-pane active">
+      
+      <!-- Cards de Métricas Centrais -->
+      <div class="grid-metrics">
+        <div class="metric-card">
+          <div class="metric-label">Total de Registros <i class="fa-solid fa-database" style="color:var(--cyan)"></i></div>
+          <div class="metric-value">16.621</div>
+          <div class="metric-sub">Base CORE de respondentes</div>
+        </div>
+
+        <div class="metric-card teal">
+          <div class="metric-label">Municípios Atingidos <i class="fa-solid fa-location-dot" style="color:var(--teal)"></i></div>
+          <div class="metric-value">125</div>
+          <div class="metric-sub">Endereços cadastrais</div>
+        </div>
+
+        <div class="metric-card purple">
+          <div class="metric-label">Estados Pesquisados <i class="fa-solid fa-map" style="color:var(--purple)"></i></div>
+          <div class="metric-value">05</div>
+          <div class="metric-sub">PA, AM, MA, BA, PI</div>
+        </div>
+
+        <div class="metric-card gold">
+          <div class="metric-label">Maior Concentração <i class="fa-solid fa-crown" style="color:var(--gold)"></i></div>
+          <div class="metric-value">34.3%</div>
+          <div class="metric-sub">Estado do Pará (5.697 reg.)</div>
+        </div>
+      </div>
+
+      <!-- Infográficos Principais -->
+      <div class="grid-charts">
+        
+        <!-- Grafico 1: Distribuição por Estado -->
+        <div class="chart-card col-7">
+          <div class="chart-header">
+            <div class="chart-title">
+              <h3>01. Distribuição de Registros por Estado</h3>
+              <p>Volume total de 16.621 registros divididos em 5 estados</p>
+            </div>
+            <span class="badge-status" style="background:rgba(0,229,255,0.1); color:var(--cyan); border-color:rgba(0,229,255,0.3)">
+              <i class="fa-solid fa-chart-column"></i> Absoluto
+            </span>
+          </div>
+
+          <div class="bar-group" id="stateBarsOverview">
+            <!-- Injetado via JS -->
+          </div>
+        </div>
+
+        <!-- Grafico 2: Proporção de Municípios -->
+        <div class="chart-card col-5">
+          <div class="chart-header">
+            <div class="chart-title">
+              <h3>Municípios por Estado</h3>
+              <p>Total de 125 municípios com dados</p>
+            </div>
+          </div>
+          
+          <div class="bar-group" id="munBarsOverview">
+            <!-- Injetado via JS -->
+          </div>
+        </div>
+
+        <!-- Balão Interativo / Interactive Highlight -->
+        <div class="interactive-card col-12">
+          <div style="display:flex; justify-content:space-between; align-items:center;">
+            <div>
+              <span class="glow-dot"></span>
+              <strong style="color:var(--cyan); font-size:14px; text-transform:uppercase; letter-spacing:1px;">Cartão de Leitura Metodológica</strong>
+              <h4 style="font-size:20px; font-weight:700; color:#FFF; margin-top:4px;">Como interpretar as distribuições geográficas?</h4>
+            </div>
+            <span style="font-family:var(--font-mono); font-size:12px; color:var(--text-muted);">REF: LT-PTSSPA-001/2026</span>
+          </div>
+          <p style="margin-top:12px; color:var(--text-muted); font-size:14px; line-height:1.6;">
+            Diferenças de volume entre estados ou municípios descrevem a distribuição dos registros no endereço cadastral associado na camada CORE. <strong style="color:#FFF;">Não demonstram, isoladamente, diferenças na população total de pescadores, nos riscos ocupacionais ou no desempenho da equipe de campo.</strong>
+          </p>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- TAB 2: EXPLORADOR DE MUNICÍPIOS -->
+    <div id="tab-municipios" class="tab-pane">
+      <div class="datatable-wrapper">
+        <div class="datatable-controls">
+          <div class="search-box">
+            <i class="fa-solid fa-magnifying-glass"></i>
+            <input type="text" id="munSearchInput" placeholder="Buscar por município ou estado..." oninput="filterMunicipalTable()">
+          </div>
+
+          <select id="munUfFilter" class="select-custom" onchange="filterMunicipalTable()">
+            <option value="">Todos os Estados (5)</option>
+          </select>
+
+          <button class="tab-btn" onclick="clearMunFilters()" style="border:1px solid var(--panel-border);">
+            <i class="fa-solid fa-rotate-left"></i> Limpar Filtros
+          </button>
+        </div>
+
+        <div class="table-responsive">
+          <table class="data-table">
+            <thead>
+              <tr>
+                <th>Pos. Geral</th>
+                <th>Pos. UF</th>
+                <th>UF</th>
+                <th>Município</th>
+                <th style="text-align:right">Registros</th>
+                <th style="text-align:right">% na UF</th>
+                <th style="text-align:right">% Geral</th>
+                <th style="text-align:right">% Acumulado</th>
+              </tr>
+            </thead>
+            <tbody id="municipalTableBody">
+              <!-- Renderizado via Javascript -->
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+    <!-- TAB 3: ANÁLISE POR ESTADO -->
+    <div id="tab-estados" class="tab-pane">
+      <div class="grid-charts">
+        <div class="chart-card col-4">
+          <div class="chart-title" style="margin-bottom:16px;">
+            <h3>Selecione o Estado</h3>
+            <p>Consulte métricas completas e rankings</p>
+          </div>
+          <select id="stateSelectDetailed" class="select-custom" style="width:100%; padding:12px;" onchange="renderStateDetail()">
+            <!-- Injetado via JS -->
+          </select>
+
+          <div id="stateDetailMetrics" style="margin-top:24px;">
+            <!-- Métricas detalhadas da UF -->
+          </div>
+        </div>
+
+        <div class="chart-card col-8">
+          <div class="chart-title" style="margin-bottom:16px;">
+            <h3 id="stateDetailTitle">Municípios do Estado</h3>
+            <p>Relação ordenadora completa por volume</p>
+          </div>
+          
+          <div class="table-responsive" style="max-height:420px;">
+            <table class="data-table">
+              <thead>
+                <tr>
+                  <th>Pos. UF</th>
+                  <th>Município</th>
+                  <th style="text-align:right">Registros</th>
+                  <th style="text-align:right">% na UF</th>
+                  <th style="text-align:right">% Geral</th>
+                </tr>
+              </thead>
+              <tbody id="stateDetailTableBody">
+                <!-- Injetado via JS -->
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+
+      <div class="grid-metrics" id="stateCardsGrid">
+        <!-- Cards Descritivos de cada Estado -->
+      </div>
+    </div>
+
+    <!-- TAB 4: CURVA DE CONCENTRAÇÃO -->
+    <div id="tab-concentracao" class="tab-pane">
+      <div class="grid-charts">
+        
+        <div class="chart-card col-7">
+          <div class="chart-header">
+            <div class="chart-title">
+              <h3>Curva Acumulada de Participação (Pareto)</h3>
+              <p>Acúmulo dos registros à medida que os 125 municípios são somados</p>
+            </div>
+          </div>
+          
+          <div style="width:100%; height:320px;">
+            <svg id="paretoSvg" viewBox="0 0 650 300" style="width:100%; height:100%;"></svg>
+          </div>
+        </div>
+
+        <div class="chart-card col-5">
+          <div class="chart-header">
+            <div class="chart-title">
+              <h3>Concentração por Grupos</h3>
+              <p>Participação dos maiores municípios no total geral</p>
+            </div>
+          </div>
+          
+          <div class="bar-group" id="concentrationGroupBars">
+            <!-- Injetado via JS -->
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- TAB 5: METODOLOGIA & DOI -->
+    <div id="tab-metodo" class="tab-pane">
+      <div class="grid-charts">
+        
+        <div class="chart-card col-6">
+          <div class="chart-title" style="margin-bottom:16px;">
+            <h3 style="color:var(--cyan);"><i class="fa-solid fa-code-branch"></i> Origem & Transformação de Dados</h3>
+          </div>
+          <p style="font-size:14px; color:var(--text-muted); line-height:1.6; margin-bottom:12px;">
+            Os dados provêm de exportação associada ao PostgreSQL <code style="color:var(--cyan);">pesca_fundacentro</code>. O arquivo de referência é <code style="color:var(--gold);">studio_results_20261102_1616.csv</code>, identificado como exportação de 2 de novembro de 2026.
+          </p>
+          <p style="font-size:14px; color:var(--text-muted); line-height:1.6;">
+            Na rotina <code style="color:var(--teal);">26C_01_carga_definitiva_caracterizacao_core.py</code>, os campos <code style="color:#FFF;">raw.full_analitico_01.end_uf</code> e <code style="color:#FFF;">end_cidade</code> são associados ao par UF e nome de cidade em <code style="color:#FFF;">core.municipio</code>.
+          </p>
+        </div>
+
+        <div class="chart-card col-6">
+          <div class="chart-title" style="margin-bottom:16px;">
+            <h3 style="color:var(--purple);"><i class="fa-solid fa-bookmark"></i> Como Citar esta Publicação</h3>
+          </div>
+          <div style="background:rgba(255,255,255,0.03); padding:16px; border-radius:10px; font-size:13px; font-family:var(--font-mono); color:var(--text-muted); line-height:1.7;">
+            <strong style="color:#FFF;">Título:</strong> Abrangência da pesquisa aplicada em campo.<br>
+            <strong style="color:#FFF;">Subtítulo:</strong> Distribuição dos registros do PTSSPA por estados e municípios.<br>
+            <strong style="color:#FFF;">Identificador:</strong> LT-PTSSPA-001/2026.<br>
+            <strong style="color:#FFF;">Autoria & Instituição:</strong> OLIVEIRA, L.A.B. / Fundacentro, 2026.<br>
+            <strong style="color:var(--gold);">DOI / Sequência:</strong> [A ser atribuído pós-homologação]
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+  </main>
+
+  <!-- Footer -->
+  <footer class="app-footer">
+    <div>
+      <strong>PTSSPA · Estúdio de Pesquisa</strong> · LT-PTSSPA-001/2026 · Fundacentro (2026)
+    </div>
+    <div>
+      OLIVEIRA, L.A.B. / Fundacentro, 2026
+    </div>
+  </footer>
+
+  <!-- DATA & JAVASCRIPT LOGIC -->
+  <script>
+    const D = {"ufs":[{"uf":"PA","estado":"Pará","municipios_com_registros":"22","registros":"5697","participacao_total_pct":"34.2759"},{"uf":"AM","estado":"Amazonas","municipios_com_registros":"33","registros":"4139","participacao_total_pct":"24.9022"},{"uf":"MA","estado":"Maranhão","municipios_com_registros":"25","registros":"3274","participacao_total_pct":"19.698"},{"uf":"BA","estado":"Bahia","municipios_com_registros":"31","registros":"2403","participacao_total_pct":"14.4576"},{"uf":"PI","estado":"Piauí","municipios_com_registros":"14","registros":"1108","participacao_total_pct":"6.6663"}],"municipios":[{"uf":"AM","estado":"Amazonas","municipio":"Manacapuru","codigo_ibge":"","codigo_ibge_status":"pendente","total_registros":"617","percentual_na_uf":"14.907","percentual_total_pct":"3.7122","posicao_na_uf":"1","posicao_geral":"2","acumulado_na_uf_pct":"14.907"},{"uf":"AM","estado":"Amazonas","municipio":"Manicoré","codigo_ibge":"","codigo_ibge_status":"pendente","total_registros":"577","percentual_na_uf":"13.9406","percentual_total_pct":"3.4715","posicao_na_uf":"2","posicao_geral":"3","acumulado_na_uf_pct":"28.8475"},{"uf":"AM","estado":"Amazonas","municipio":"Lábrea","codigo_ibge":"","codigo_ibge_status":"pendente","total_registros":"343","percentual_na_uf":"8.287","percentual_total_pct":"2.0637","posicao_na_uf":"3","posicao_geral":"8","acumulado_na_uf_pct":"37.1346"},{"uf":"AM","estado":"Amazonas","municipio":"Santo Antônio do Içá","codigo_ibge":"","codigo_ibge_status":"pendente","total_registros":"215","percentual_na_uf":"5.1945","percentual_total_pct":"1.2935","posicao_na_uf":"4","posicao_geral":"19","acumulado_na_uf_pct":"42.3291"},{"uf":"AM","estado":"Amazonas","municipio":"Parintins","codigo_ibge":"","codigo_ibge_status":"pendente","total_registros":"169","percentual_na_uf":"4.0831","percentual_total_pct":"1.0168","posicao_na_uf":"5","posicao_geral":"27","acumulado_na_uf_pct":"46.4122"},{"uf":"AM","estado":"Amazonas","municipio":"Boa Vista do Ramos","codigo_ibge":"","codigo_ibge_status":"pendente","total_registros":"164","percentual_na_uf":"3.9623","percentual_total_pct":"0.9867","posicao_na_uf":"6","posicao_geral":"30","acumulado_na_uf_pct":"50.3745"},{"uf":"AM","estado":"Amazonas","municipio":"Itacoatiara","codigo_ibge":"","codigo_ibge_status":"pendente","total_registros":"161","percentual_na_uf":"3.8898","percentual_total_pct":"0.9687","posicao_na_uf":"7","posicao_geral":"31","acumulado_na_uf_pct":"54.2643"},{"uf":"AM","estado":"Amazonas","municipio":"Tapauá","codigo_ibge":"","codigo_ibge_status":"pendente","total_registros":"143","percentual_na_uf":"3.4549","percentual_total_pct":"0.8604","posicao_na_uf":"8","posicao_geral":"38","acumulado_na_uf_pct":"57.7193"},{"uf":"AM","estado":"Amazonas","municipio":"Anamã","codigo_ibge":"","codigo_ibge_status":"pendente","total_registros":"141","percentual_na_uf":"3.4066","percentual_total_pct":"0.8483","posicao_na_uf":"9","posicao_geral":"39","acumulado_na_uf_pct":"61.1259"},{"uf":"AM","estado":"Amazonas","municipio":"Tefé","codigo_ibge":"","codigo_ibge_status":"pendente","total_registros":"129","percentual_na_uf":"3.1167","percentual_total_pct":"0.7761","posicao_na_uf":"10","posicao_geral":"40","acumulado_na_uf_pct":"64.2426"},{"uf":"AM","estado":"Amazonas","municipio":"Manaus","codigo_ibge":"","codigo_ibge_status":"pendente","total_registros":"119","percentual_na_uf":"2.8751","percentual_total_pct":"0.716","posicao_na_uf":"11","posicao_geral":"46","acumulado_na_uf_pct":"67.1177"},{"uf":"AM","estado":"Amazonas","municipio":"Urucará","codigo_ibge":"","codigo_ibge_status":"pendente","total_registros":"119","percentual_na_uf":"2.8751","percentual_total_pct":"0.716","posicao_na_uf":"11","posicao_geral":"46","acumulado_na_uf_pct":"69.9928"},{"uf":"AM","estado":"Amazonas","municipio":"Autazes","codigo_ibge":"","codigo_ibge_status":"pendente","total_registros":"107","percentual_na_uf":"2.5852","percentual_total_pct":"0.6438","posicao_na_uf":"13","posicao_geral":"57","acumulado_na_uf_pct":"72.5779"},{"uf":"AM","estado":"Amazonas","municipio":"Guajará","codigo_ibge":"","codigo_ibge_status":"pendente","total_registros":"101","percentual_na_uf":"2.4402","percentual_total_pct":"0.6077","posicao_na_uf":"14","posicao_geral":"61","acumulado_na_uf_pct":"75.0181"},{"uf":"AM","estado":"Amazonas","municipio":"Fonte Boa","codigo_ibge":"","codigo_ibge_status":"pendente","total_registros":"95","percentual_na_uf":"2.2952","percentual_total_pct":"0.5716","posicao_na_uf":"15","posicao_geral":"65","acumulado_na_uf_pct":"77.3134"},{"uf":"AM","estado":"Amazonas","municipio":"Coari","codigo_ibge":"","codigo_ibge_status":"pendente","total_registros":"90","percentual_na_uf":"2.1744","percentual_total_pct":"0.5415","posicao_na_uf":"16","posicao_geral":"67","acumulado_na_uf_pct":"79.4878"},{"uf":"AM","estado":"Amazonas","municipio":"Anori","codigo_ibge":"","codigo_ibge_status":"pendente","total_registros":"86","percentual_na_uf":"2.0778","percentual_total_pct":"0.5174","posicao_na_uf":"17","posicao_geral":"70","acumulado_na_uf_pct":"81.5656"},{"uf":"AM","estado":"Amazonas","municipio":"Ipixuna","codigo_ibge":"","codigo_ibge_status":"pendente","total_registros":"83","percentual_na_uf":"2.0053","percentual_total_pct":"0.4994","posicao_na_uf":"18","posicao_geral":"73","acumulado_na_uf_pct":"83.5709"},{"uf":"AM","estado":"Amazonas","municipio":"Borba","codigo_ibge":"","codigo_ibge_status":"pendente","total_registros":"79","percentual_na_uf":"1.9087","percentual_total_pct":"0.4753","posicao_na_uf":"19","posicao_geral":"75","acumulado_na_uf_pct":"85.4796"},{"uf":"AM","estado":"Amazonas","municipio":"Humaitá","codigo_ibge":"","codigo_ibge_status":"pendente","total_registros":"74","percentual_na_uf":"1.7879","percentual_total_pct":"0.4452","posicao_na_uf":"20","posicao_geral":"77","acumulado_na_uf_pct":"87.2675"},{"uf":"AM","estado":"Amazonas","municipio":"Manaquiri","codigo_ibge":"","codigo_ibge_status":"pendente","total_registros":"68","percentual_na_uf":"1.6429","percentual_total_pct":"0.4091","posicao_na_uf":"21","posicao_geral":"82","acumulado_na_uf_pct":"88.9104"},{"uf":"AM","estado":"Amazonas","municipio":"Benjamin Constant","codigo_ibge":"","codigo_ibge_status":"pendente","total_registros":"63","percentual_na_uf":"1.5221","percentual_total_pct":"0.379","posicao_na_uf":"22","posicao_geral":"88","acumulado_na_uf_pct":"90.4325"},{"uf":"AM","estado":"Amazonas","municipio":"Maraã","codigo_ibge":"","codigo_ibge_status":"pendente","total_registros":"62","percentual_na_uf":"1.4979","percentual_total_pct":"0.373","posicao_na_uf":"23","posicao_geral":"89","acumulado_na_uf_pct":"91.9304"},{"uf":"AM","estado":"Amazonas","municipio":"Urucurituba","codigo_ibge":"","codigo_ibge_status":"pendente","total_registros":"54","percentual_na_uf":"1.3047","percentual_total_pct":"0.3249","posicao_na_uf":"24","posicao_geral":"95","acumulado_na_uf_pct":"93.2351"},{"uf":"AM","estado":"Amazonas","municipio":"Jutaí","codigo_ibge":"","codigo_ibge_status":"pendente","total_registros":"53","percentual_na_uf":"1.2805","percentual_total_pct":"0.3189","posicao_na_uf":"25","posicao_geral":"96","acumulado_na_uf_pct":"94.5156"},{"uf":"AM","estado":"Amazonas","municipio":"Iranduba","codigo_ibge":"","codigo_ibge_status":"pendente","total_registros":"52","percentual_na_uf":"1.2563","percentual_total_pct":"0.3129","posicao_na_uf":"26","posicao_geral":"98","acumulado_na_uf_pct":"95.7719"},{"uf":"AM","estado":"Amazonas","municipio":"Careiro","codigo_ibge":"","codigo_ibge_status":"pendente","total_registros":"46","percentual_na_uf":"1.1114","percentual_total_pct":"0.2768","posicao_na_uf":"27","posicao_geral":"101","acumulado_na_uf_pct":"96.8833"},{"uf":"AM","estado":"Amazonas","municipio":"Beruri","codigo_ibge":"","codigo_ibge_status":"pendente","total_registros":"42","percentual_na_uf":"1.0147","percentual_total_pct":"0.2527","posicao_na_uf":"28","posicao_geral":"106","acumulado_na_uf_pct":"97.898"},{"uf":"AM","estado":"Amazonas","municipio":"São Paulo de Olivença","codigo_ibge":"","codigo_ibge_status":"pendente","total_registros":"35","percentual_na_uf":"0.8456","percentual_total_pct":"0.2106","posicao_na_uf":"29","posicao_geral":"110","acumulado_na_uf_pct":"98.7437"},{"uf":"AM","estado":"Amazonas","municipio":"Tabatinga","codigo_ibge":"","codigo_ibge_status":"pendente","total_registros":"21","percentual_na_uf":"0.5074","percentual_total_pct":"0.1263","posicao_na_uf":"30","posicao_geral":"116","acumulado_na_uf_pct":"99.251"},{"uf":"AM","estado":"Amazonas","municipio":"Codajás","codigo_ibge":"","codigo_ibge_status":"pendente","total_registros":"15","percentual_na_uf":"0.3624","percentual_total_pct":"0.0902","posicao_na_uf":"31","posicao_geral":"118","acumulado_na_uf_pct":"99.6134"},{"uf":"AM","estado":"Amazonas","municipio":"Caapiranga","codigo_ibge":"","codigo_ibge_status":"pendente","total_registros":"13","percentual_na_uf":"0.3141","percentual_total_pct":"0.0782","posicao_na_uf":"32","posicao_geral":"120","acumulado_na_uf_pct":"99.9275"},{"uf":"AM","estado":"Amazonas","municipio":"São Sebastião do Uatumã","codigo_ibge":"","codigo_ibge_status":"pendente","total_registros":"3","percentual_na_uf":"0.0725","percentual_total_pct":"0.018","posicao_na_uf":"33","posicao_geral":"125","acumulado_na_uf_pct":"100.0"},{"uf":"BA","estado":"Bahia","municipio":"Santo Amaro","codigo_ibge":"","codigo_ibge_status":"pendente","total_registros":"193","percentual_na_uf":"8.0316","percentual_total_pct":"1.1612","posicao_na_uf":"1","posicao_geral":"24","acumulado_na_uf_pct":"8.0316"},{"uf":"BA","estado":"Bahia","municipio":"São Francisco do Conde","codigo_ibge":"","codigo_ibge_status":"pendente","total_registros":"169","percentual_na_uf":"7.0329","percentual_total_pct":"1.0168","posicao_na_uf":"2","posicao_geral":"27","acumulado_na_uf_pct":"15.0645"},{"uf":"BA","estado":"Bahia","municipio":"Vera Cruz","codigo_ibge":"","codigo_ibge_status":"pendente","total_registros":"153","percentual_na_uf":"6.367","percentual_total_pct":"0.9205","posicao_na_uf":"3","posicao_geral":"32","acumulado_na_uf_pct":"21.4315"},{"uf":"BA","estado":"Bahia","municipio":"Valença","codigo_ibge":"","codigo_ibge_status":"pendente","total_registros":"121","percentual_na_uf":"5.0354","percentual_total_pct":"0.728","posicao_na_uf":"4","posicao_geral":"44","acumulado_na_uf_pct":"26.4669"},{"uf":"BA","estado":"Bahia","municipio":"Maragogipe","codigo_ibge":"","codigo_ibge_status":"pendente","total_registros":"120","percentual_na_uf":"4.9938","percentual_total_pct":"0.722","posicao_na_uf":"5","posicao_geral":"45","acumulado_na_uf_pct":"31.4607"},{"uf":"BA","estado":"Bahia","municipio":"Saubara","codigo_ibge":"","codigo_ibge_status":"pendente","total_registros":"119","percentual_na_uf":"4.9521","percentual_total_pct":"0.716","posicao_na_uf":"6","posicao_geral":"46","acumulado_na_uf_pct":"36.4128"},{"uf":"BA","estado":"Bahia","municipio":"Salinas da Margarida","codigo_ibge":"","codigo_ibge_status":"pendente","total_registros":"115","percentual_na_uf":"4.7857","percentual_total_pct":"0.6919","posicao_na_uf":"7","posicao_geral":"52","acumulado_na_uf_pct":"41.1985"},{"uf":"BA","estado":"Bahia","municipio":"Sítio do Mato","codigo_ibge":"","codigo_ibge_status":"pendente","total_registros":"110","percentual_na_uf":"4.5776","percentual_total_pct":"0.6618","posicao_na_uf":"8","posicao_geral":"54","acumulado_na_uf_pct":"45.7761"},{"uf":"BA","estado":"Bahia","municipio":"Salvador","codigo_ibge":"","codigo_ibge_status":"pendente","total_registros":"106","percentual_na_uf":"4.4112","percentual_total_pct":"0.6377","posicao_na_uf":"9","posicao_geral":"58","acumulado_na_uf_pct":"50.1873"},{"uf":"BA","estado":"Bahia","municipio":"Pilão Arcado","codigo_ibge":"","codigo_ibge_status":"pendente","total_registros":"102","percentual_na_uf":"4.2447","percentual_total_pct":"0.6137","posicao_na_uf":"10","posicao_geral":"59","acumulado_na_uf_pct":"54.432"},{"uf":"BA","estado":"Bahia","municipio":"Malhada","codigo_ibge":"","codigo_ibge_status":"pendente","total_registros":"88","percentual_na_uf":"3.6621","percentual_total_pct":"0.5295","posicao_na_uf":"11","posicao_geral":"68","acumulado_na_uf_pct":"58.094"},{"uf":"BA","estado":"Bahia","municipio":"Bom Jesus da Lapa","codigo_ibge":"","codigo_ibge_status":"pendente","total_registros":"87","percentual_na_uf":"3.6205","percentual_total_pct":"0.5234","posicao_na_uf":"12","posicao_geral":"69","acumulado_na_uf_pct":"61.7145"},{"uf":"BA","estado":"Bahia","municipio":"Nazaré","codigo_ibge":"","codigo_ibge_status":"pendente","total_registros":"84","percentual_na_uf":"3.4956","percentual_total_pct":"0.5054","posicao_na_uf":"13","posicao_geral":"72","acumulado_na_uf_pct":"65.2102"},{"uf":"BA","estado":"Bahia","municipio":"Ibotirama","codigo_ibge":"","codigo_ibge_status":"pendente","total_registros":"74","percentual_na_uf":"3.0795","percentual_total_pct":"0.4452","posicao_na_uf":"14","posicao_geral":"77","acumulado_na_uf_pct":"68.2896"},{"uf":"BA","estado":"Bahia","municipio":"Itaparica","codigo_ibge":"","codigo_ibge_status":"pendente","total_registros":"74","percentual_na_uf":"3.0795","percentual_total_pct":"0.4452","posicao_na_uf":"14","posicao_geral":"77","acumulado_na_uf_pct":"71.3691"},{"uf":"BA","estado":"Bahia","municipio":"Paratinga","codigo_ibge":"","codigo_ibge_status":"pendente","total_registros":"74","percentual_na_uf":"3.0795","percentual_total_pct":"0.4452","posicao_na_uf":"14","posicao_geral":"77","acumulado_na_uf_pct":"74.4486"},{"uf":"BA","estado":"Bahia","municipio":"Curaçá","codigo_ibge":"","codigo_ibge_status":"pendente","total_registros":"64","percentual_na_uf":"2.6633","percentual_total_pct":"0.3851","posicao_na_uf":"17","posicao_geral":"84","acumulado_na_uf_pct":"77.1119"},{"uf":"BA","estado":"Bahia","municipio":"Remanso","codigo_ibge":"","codigo_ibge_status":"pendente","total_registros":"64","percentual_na_uf":"2.6633","percentual_total_pct":"0.3851","posicao_na_uf":"17","posicao_geral":"84","acumulado_na_uf_pct":"79.7753"},{"uf":"BA","estado":"Bahia","municipio":"Casa Nova","codigo_ibge":"","codigo_ibge_status":"pendente","total_registros":"61","percentual_na_uf":"2.5385","percentual_total_pct":"0.367","posicao_na_uf":"19","posicao_geral":"90","acumulado_na_uf_pct":"82.3138"},{"uf":"BA","estado":"Bahia","municipio":"Jandaíra","codigo_ibge":"","codigo_ibge_status":"pendente","total_registros":"57","percentual_na_uf":"2.372","percentual_total_pct":"0.3429","posicao_na_uf":"20","posicao_geral":"93","acumulado_na_uf_pct":"84.6858"},{"uf":"BA","estado":"Bahia","municipio":"Conde","codigo_ibge":"","codigo_ibge_status":"pendente","total_registros":"56","percentual_na_uf":"2.3304","percentual_total_pct":"0.3369","posicao_na_uf":"21","posicao_geral":"94","acumulado_na_uf_pct":"87.0162"},{"uf":"BA","estado":"Bahia","municipio":"Xique-Xique","codigo_ibge":"","codigo_ibge_status":"pendente","total_registros":"53","percentual_na_uf":"2.2056","percentual_total_pct":"0.3189","posicao_na_uf":"22","posicao_geral":"96","acumulado_na_uf_pct":"89.2218"},{"uf":"BA","estado":"Bahia","municipio":"Juazeiro","codigo_ibge":"","codigo_ibge_status":"pendente","total_registros":"46","percentual_na_uf":"1.9143","percentual_total_pct":"0.2768","posicao_na_uf":"23","posicao_geral":"101","acumulado_na_uf_pct":"91.1361"},{"uf":"BA","estado":"Bahia","municipio":"Sobradinho","codigo_ibge":"","codigo_ibge_status":"pendente","total_registros":"45","percentual_na_uf":"1.8727","percentual_total_pct":"0.2707","posicao_na_uf":"24","posicao_geral":"103","acumulado_na_uf_pct":"93.0087"},{"uf":"BA","estado":"Bahia","municipio":"Sento Sé","codigo_ibge":"","codigo_ibge_status":"pendente","total_registros":"44","percentual_na_uf":"1.831","percentual_total_pct":"0.2647","posicao_na_uf":"25","posicao_geral":"104","acumulado_na_uf_pct":"94.8398"},{"uf":"BA","estado":"Bahia","municipio":"Itiúba","codigo_ibge":"","codigo_ibge_status":"pendente","total_registros":"43","percentual_na_uf":"1.7894","percentual_total_pct":"0.2587","posicao_na_uf":"26","posicao_geral":"105","acumulado_na_uf_pct":"96.6292"},{"uf":"BA","estado":"Bahia","municipio":"Morpará","codigo_ibge":"","codigo_ibge_status":"pendente","total_registros":"30","percentual_na_uf":"1.2484","percentual_total_pct":"0.1805","posicao_na_uf":"27","posicao_geral":"112","acumulado_na_uf_pct":"97.8777"},{"uf":"BA","estado":"Bahia","municipio":"Serra do Ramalho","codigo_ibge":"","codigo_ibge_status":"pendente","total_registros":"29","percentual_na_uf":"1.2068","percentual_total_pct":"0.1745","posicao_na_uf":"28","posicao_geral":"113","acumulado_na_uf_pct":"99.0845"},{"uf":"BA","estado":"Bahia","municipio":"Rodelas","codigo_ibge":"","codigo_ibge_status":"pendente","total_registros":"14","percentual_na_uf":"0.5826","percentual_total_pct":"0.0842","posicao_na_uf":"29","posicao_geral":"119","acumulado_na_uf_pct":"99.6671"},{"uf":"BA","estado":"Bahia","municipio":"Barra","codigo_ibge":"","codigo_ibge_status":"pendente","total_registros":"4","percentual_na_uf":"0.1665","percentual_total_pct":"0.0241","posicao_na_uf":"30","posicao_geral":"123","acumulado_na_uf_pct":"99.8335"},{"uf":"BA","estado":"Bahia","municipio":"Gentio do Ouro","codigo_ibge":"","codigo_ibge_status":"pendente","total_registros":"4","percentual_na_uf":"0.1665","percentual_total_pct":"0.0241","posicao_na_uf":"30","posicao_geral":"123","acumulado_na_uf_pct":"100.0"},{"uf":"MA","estado":"Maranhão","municipio":"São Luís","codigo_ibge":"","codigo_ibge_status":"pendente","total_registros":"486","percentual_na_uf":"14.8442","percentual_total_pct":"2.924","posicao_na_uf":"1","posicao_geral":"4","acumulado_na_uf_pct":"14.8442"},{"uf":"MA","estado":"Maranhão","municipio":"Anajatuba","codigo_ibge":"","codigo_ibge_status":"pendente","total_registros":"280","percentual_na_uf":"8.5522","percentual_total_pct":"1.6846","posicao_na_uf":"2","posicao_geral":"12","acumulado_na_uf_pct":"23.3965"},{"uf":"MA","estado":"Maranhão","municipio":"Rosário","codigo_ibge":"","codigo_ibge_status":"pendente","total_registros":"259","percentual_na_uf":"7.9108","percentual_total_pct":"1.5583","posicao_na_uf":"3","posicao_geral":"14","acumulado_na_uf_pct":"31.3073"},{"uf":"MA","estado":"Maranhão","municipio":"Matinha","codigo_ibge":"","codigo_ibge_status":"pendente","total_registros":"203","percentual_na_uf":"6.2004","percentual_total_pct":"1.2213","posicao_na_uf":"4","posicao_geral":"21","acumulado_na_uf_pct":"37.5076"},{"uf":"MA","estado":"Maranhão","municipio":"Tutóia","codigo_ibge":"","codigo_ibge_status":"pendente","total_registros":"186","percentual_na_uf":"5.6811","percentual_total_pct":"1.1191","posicao_na_uf":"5","posicao_geral":"25","acumulado_na_uf_pct":"43.1888"},{"uf":"MA","estado":"Maranhão","municipio":"Pedro do Rosário","codigo_ibge":"","codigo_ibge_status":"pendente","total_registros":"152","percentual_na_uf":"4.6426","percentual_total_pct":"0.9145","posicao_na_uf":"6","posicao_geral":"33","acumulado_na_uf_pct":"47.8314"},{"uf":"MA","estado":"Maranhão","municipio":"Pinheiro","codigo_ibge":"","codigo_ibge_status":"pendente","total_registros":"149","percentual_na_uf":"4.551","percentual_total_pct":"0.8965","posicao_na_uf":"7","posicao_geral":"34","acumulado_na_uf_pct":"52.3824"},{"uf":"MA","estado":"Maranhão","municipio":"Urbano Santos","codigo_ibge":"","codigo_ibge_status":"pendente","total_registros":"149","percentual_na_uf":"4.551","percentual_total_pct":"0.8965","posicao_na_uf":"7","posicao_geral":"34","acumulado_na_uf_pct":"56.9334"},{"uf":"MA","estado":"Maranhão","municipio":"Paço do Lumiar","codigo_ibge":"","codigo_ibge_status":"pendente","total_registros":"146","percentual_na_uf":"4.4594","percentual_total_pct":"0.8784","posicao_na_uf":"9","posicao_geral":"36","acumulado_na_uf_pct":"61.3928"},{"uf":"MA","estado":"Maranhão","municipio":"Santa Quitéria do Maranhão","codigo_ibge":"","codigo_ibge_status":"pendente","total_registros":"118","percentual_na_uf":"3.6042","percentual_total_pct":"0.7099","posicao_na_uf":"10","posicao_geral":"49","acumulado_na_uf_pct":"64.9969"},{"uf":"MA","estado":"Maranhão","municipio":"São José de Ribamar","codigo_ibge":"","codigo_ibge_status":"pendente","total_registros":"118","percentual_na_uf":"3.6042","percentual_total_pct":"0.7099","posicao_na_uf":"10","posicao_geral":"49","acumulado_na_uf_pct":"68.6011"},{"uf":"MA","estado":"Maranhão","municipio":"Raposa","codigo_ibge":"","codigo_ibge_status":"pendente","total_registros":"114","percentual_na_uf":"3.482","percentual_total_pct":"0.6859","posicao_na_uf":"12","posicao_geral":"53","acumulado_na_uf_pct":"72.0831"},{"uf":"MA","estado":"Maranhão","municipio":"Santa Inês","codigo_ibge":"","codigo_ibge_status":"pendente","total_registros":"108","percentual_na_uf":"3.2987","percentual_total_pct":"0.6498","posicao_na_uf":"13","posicao_geral":"55","acumulado_na_uf_pct":"75.3818"},{"uf":"MA","estado":"Maranhão","municipio":"Araioses","codigo_ibge":"","codigo_ibge_status":"pendente","total_registros":"102","percentual_na_uf":"3.1155","percentual_total_pct":"0.6137","posicao_na_uf":"14","posicao_geral":"59","acumulado_na_uf_pct":"78.4973"},{"uf":"MA","estado":"Maranhão","municipio":"São Bernardo","codigo_ibge":"","codigo_ibge_status":"pendente","total_registros":"99","percentual_na_uf":"3.0238","percentual_total_pct":"0.5956","posicao_na_uf":"15","posicao_geral":"62","acumulado_na_uf_pct":"81.5211"},{"uf":"MA","estado":"Maranhão","municipio":"Pio XII","codigo_ibge":"","codigo_ibge_status":"pendente","total_registros":"96","percentual_na_uf":"2.9322","percentual_total_pct":"0.5776","posicao_na_uf":"16","posicao_geral":"64","acumulado_na_uf_pct":"84.4533"},{"uf":"MA","estado":"Maranhão","municipio":"Bacabal","codigo_ibge":"","codigo_ibge_status":"pendente","total_registros":"91","percentual_na_uf":"2.7795","percentual_total_pct":"0.5475","posicao_na_uf":"17","posicao_geral":"66","acumulado_na_uf_pct":"87.2327"},{"uf":"MA","estado":"Maranhão","municipio":"Viana","codigo_ibge":"","codigo_ibge_status":"pendente","total_registros":"71","percentual_na_uf":"2.1686","percentual_total_pct":"0.4272","posicao_na_uf":"18","posicao_geral":"81","acumulado_na_uf_pct":"89.4013"},{"uf":"MA","estado":"Maranhão","municipio":"Magalhães de Almeida","codigo_ibge":"","codigo_ibge_status":"pendente","total_registros":"64","percentual_na_uf":"1.9548","percentual_total_pct":"0.3851","posicao_na_uf":"19","posicao_geral":"84","acumulado_na_uf_pct":"91.3561"},{"uf":"MA","estado":"Maranhão","municipio":"São João Batista","codigo_ibge":"","codigo_ibge_status":"pendente","total_registros":"64","percentual_na_uf":"1.9548","percentual_total_pct":"0.3851","posicao_na_uf":"19","posicao_geral":"84","acumulado_na_uf_pct":"93.3109"},{"uf":"MA","estado":"Maranhão","municipio":"Pindaré-Mirim","codigo_ibge":"","codigo_ibge_status":"pendente","total_registros":"59","percentual_na_uf":"1.8021","percentual_total_pct":"0.355","posicao_na_uf":"21","posicao_geral":"92","acumulado_na_uf_pct":"95.113"},{"uf":"MA","estado":"Maranhão","municipio":"Bom Jardim","codigo_ibge":"","codigo_ibge_status":"pendente","total_registros":"50","percentual_na_uf":"1.5272","percentual_total_pct":"0.3008","posicao_na_uf":"22","posicao_geral":"99","acumulado_na_uf_pct":"96.6402"},{"uf":"MA","estado":"Maranhão","municipio":"Santa Luzia do Paruá","codigo_ibge":"","codigo_ibge_status":"pendente","total_registros":"41","percentual_na_uf":"1.2523","percentual_total_pct":"0.2467","posicao_na_uf":"23","posicao_geral":"107","acumulado_na_uf_pct":"97.8925"},{"uf":"MA","estado":"Maranhão","municipio":"Zé Doca","codigo_ibge":"","codigo_ibge_status":"pendente","total_registros":"36","percentual_na_uf":"1.0996","percentual_total_pct":"0.2166","posicao_na_uf":"24","posicao_geral":"109","acumulado_na_uf_pct":"98.9921"},{"uf":"MA","estado":"Maranhão","municipio":"Santa Helena","codigo_ibge":"","codigo_ibge_status":"pendente","total_registros":"33","percentual_na_uf":"1.0079","percentual_total_pct":"0.1985","posicao_na_uf":"25","posicao_geral":"111","acumulado_na_uf_pct":"100.0"},{"uf":"PA","estado":"Pará","municipio":"Cametá","codigo_ibge":"","codigo_ibge_status":"pendente","total_registros":"1159","percentual_na_uf":"20.344","percentual_total_pct":"6.9731","posicao_na_uf":"1","posicao_geral":"1","acumulado_na_uf_pct":"20.344"},{"uf":"PA","estado":"Pará","municipio":"Cachoeira do Arari","codigo_ibge":"","codigo_ibge_status":"pendente","total_registros":"465","percentual_na_uf":"8.1622","percentual_total_pct":"2.7977","posicao_na_uf":"2","posicao_geral":"5","acumulado_na_uf_pct":"28.5062"},{"uf":"PA","estado":"Pará","municipio":"Ponta de Pedras","codigo_ibge":"","codigo_ibge_status":"pendente","total_registros":"387","percentual_na_uf":"6.793","percentual_total_pct":"2.3284","posicao_na_uf":"3","posicao_geral":"6","acumulado_na_uf_pct":"35.2993"},{"uf":"PA","estado":"Pará","municipio":"Abaetetuba","codigo_ibge":"","codigo_ibge_status":"pendente","total_registros":"356","percentual_na_uf":"6.2489","percentual_total_pct":"2.1419","posicao_na_uf":"4","posicao_geral":"7","acumulado_na_uf_pct":"41.5482"},{"uf":"PA","estado":"Pará","municipio":"Limoeiro do Ajuru","codigo_ibge":"","codigo_ibge_status":"pendente","total_registros":"329","percentual_na_uf":"5.775","percentual_total_pct":"1.9794","posicao_na_uf":"5","posicao_geral":"9","acumulado_na_uf_pct":"47.3232"},{"uf":"PA","estado":"Pará","municipio":"São Sebastião da Boa Vista","codigo_ibge":"","codigo_ibge_status":"pendente","total_registros":"287","percentual_na_uf":"5.0377","percentual_total_pct":"1.7267","posicao_na_uf":"6","posicao_geral":"10","acumulado_na_uf_pct":"52.3609"},{"uf":"PA","estado":"Pará","municipio":"Monte Alegre","codigo_ibge":"","codigo_ibge_status":"pendente","total_registros":"285","percentual_na_uf":"5.0026","percentual_total_pct":"1.7147","posicao_na_uf":"7","posicao_geral":"11","acumulado_na_uf_pct":"57.3635"},{"uf":"PA","estado":"Pará","municipio":"Baião","codigo_ibge":"","codigo_ibge_status":"pendente","total_registros":"269","percentual_na_uf":"4.7218","percentual_total_pct":"1.6184","posicao_na_uf":"8","posicao_geral":"13","acumulado_na_uf_pct":"62.0853"},{"uf":"PA","estado":"Pará","municipio":"Breves","codigo_ibge":"","codigo_ibge_status":"pendente","total_registros":"259","percentual_na_uf":"4.5463","percentual_total_pct":"1.5583","posicao_na_uf":"9","posicao_geral":"14","acumulado_na_uf_pct":"66.6316"},{"uf":"PA","estado":"Pará","municipio":"Tucuruí","codigo_ibge":"","codigo_ibge_status":"pendente","total_registros":"238","percentual_na_uf":"4.1776","percentual_total_pct":"1.4319","posicao_na_uf":"10","posicao_geral":"16","acumulado_na_uf_pct":"70.8092"},{"uf":"PA","estado":"Pará","municipio":"Prainha","codigo_ibge":"","codigo_ibge_status":"pendente","total_registros":"229","percentual_na_uf":"4.0197","percentual_total_pct":"1.3778","posicao_na_uf":"11","posicao_geral":"17","acumulado_na_uf_pct":"74.8289"},{"uf":"PA","estado":"Pará","municipio":"Oeiras do Pará","codigo_ibge":"","codigo_ibge_status":"pendente","total_registros":"208","percentual_na_uf":"3.651","percentual_total_pct":"1.2514","posicao_na_uf":"12","posicao_geral":"20","acumulado_na_uf_pct":"78.4799"},{"uf":"PA","estado":"Pará","municipio":"Soure","codigo_ibge":"","codigo_ibge_status":"pendente","total_registros":"203","percentual_na_uf":"3.5633","percentual_total_pct":"1.2213","posicao_na_uf":"13","posicao_geral":"21","acumulado_na_uf_pct":"82.0432"},{"uf":"PA","estado":"Pará","municipio":"Santarém","codigo_ibge":"","codigo_ibge_status":"pendente","total_registros":"171","percentual_na_uf":"3.0016","percentual_total_pct":"1.0288","posicao_na_uf":"14","posicao_geral":"26","acumulado_na_uf_pct":"85.0448"},{"uf":"PA","estado":"Pará","municipio":"Igarapé-Miri","codigo_ibge":"","codigo_ibge_status":"pendente","total_registros":"146","percentual_na_uf":"2.5628","percentual_total_pct":"0.8784","posicao_na_uf":"15","posicao_geral":"36","acumulado_na_uf_pct":"87.6075"},{"uf":"PA","estado":"Pará","municipio":"Gurupá","codigo_ibge":"","codigo_ibge_status":"pendente","total_registros":"129","percentual_na_uf":"2.2643","percentual_total_pct":"0.7761","posicao_na_uf":"16","posicao_geral":"40","acumulado_na_uf_pct":"89.8719"},{"uf":"PA","estado":"Pará","municipio":"Salvaterra","codigo_ibge":"","codigo_ibge_status":"pendente","total_registros":"129","percentual_na_uf":"2.2643","percentual_total_pct":"0.7761","posicao_na_uf":"16","posicao_geral":"40","acumulado_na_uf_pct":"92.1362"},{"uf":"PA","estado":"Pará","municipio":"Mocajuba","codigo_ibge":"","codigo_ibge_status":"pendente","total_registros":"126","percentual_na_uf":"2.2117","percentual_total_pct":"0.7581","posicao_na_uf":"18","posicao_geral":"43","acumulado_na_uf_pct":"94.3479"},{"uf":"PA","estado":"Pará","municipio":"Óbidos","codigo_ibge":"","codigo_ibge_status":"pendente","total_registros":"117","percentual_na_uf":"2.0537","percentual_total_pct":"0.7039","posicao_na_uf":"19","posicao_geral":"51","acumulado_na_uf_pct":"96.4016"},{"uf":"PA","estado":"Pará","municipio":"Breu Branco","codigo_ibge":"","codigo_ibge_status":"pendente","total_registros":"108","percentual_na_uf":"1.8957","percentual_total_pct":"0.6498","posicao_na_uf":"20","posicao_geral":"55","acumulado_na_uf_pct":"98.2973"},{"uf":"PA","estado":"Pará","municipio":"Muaná","codigo_ibge":"","codigo_ibge_status":"pendente","total_registros":"80","percentual_na_uf":"1.4042","percentual_total_pct":"0.4813","posicao_na_uf":"21","posicao_geral":"74","acumulado_na_uf_pct":"99.7016"},{"uf":"PA","estado":"Pará","municipio":"Curralinho","codigo_ibge":"","codigo_ibge_status":"pendente","total_registros":"17","percentual_na_uf":"0.2984","percentual_total_pct":"0.1023","posicao_na_uf":"22","posicao_geral":"117","acumulado_na_uf_pct":"100.0"},{"uf":"PI","estado":"Piauí","municipio":"Luís Correia","codigo_ibge":"","codigo_ibge_status":"pendente","total_registros":"218","percentual_na_uf":"19.6751","percentual_total_pct":"1.3116","posicao_na_uf":"1","posicao_geral":"18","acumulado_na_uf_pct":"19.6751"},{"uf":"PI","estado":"Piauí","municipio":"Parnaíba","codigo_ibge":"","codigo_ibge_status":"pendente","total_registros":"194","percentual_na_uf":"17.509","percentual_total_pct":"1.1672","posicao_na_uf":"2","posicao_geral":"23","acumulado_na_uf_pct":"37.1841"},{"uf":"PI","estado":"Piauí","municipio":"Teresina","codigo_ibge":"","codigo_ibge_status":"pendente","total_registros":"169","percentual_na_uf":"15.2527","percentual_total_pct":"1.0168","posicao_na_uf":"3","posicao_geral":"27","acumulado_na_uf_pct":"52.4368"},{"uf":"PI","estado":"Piauí","municipio":"Ilha Grande","codigo_ibge":"","codigo_ibge_status":"pendente","total_registros":"97","percentual_na_uf":"8.7545","percentual_total_pct":"0.5836","posicao_na_uf":"4","posicao_geral":"63","acumulado_na_uf_pct":"61.1913"},{"uf":"PI","estado":"Piauí","municipio":"Matias Olímpio","codigo_ibge":"","codigo_ibge_status":"pendente","total_registros":"86","percentual_na_uf":"7.7617","percentual_total_pct":"0.5174","posicao_na_uf":"5","posicao_geral":"70","acumulado_na_uf_pct":"68.9531"},{"uf":"PI","estado":"Piauí","municipio":"Joca Marques","codigo_ibge":"","codigo_ibge_status":"pendente","total_registros":"76","percentual_na_uf":"6.8592","percentual_total_pct":"0.4573","posicao_na_uf":"6","posicao_geral":"76","acumulado_na_uf_pct":"75.8123"},{"uf":"PI","estado":"Piauí","municipio":"Barras","codigo_ibge":"","codigo_ibge_status":"pendente","total_registros":"67","percentual_na_uf":"6.0469","percentual_total_pct":"0.4031","posicao_na_uf":"7","posicao_geral":"83","acumulado_na_uf_pct":"81.8592"},{"uf":"PI","estado":"Piauí","municipio":"José de Freitas","codigo_ibge":"","codigo_ibge_status":"pendente","total_registros":"60","percentual_na_uf":"5.4152","percentual_total_pct":"0.361","posicao_na_uf":"8","posicao_geral":"91","acumulado_na_uf_pct":"87.2744"},{"uf":"PI","estado":"Piauí","municipio":"Buriti dos Lopes","codigo_ibge":"","codigo_ibge_status":"pendente","total_registros":"47","percentual_na_uf":"4.2419","percentual_total_pct":"0.2828","posicao_na_uf":"9","posicao_geral":"100","acumulado_na_uf_pct":"91.5162"},{"uf":"PI","estado":"Piauí","municipio":"Madeiro","codigo_ibge":"","codigo_ibge_status":"pendente","total_registros":"37","percentual_na_uf":"3.3394","percentual_total_pct":"0.2226","posicao_na_uf":"10","posicao_geral":"108","acumulado_na_uf_pct":"94.8556"},{"uf":"PI","estado":"Piauí","municipio":"Campo Largo do Piauí","codigo_ibge":"","codigo_ibge_status":"pendente","total_registros":"22","percentual_na_uf":"1.9856","percentual_total_pct":"0.1324","posicao_na_uf":"11","posicao_geral":"114","acumulado_na_uf_pct":"96.8412"},{"uf":"PI","estado":"Piauí","municipio":"Guadalupe","codigo_ibge":"","codigo_ibge_status":"pendente","total_registros":"22","percentual_na_uf":"1.9856","percentual_total_pct":"0.1324","posicao_na_uf":"11","posicao_geral":"114","acumulado_na_uf_pct":"98.8267"},{"uf":"PI","estado":"Piauí","municipio":"Cajueiro da Praia","codigo_ibge":"","codigo_ibge_status":"pendente","total_registros":"7","percentual_na_uf":"0.6318","percentual_total_pct":"0.0421","posicao_na_uf":"13","posicao_geral":"121","acumulado_na_uf_pct":"99.4585"},{"uf":"PI","estado":"Piauí","municipio":"Murici dos Portelas","codigo_ibge":"","codigo_ibge_status":"pendente","total_registros":"6","percentual_na_uf":"0.5415","percentual_total_pct":"0.0361","posicao_na_uf":"14","posicao_geral":"122","acumulado_na_uf_pct":"100.0"}],"stats":[{"uf":"PA","estado":"Pará","municipios":"22","registros":"5697","minimo":"17","maximo":"1159","media":"258.9545","mediana":"218.5","desvio_padrao_amostral":"228.5919","q1":"129.0","q3":"286.5","top1_registros":"1159","top1_pct":"20.344","top5_registros":"2696","top5_pct":"47.3232","top10_registros":"4034","top10_pct":"70.8092"},{"uf":"AM","estado":"Amazonas","municipios":"33","registros":"4139","minimo":"3","maximo":"617","media":"125.4242","mediana":"86.0","desvio_padrao_amostral":"138.8146","q1":"53.0","q3":"141.0","top1_registros":"617","top1_pct":"14.907","top5_registros":"1921","top5_pct":"46.4122","top10_registros":"2659","top10_pct":"64.2426"},{"uf":"MA","estado":"Maranhão","municipios":"25","registros":"3274","minimo":"33","maximo":"486","media":"130.96","mediana":"108.0","desvio_padrao_amostral":"98.1137","q1":"64.0","q3":"149.0","top1_registros":"486","top1_pct":"14.8442","top5_registros":"1414","top5_pct":"43.1888","top10_registros":"2128","top10_pct":"64.9969"},{"uf":"BA","estado":"Bahia","municipios":"31","registros":"2403","minimo":"4","maximo":"193","media":"77.5161","mediana":"74.0","desvio_padrao_amostral":"45.7944","q1":"45.5","q3":"108.0","top1_registros":"193","top1_pct":"8.0316","top5_registros":"756","top5_pct":"31.4607","top10_registros":"1308","top10_pct":"54.432"},{"uf":"PI","estado":"Piauí","municipios":"14","registros":"1108","minimo":"6","maximo":"218","media":"79.1429","mediana":"63.5","desvio_padrao_amostral":"68.6864","q1":"25.75","q3":"94.25","top1_registros":"218","top1_pct":"19.6751","top5_registros":"764","top5_pct":"68.9531","top10_registros":"1051","top10_pct":"94.8556"}]};
+
+    const nf = n => Number(n).toLocaleString('pt-BR');
+    const pct = n => Number(n).toLocaleString('pt-BR', {minimumFractionDigits: 1, maximumFractionDigits: 1}) + '%';
+
+    // Tab Switcher
+    function switchTab(tabId, btn) {
+      document.querySelectorAll('.tab-pane').forEach(el => el.classList.remove('active'));
+      document.querySelectorAll('.tab-btn').forEach(el => el.classList.remove('active'));
+      
+      document.getElementById('tab-' + tabId).classList.add('active');
+      btn.classList.add('active');
+    }
+
+    // Initialize UI Elements
+    document.addEventListener('DOMContentLoaded', () => {
+      renderOverview();
+      initMunicipalTable();
+      initStatesTab();
+      renderParetoChart();
+    });
+
+    // 1. Overview Render
+    function renderOverview() {
+      // Registros por Estado Bars
+      const maxReg = Math.max(...D.ufs.map(x => Number(x.registros)));
+      const htmlReg = D.ufs.map(x => `
+        <div class="bar-item">
+          <div class="bar-info">
+            <span class="name">${x.estado} (${x.uf})</span>
+            <span class="val">${nf(x.registros)} reg. (${pct(x.participacao_total_pct)})</span>
+          </div>
+          <div class="bar-track">
+            <div class="bar-fill" style="width: ${(x.registros/maxReg)*100}%"></div>
+          </div>
+        </div>
+      `).join('');
+      document.getElementById('stateBarsOverview').innerHTML = htmlReg;
+
+      // Municípios por Estado Bars
+      const maxMun = Math.max(...D.ufs.map(x => Number(x.municipios_com_registros)));
+      const htmlMun = D.ufs.map(x => `
+        <div class="bar-item">
+          <div class="bar-info">
+            <span class="name">${x.estado} (${x.uf})</span>
+            <span class="val">${x.municipios_com_registros} mun.</span>
+          </div>
+          <div class="bar-track">
+            <div class="bar-fill teal" style="width: ${(x.municipios_com_registros/maxMun)*100}%"></div>
+          </div>
+        </div>
+      `).join('');
+      document.getElementById('munBarsOverview').innerHTML = htmlMun;
+    }
+
+    // 2. Municipal Table Logic
+    let allMunData = [...D.municipios].sort((a,b) => Number(b.total_registros) - Number(a.total_registros));
+
+    function initMunicipalTable() {
+      // Populate Filter Options
+      const select = document.getElementById('munUfFilter');
+      D.ufs.forEach(u => {
+        const opt = document.createElement('option');
+        opt.value = u.uf;
+        opt.textContent = `${u.estado} (${u.uf})`;
+        select.appendChild(opt);
+      });
+
+      renderMunicipalTable(allMunData);
+    }
+
+    function renderMunicipalTable(data) {
+      const tbody = document.getElementById('municipalTableBody');
+      tbody.innerHTML = data.map(x => `
+        <tr>
+          <td class="num">${x.posicao_geral}º</td>
+          <td class="num">${x.posicao_na_uf}º</td>
+          <td><span class="tag-uf">${x.uf}</span></td>
+          <td style="font-weight:600; color:#FFF;">${x.municipio}</td>
+          <td class="num" style="color:var(--cyan); font-weight:700;">${nf(x.total_registros)}</td>
+          <td class="num">${pct(x.percentual_na_uf)}</td>
+          <td class="num">${pct(x.percentual_total_pct)}</td>
+          <td class="num" style="color:var(--text-muted);">${pct(x.acumulado_na_uf_pct)}</td>
+        </tr>
+      `).join('');
+    }
+
+    function filterMunicipalTable() {
+      const search = document.getElementById('munSearchInput').value.toLowerCase();
+      const uf = document.getElementById('munUfFilter').value;
+
+      const filtered = allMunData.filter(x => {
+        const matchesSearch = x.municipio.toLowerCase().includes(search) || x.estado.toLowerCase().includes(search);
+        const matchesUf = !uf || x.uf === uf;
+        return matchesSearch && matchesUf;
+      });
+
+      renderMunicipalTable(filtered);
+    }
+
+    function clearMunFilters() {
+      document.getElementById('munSearchInput').value = '';
+      document.getElementById('munUfFilter').value = '';
+      renderMunicipalTable(allMunData);
+    }
+
+    // 3. States Tab Logic
+    function initStatesTab() {
+      const select = document.getElementById('stateSelectDetailed');
+      select.innerHTML = D.ufs.map(u => `<option value="${u.uf}">${u.estado} (${u.uf})</option>`).join('');
+      
+      // Render State Summary Cards
+      const cardsGrid = document.getElementById('stateCardsGrid');
+      cardsGrid.innerHTML = D.stats.map(s => `
+        <div class="metric-card">
+          <div class="metric-label">${s.estado} (${s.uf})</div>
+          <div class="metric-value">${nf(s.registros)}</div>
+          <div class="metric-sub">${s.municipios} municípios · Mediana ${nf(s.mediana)}</div>
+        </div>
+      `).join('');
+
+      renderStateDetail();
+    }
+
+    function renderStateDetail() {
+      const uf = document.getElementById('stateSelectDetailed').value;
+      const ufInfo = D.ufs.find(u => u.uf === uf);
+      const ufStats = D.stats.find(s => s.uf === uf);
+      const munList = D.municipios.filter(m => m.uf === uf).sort((a,b) => Number(a.posicao_na_uf) - Number(b.posicao_na_uf));
+
+      document.getElementById('stateDetailTitle').textContent = `Municípios do ${ufInfo.estado} (${ufInfo.municipios_com_registros} mun.)`;
+
+      // Render metrics panel
+      document.getElementById('stateDetailMetrics').innerHTML = `
+        <div style="display:flex; flex-direction:column; gap:12px; font-size:13px;">
+          <div style="display:flex; justify-content:space-between; border-bottom:1px solid rgba(255,255,255,0.05); padding-bottom:6px;">
+            <span style="color:var(--text-muted)">Total Registros:</span>
+            <strong style="color:var(--cyan); font-family:var(--font-mono);">${nf(ufInfo.registros)} (${pct(ufInfo.participacao_total_pct)})</strong>
+          </div>
+          <div style="display:flex; justify-content:space-between; border-bottom:1px solid rgba(255,255,255,0.05); padding-bottom:6px;">
+            <span style="color:var(--text-muted)">Média por Mun.:</span>
+            <strong style="color:#FFF; font-family:var(--font-mono);">${nf(ufStats.media)}</strong>
+          </div>
+          <div style="display:flex; justify-content:space-between; border-bottom:1px solid rgba(255,255,255,0.05); padding-bottom:6px;">
+            <span style="color:var(--text-muted)">Mínimo / Máximo:</span>
+            <strong style="color:#FFF; font-family:var(--font-mono);">${nf(ufStats.minimo)} / ${nf(ufStats.maximo)}</strong>
+          </div>
+          <div style="display:flex; justify-content:space-between; border-bottom:1px solid rgba(255,255,255,0.05); padding-bottom:6px;">
+            <span style="color:var(--text-muted)">Quartis (Q1 / Q3):</span>
+            <strong style="color:#FFF; font-family:var(--font-mono);">${nf(ufStats.q1)} / ${nf(ufStats.q3)}</strong>
+          </div>
+        </div>
+      `;
+
+      // Render table
+      document.getElementById('stateDetailTableBody').innerHTML = munList.map(m => `
+        <tr>
+          <td class="num">${m.posicao_na_uf}º</td>
+          <td style="font-weight:600; color:#FFF;">${m.municipio}</td>
+          <td class="num" style="color:var(--cyan); font-weight:700;">${nf(m.total_registros)}</td>
+          <td class="num">${pct(m.percentual_na_uf)}</td>
+          <td class="num">${pct(m.percentual_total_pct)}</td>
+        </tr>
+      `).join('');
+    }
+
+    // 4. Pareto Chart Rendering
+    function renderParetoChart() {
+      const svg = document.getElementById('paretoSvg');
+      let pts = [[0, 0]];
+      let sum = 0;
+      allMunData.forEach((x, i) => {
+        sum += Number(x.total_registros);
+        pts.push([i + 1, (sum / 16621) * 100]);
+      });
+
+      let pathD = pts.map(([x, y], i) => (i ? 'L' : 'M') + (45 + (x / 125) * 580).toFixed(2) + ',' + (260 - (y / 100) * 220).toFixed(2)).join(' ');
+
+      svg.innerHTML = `
+        <line x1="45" y1="260" x2="625" y2="260" stroke="#334155" stroke-width="1"/>
+        <line x1="45" y1="40" x2="45" y2="260" stroke="#334155" stroke-width="1"/>
+        <line x1="45" y1="260" x2="625" y2="40" stroke="#475569" stroke-dasharray="4 4"/>
+        <path d="${pathD}" stroke="var(--cyan)" stroke-width="3" fill="none"/>
+        <text x="5" y="45" fill="#94A3B8" font-size="11" font-family="var(--font-mono)">100%</text>
+        <text x="40" y="280" fill="#94A3B8" font-size="11" font-family="var(--font-mono)">0 mun.</text>
+        <text x="590" y="280" fill="#94A3B8" font-size="11" font-family="var(--font-mono)">125 mun.</text>
+      `;
+
+      // Render Concentration Group Bars
+      const groups = [
+        { name: 'Top 5 Municípios', val: allMunData.slice(0, 5).reduce((a, b) => a + Number(b.total_registros), 0) },
+        { name: 'Top 10 Municípios', val: allMunData.slice(0, 10).reduce((a, b) => a + Number(b.total_registros), 0) },
+        { name: 'Top 20 Municípios', val: allMunData.slice(0, 20).reduce((a, b) => a + Number(b.total_registros), 0) }
+      ];
+
+      document.getElementById('concentrationGroupBars').innerHTML = groups.map(g => `
+        <div class="bar-item">
+          <div class="bar-info">
+            <span class="name">${g.name}</span>
+            <span class="val">${nf(g.val)} reg. (${pct((g.val/16621)*100)})</span>
+          </div>
+          <div class="bar-track">
+            <div class="bar-fill purple" style="width: ${(g.val/16621)*100}%"></div>
+          </div>
+        </div>
+      `).join('');
+    }
+  </script>
+</body>
+</html>
