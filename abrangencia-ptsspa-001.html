@@ -659,33 +659,80 @@
       </div>
     </section>
 
-    <!-- SEÇÃO 05: ESTATÍSTICAS DESCRITIVAS -->
-    <section id="descritivas">
-      <div class="wrap">
-        <h2>05. Estatísticas descritivas dos municípios</h2>
-        <p class="lead">Média, mediana, quartis, valores mínimos e máximos descrevem a distribuição das contagens municipais. Não representam características individuais de participantes.</p>
-        
-        <div id="stateCards" class="stategrid"></div>
-        <div style="margin-top:14px;">
-          <button type="button" class="btn-download" onclick="exportStatsCardsPNG()">
-            <i class="fa-solid fa-download"></i> Baixar Quadro de Estatísticas Descritivas (PNG)
-          </button>
-        </div>
+    <!-- 05. ESTATÍSTICAS DESCRITIVAS DOS MUNICÍPIOS (ESTÁTICO CONFORME ORIGINAL) -->
+<section id="descritivas">
+  <div class="wrap">
+    <div class="kicker-light">05 · Resumo Estatístico</div>
+    <h2>05. Estatísticas descritivas dos municípios</h2>
+    <p class="lead">Média, mediana, quartis, valores mínimos e máximos descrevem a distribuição das contagens municipais. Não representam características individuais de participantes.</p>
+    
+    <!-- Cards Estáticos dos 5 Estados -->
+    <div class="stategrid" id="stateCards">
+      
+      <article class="state">
+        <h3>Pará (PA)</h3>
+        <div class="big">5.697 <span class="sub">registros</span></div>
+        <p><strong>22</strong> municípios · mediana <strong>218,5</strong></p>
+        <p class="small">Mínimo 17 · Q1 129,0 · Q3 286,5 · Máximo 1.159</p>
+        <p class="small">Média 259,0 · Desvio-padrão amostral 228,6</p>
+      </article>
 
-        <div class="panel">
-          <h3>Faixas de volume de registros</h3>
-          <div class="filters">
-            <label>Estado <select id="faixaUF"></select></label>
-          </div>
-          <div id="faixaBars"></div>
-          <p class="small">As faixas seguem os intervalos presentes no pacote técnico recebido.</p>
-          <button type="button" class="btn-download" onclick="exportFaixasPNG()">
-            <i class="fa-solid fa-download"></i> Baixar Distribuição por Faixas de Volume (PNG)
-          </button>
-        </div>
+      <article class="state">
+        <h3>Amazonas (AM)</h3>
+        <div class="big">4.139 <span class="sub">registros</span></div>
+        <p><strong>33</strong> municípios · mediana <strong>86,0</strong></p>
+        <p class="small">Mínimo 3 · Q1 53,0 · Q3 141,0 · Máximo 617</p>
+        <p class="small">Média 125,4 · Desvio-padrão amostral 138,8</p>
+      </article>
+
+      <article class="state">
+        <h3>Maranhão (MA)</h3>
+        <div class="big">3.274 <span class="sub">registros</span></div>
+        <p><strong>25</strong> municípios · mediana <strong>108,0</strong></p>
+        <p class="small">Mínimo 33 · Q1 64,0 · Q3 149,0 · Máximo 486</p>
+        <p class="small">Média 131,0 · Desvio-padrão amostral 98,1</p>
+      </article>
+
+      <article class="state">
+        <h3>Bahia (BA)</h3>
+        <div class="big">2.403 <span class="sub">registros</span></div>
+        <p><strong>31</strong> municípios · mediana <strong>74,0</strong></p>
+        <p class="small">Mínimo 4 · Q1 45,5 · Q3 108,0 · Máximo 193</p>
+        <p class="small">Média 77,5 · Desvio-padrão amostral 45,8</p>
+      </article>
+
+      <article class="state">
+        <h3>Piauí (PI)</h3>
+        <div class="big">1.108 <span class="sub">registros</span></div>
+        <p><strong>14</strong> municípios · mediana <strong>63,5</strong></p>
+        <p class="small">Mínimo 6 · Q1 25,8 · Q3 94,3 · Máximo 218</p>
+        <p class="small">Média 79,1 · Desvio-padrão amostral 68,7</p>
+      </article>
+
+    </div>
+
+    <!-- Painel de Faixas de Volume de Registros -->
+    <div class="panel" style="margin-top: 24px;">
+      <h3>Faixas de volume de registros</h3>
+      <div class="filters">
+        <label>Estado 
+          <select id="faixaUF">
+            <option value="PA">Pará</option>
+            <option value="AM">Amazonas</option>
+            <option value="MA">Maranhão</option>
+            <option value="BA">Bahia</option>
+            <option value="PI">Piauí</option>
+          </select>
+        </label>
       </div>
-    </section>
+      
+      <div id="faixaBars"></div>
+      <p class="small">As faixas seguem os intervalos presentes no pacote técnico recebido.</p>
+    </div>
 
+  </div>
+</section>
+    
     <!-- SEÇÃO 05: ESTATÍSTICAS DESCRITIVAS -->
     <section id="descritivas">
       <div class="wrap">
@@ -1631,8 +1678,7 @@
       link.click();
       triggerCitationModal();
     }
-
-    // Initialize Studio Canvas Chart
+    // Initialize in english porque podemos kkk Studio Canvas Chart
     window.onload = function() {
       document.getElementById('stateCards').innerHTML = D.stats.map(x => `
         <article class="state">
@@ -1643,15 +1689,28 @@
           <p class="small">Média ${nf(x.media)} · DP amostral ${nf(x.desvio_padrao_amostral)}</p>
         </article>
       `).join('');
+let fsel = document.getElementById('faixaUF');
+    function renderFaixas() {
+      if (!fsel) return;
+      const ufSelecionada = fsel.value || 'PA';
+      const f = D.faixas.filter(x => x.uf === ufSelecionada);
+      const t = f.reduce((s, x) => s + Number(x.municipios), 0);
+      
+      document.getElementById('faixaBars').innerHTML = bars(
+        f.map(x => ({ estado: x.faixa_registros, municipios: Number(x.municipios) })),
+        'municipios',
+        t
+      );
+    }
 
-      let fsel = document.getElementById('faixaUF');
-      if (fsel && fsel.options.length > 0) {
-        fsel.selectedIndex = 0;
-        renderFaixas();
-      }
+    if (fsel && fsel.options && fsel.options.length > 0) {
+      fsel.selectedIndex = 0;
+      fsel.onchange = renderFaixas;
+      renderFaixas();
+    }
 
-      drawStudioChart();
-    };
-  </script>
+    drawStudioChart();
+  };
+</script>
 </body>
 </html>
